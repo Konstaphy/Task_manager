@@ -1,0 +1,98 @@
+const pg = require("../db");
+const userDTO = require('../DTO_library/user.dto')
+const tokenLogic = require('../logic/token.logic')
+
+const bcrypt = require("bcrypt");
+
+class Service {
+  // REGISTRATION
+  async registration(username, email, password){
+    const candidate = await pg.query(
+        `SELECT user_id FROM users where (email = $1) OR (username = $2)`,
+        [email, username]
+    )
+    if (candidate.rows.length !== 0) throw new Error('User already exists')
+    // Checks if user with that email exists
+
+    const newUser = await pg.query(
+        `INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *`,
+        [username, email, bcrypt.hashSync(password, 7), "USER"]
+    ); // Creating DB instance
+
+    const userInstance = new userDTO(newUser.rows[0]) // Creating object as user pattern
+    const tokens = tokenLogic.getToken({...userInstance}) // Getting JWT token with that information
+
+    await tokenLogic.saveToken(userInstance.user_id, tokens.refreshToken) // Saving refresh token to DB
+
+    return{ ...tokens, user: userInstance}
+  }
+
+  // LOGIN
+  async login (user, password) {
+    if (user.rows.length === 0) {
+      throw new Error('User not found')
+    }
+
+    // getting hashed password
+    const userPW = user.rows[0].password
+
+    // comparing passwords
+    const compared = await bcrypt.compare(password, userPW)
+    if (!compared) {
+      throw new Error('Invalid password')
+    }
+
+    // creating user model with dto pattern
+    const userInstance = new userDTO(user.rows[0])
+
+    const tokens = tokenLogic.getToken({...userInstance}) // Getting JWT token with that information
+
+    await tokenLogic.saveToken(userInstance.user_id, tokens.refreshToken) // Saving refresh token to DB
+
+    return{ ...tokens, user: userInstance}
+  }
+
+  async loginWithUsername (username, password) {
+    // checking if there is user with that username in db
+    const neededUser = await pg.query(`SELECT * FROM users where username = $1`, [username])
+    return await this.login(neededUser, password)
+  }
+
+  async loginWithEmail (email, password) {
+    // checking if there is user with that email in db
+    const neededUser = await pg.query(`SELECT * FROM users where email = $1`, [email])
+    return await this.login(neededUser, password)
+  }
+
+  async refresh (refreshToken) {
+
+    // Checking if token is null
+    if (!refreshToken) {
+      throw new Error('User unauthorised')
+    }
+
+    // Validating jwt
+    const userData = await tokenLogic.validateRefToken(refreshToken)
+
+    // Finding token in db
+    const token = await tokenLogic.findToken(refreshToken)
+
+
+    // Validating if user is unauthorised
+    if(!userData || !token) {
+      throw new Error('User unauthorised')
+    }
+
+    // Getting actual user data
+    const user = await pg.query(`SELECT * FROM users where user_id = $1`, [userData.user_id])
+
+    // Creating instance using dto pattern
+    const userIns = new userDTO(user.rows[0])
+    const tokens = tokenLogic.getToken({...userIns})
+
+    await tokenLogic.saveToken(userIns.user_id, tokens.refreshToken)
+    return { ...tokens, user: userIns}
+  }
+}
+
+module.exports = new Service();
