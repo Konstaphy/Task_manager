@@ -7,7 +7,8 @@ const initialState: types.state = {
     token: null,
     login: {
         currentPassword: '',
-        currentUsername: ''
+        currentUsername: '',
+        currentEmail: ''
     }
 }
 
@@ -15,31 +16,44 @@ const initialState: types.state = {
 export const authReducer = (state = initialState, action: types.action): types.state => {
     switch (action.type) {
         // Handle login.currentUsername change
-        case (types.actionTypes.setUsername): {
+        case (types.actionUsersTypes.setUsername): {
             return {
                 ...state,
                 login: {
                     currentPassword: state.login.currentPassword,
-                    currentUsername: action.payload
+                    currentUsername: action.payload,
+                    currentEmail: state.login.currentEmail
                 }
             }
         }
         // Handle login.currentPassword change
-        case (types.actionTypes.setPassword): {
+        case (types.actionUsersTypes.setPassword): {
             return {
                 ...state,
                 login: {
                     currentPassword: action.payload,
-                    currentUsername: state.login.currentUsername
+                    currentUsername: state.login.currentUsername,
+                    currentEmail: state.login.currentEmail
+                }
+            }
+        }
+        // Handle login.currentEmail change
+        case (types.actionUsersTypes.setEmail): {
+            return {
+                ...state,
+                login: {
+                    currentPassword: state.login.currentPassword,
+                    currentUsername: state.login.currentUsername,
+                    currentEmail: action.payload
                 }
             }
         }
         // Logged in user information
-        case (types.actionTypes.login): {
+        case (types.actionUsersTypes.login): {
             return {
                 ...state,
                 user_id: action.payload.id,
-                isAuthed: false,
+                isAuthed: true,
                 token: action.payload.token
             }
         }

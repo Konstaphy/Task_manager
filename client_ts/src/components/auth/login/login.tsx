@@ -4,7 +4,8 @@ import logo from '../../../assets/logo.svg'
 import {login} from "../../../http/api";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {useDispatch} from "react-redux";
-import {actionTypes} from "../../../models/authTypes";
+import {actionUsersTypes} from "../../../models/authTypes";
+import {Redirect} from "react-router-dom";
 
 const Box = styled.div`
   display: flex;
@@ -92,15 +93,19 @@ const Login: React.FC = () => {
 
     const getAccessToken = async () => {
         await login(state.login.currentUsername, state.login.currentPassword).then(res => {
-            console.log(res.accessToken)
+            dispatch({type: actionUsersTypes.login, payload: {id: res.user.user_id, token: res.refreshToken}})
         })
     }
 
     const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch({type: actionTypes.setUsername, payload: event.target.value})
+        dispatch({type: actionUsersTypes.setUsername, payload: event.target.value})
     }
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch({type: actionTypes.setPassword, payload: event.target.value})
+        dispatch({type: actionUsersTypes.setPassword, payload: event.target.value})
+    }
+
+    if (state.isAuthed) {
+        return <Redirect to='/tasks'/>
     }
 
     return (

@@ -4,6 +4,7 @@
 interface login {
     currentUsername: string;
     currentPassword: string;
+    currentEmail: string;
 }
 
 export interface state {
@@ -16,21 +17,27 @@ export interface state {
 
 // action
 
-export enum actionTypes {
+export enum actionUsersTypes {
     setUsername = 'setUsername',
     setPassword = 'setPassword',
-    login = 'login'
+    login = 'login',
+    setEmail = 'setEmail'
 }
 
 
 // action types
 export interface setUsernameAction {
-    type: actionTypes.setUsername;
+    type: actionUsersTypes.setUsername;
     payload: string;
 }
 
 export interface setPasswordAction {
-    type: actionTypes.setPassword;
+    type: actionUsersTypes.setPassword;
+    payload: string;
+}
+
+export interface setEmailAction {
+    type: actionUsersTypes.setEmail;
     payload: string;
 }
 
@@ -40,9 +47,10 @@ interface loginPayload {
 }
 
 export interface loginAction {
-    type: actionTypes.login;
+    type: actionUsersTypes.login;
     payload: loginPayload;
 }
 
+
 // common action type
-export type action = setUsernameAction | setPasswordAction | loginAction
+export type action = setUsernameAction | setPasswordAction | setEmailAction | loginAction

@@ -2,11 +2,12 @@ import React, {FC} from 'react';
 
 
 const Tasks: FC = () => {
-    return (
-        <></>
 
+    return (
+        <>
+            TASKS
+        </>
     )
-        ;
 };
 
 export default Tasks;

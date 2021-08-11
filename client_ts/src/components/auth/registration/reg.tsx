@@ -1,7 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from "styled-components";
 import logo from "../../../assets/logo.svg";
 import {registration} from "../../../http/api";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
+import {useDispatch} from "react-redux";
+import {actionUsersTypes} from "../../../models/authTypes";
+import {Redirect} from "react-router-dom";
 
 const Box = styled.div`
   display: flex;
@@ -103,26 +107,31 @@ const Privacy = styled.div`
 `
 
 const Registration: React.FC = () => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [email, setEmail] = useState('')
+    const state = useTypedSelector(state => state.auth)
+    const dispatch = useDispatch()
 
     const getAccessToken = async () => {
-        await registration(username, password, email).then(res => {
-            console.log(res.accessToken)
-        })
+        await registration(state.login.currentUsername, state.login.currentPassword, state.login.currentEmail)
+            .then(res => {
+                dispatch({type: actionUsersTypes.login, payload: {id: res.user.user_id, token: res.refreshToken}})
+            })
     }
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(event.target.value)
+        dispatch({type: actionUsersTypes.setEmail, payload: event.target.value})
     }
 
     const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(event.target.value)
+        dispatch({type: actionUsersTypes.setUsername, payload: event.target.value})
     }
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(event.target.value)
+        dispatch({type: actionUsersTypes.setPassword, payload: event.target.value})
     }
+
+    if (state.isAuthed) {
+        return <Redirect to='/tasks'/>
+    }
+    
 
     return (
         <Box>
@@ -135,15 +144,15 @@ const Registration: React.FC = () => {
                     <DescInp>
                         Username
                     </DescInp>
-                    <Inp type='text' onChange={handleUsernameChange} value={username}/>
+                    <Inp type='text' onChange={handleUsernameChange} value={state.login.currentUsername}/>
                     <DescInp>
                         Email
                     </DescInp>
-                    <Inp type='email' onChange={handleEmailChange} value={email}/>
+                    <Inp type='email' onChange={handleEmailChange} value={state.login.currentEmail}/>
                     <DescInp>
                         Password
                     </DescInp>
-                    <Inp type='text' onChange={handlePasswordChange} value={password}/>
+                    <Inp type='text' onChange={handlePasswordChange} value={state.login.currentPassword}/>
 
                     <Privacy><input type="checkbox" id='pp'/><label htmlFor="pp">Privacy policy</label></Privacy>
                     <Submit>

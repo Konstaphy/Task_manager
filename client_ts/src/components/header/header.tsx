@@ -3,7 +3,8 @@ import styled from "styled-components";
 import logo from '../../assets/logo.svg'
 import RegBTN from "../auth/registration/regBTN";
 import LoginBTN from "../auth/login/loginBTN";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
 
 const Main = styled.main`
   display: flex;
@@ -25,15 +26,31 @@ const Links = styled.div`
 
 const Header = () => {
 
+    const state = useTypedSelector(state => state)
+
+    if (!state.auth.isAuthed) {
+        return (
+            <Main>
+                <Logo src={logo} alt='whatyougonnado?'/>
+                <Links>
+                    <NavLink to='/registration'><RegBTN/></NavLink>
+                    <NavLink to='/login'><LoginBTN/></NavLink>
+                </Links>
+                <Redirect to='/login'/>
+            
+            </Main>
+        );
+    }
     return (
         <Main>
             <Logo src={logo} alt='whatyougonnado?'/>
             <Links>
-                <NavLink to='/registration'><RegBTN/></NavLink>
-                <NavLink to='/login'><LoginBTN/></NavLink>
+                <NavLink to='/tasks'>Tasks</NavLink>
             </Links>
         </Main>
-    );
+    )
+
+
 };
 
 export default Header;
