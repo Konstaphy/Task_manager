@@ -6,7 +6,8 @@ const defaultState: authState = {
     password: '',
     logged: false,
     user_id: 0,
-    error: null
+    error: null,
+    fetched: false
 }
 
 export const authReducer = (state = defaultState, action: authActionsType): authState => {
@@ -19,6 +20,8 @@ export const authReducer = (state = defaultState, action: authActionsType): auth
             return {...state, password: action.payload}
         case (authActionTypes.setLogged):
             return {...state, logged: true}
+        case (authActionTypes.setFetched):
+            return {...state, fetched: true}
         default:
             return state
     }

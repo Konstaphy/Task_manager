@@ -1,9 +1,16 @@
 import React from 'react';
 import logo from "../../assets/logo.svg";
 import {Box, Inp, DescInp, Submit, Privacy, Form, LoginForm, Logo} from "./regStyles";
+import {Redirect} from "react-router-dom";
+import {useTypedSelector} from "../../../hooks/hooks";
 
 
 const Registration: React.FC = () => {
+    const state = useTypedSelector(state => state.auth)
+
+    if (state.logged) {
+        return <Redirect to="/tasks"/>
+    }
 
     return (
         <Box>

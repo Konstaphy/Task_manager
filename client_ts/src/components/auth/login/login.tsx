@@ -5,6 +5,7 @@ import axiosInstance from "../../../server";
 import {useTypedSelector} from "../../../hooks/hooks";
 import {useDispatch} from "react-redux";
 import {authActionTypes} from "../../../Redux/reducers/authTypes";
+import {Redirect} from "react-router-dom";
 
 
 const Login: React.FC = () => {
@@ -27,6 +28,10 @@ const Login: React.FC = () => {
 
     const changePassword = (e: React.FormEvent<HTMLInputElement>) => {
         dispatch({type: authActionTypes.setPassword, payload: e.currentTarget.value})
+    }
+
+    if (state.logged) {
+        return <Redirect to="/tasks"/>
     }
 
     return (
