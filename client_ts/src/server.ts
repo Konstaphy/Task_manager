@@ -15,3 +15,5 @@ axiosInstance.interceptors.response.use((config) => {
 }, async (error) => {
     throw error
 })
+
+export default axiosInstance

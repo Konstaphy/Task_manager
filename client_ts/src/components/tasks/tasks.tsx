@@ -11,7 +11,7 @@ const Tasks: FC = () => {
                 <p>Tasks</p>
             </RightBox>
             <LeftBox>
-                <Task></Task>
+                <Task/>
             </LeftBox>
         </Main>
     )

@@ -29,22 +29,38 @@ interface loginPayload {
 }
 
 interface login {
-    action: authActionTypes.login,
+    type: authActionTypes.login,
     payload: loginPayload
 }
 
 interface loginSuccess {
-    action: authActionTypes.login_SUCCESS,
+    type: authActionTypes.login_SUCCESS,
     payload: undefined
 }
 
 interface loginError {
-    action: authActionTypes.login_ERROR,
+    type: authActionTypes.login_ERROR,
     payload: string
 }
+
+interface loginSetUsername {
+    type: authActionTypes.setUsername,
+    payload: string
+}
+
+interface loginSetEmail {
+    type: authActionTypes.setEmail,
+    payload: string
+}
+
+interface loginSetPassword {
+    type: authActionTypes.setPassword,
+    payload: string
+}
+
 
 //Registration
 //Setting current values
 
 //ACTION TYPE
-export type authActionsType = login | loginError | loginSuccess
+export type authActionsType = login | loginError | loginSuccess | loginSetUsername | loginSetEmail | loginSetPassword

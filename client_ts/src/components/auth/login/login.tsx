@@ -1,9 +1,32 @@
 import React from 'react';
 import logo from '../../assets/logo.svg'
 import {Box, Inp, Form, LoginForm, Logo, Submit, DescInp} from "./loginStyles";
+import axiosInstance from "../../../server";
+import {useTypedSelector} from "../../../hooks/hooks";
+import {useDispatch} from "react-redux";
+import {authActionTypes} from "../../../Redux/reducers/authTypes";
 
 
 const Login: React.FC = () => {
+    const state = useTypedSelector(state => state.auth)
+    const dispatch = useDispatch()
+
+    const Login = () => {
+        axiosInstance.post('http://localhost:5000/api/login', {
+            username: state.username,
+            password: state.password
+        }).then(r => {
+            console.log(r.data)
+        })
+    }
+
+    const changeUsername = (e: React.FormEvent<HTMLInputElement>) => {
+        dispatch({type: authActionTypes.setUsername, payload: e.currentTarget.value})
+    }
+
+    const changePassword = (e: React.FormEvent<HTMLInputElement>) => {
+        dispatch({type: authActionTypes.setPassword, payload: e.currentTarget.value})
+    }
 
     return (
         <Box>
@@ -16,13 +39,13 @@ const Login: React.FC = () => {
                     <DescInp>
                         Username
                     </DescInp>
-                    <Inp type='text'/>
+                    <Inp type='text' onChange={(e) => changeUsername(e)} value={state.username}/>
                     <DescInp>
                         Password
                     </DescInp>
-                    <Inp type='text'/>
+                    <Inp type='text' onChange={(e) => changePassword(e)} value={state.password}/>
                     <Submit>
-                        <button>
+                        <button onClick={() => Login()}>
                             Login
                         </button>
                     </Submit>
