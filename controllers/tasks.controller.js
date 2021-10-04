@@ -9,10 +9,18 @@ class TasksController {
     );
     res.json(newTask);
   }
-  async getTaskByUser(req, res) {
+  async getTasksByUser(req, res) {
     const id = req.params.id;
+    console.log(id)
+    if (id === '0') return res.status(404).json({'error': 'You are not authorised'})
     const task = await db.query(`SELECT * from tasks where user_id = $1`, [id]);
-    res.json(task);
+    res.json(task.rows);
+  }
+
+  async getTaskById(req, res) {
+    const {id} = req.body
+    const task = await db.query(`SELECT * FROM tasks where task_id = $1`, [id]);
+    res.json(task.rows[0])
   }
 }
 

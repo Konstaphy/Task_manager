@@ -2,7 +2,8 @@ const Router = require("express");
 const router = new Router();
 const taskController = require("../controllers/tasks.controller.js");
 
-router.post("/task", taskController.createTask);
-router.get("/task/:id", taskController.getTaskByUser);
+router.post("/createTask", taskController.createTask);
+router.post("/getTask", taskController.getTaskById)
+router.get("/task/:id", taskController.getTasksByUser);
 
 module.exports = router;

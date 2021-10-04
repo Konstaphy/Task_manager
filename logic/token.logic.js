@@ -23,8 +23,7 @@ class TokenLogic{
 
     validateRefToken(token) {
         try {
-            const userData = jwt.verify(token, process.env.SECRETKEYREFRESH)
-            return userData
+            return jwt.verify(token, process.env.SECRETKEYREFRESH)
         }catch (e) {
             return null
         }

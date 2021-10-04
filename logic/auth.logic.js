@@ -65,7 +65,6 @@ class Service {
   }
 
   async refresh (refreshToken) {
-
     // Checking if token is null
     if (!refreshToken) {
       throw new Error('User unauthorised')

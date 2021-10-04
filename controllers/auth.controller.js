@@ -93,9 +93,9 @@ class Controller {
 
         // Generating new token
         const userData = await authLogic.refresh(refreshToken)
-
+        // return res.json(userData)
         // Cooking new refresh token
-        res.cookie('refreshToken', userData.refreshToken, {httpOnly: true, maxAge: 30 * 24* 60 * 60 * 1000})
+        res.cookie('refreshToken', userData.refreshToken, {httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000})
 
         // Callback
         next()
