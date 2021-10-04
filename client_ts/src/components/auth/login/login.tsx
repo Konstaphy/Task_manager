@@ -19,7 +19,9 @@ const Login: React.FC = () => {
         }).then(r => {
             console.log(r.data)
             localStorage.setItem('token', r.data.accessToken);
+            return <Redirect to='/tasks'/>
         })
+
     }
 
     const changeUsername = (e: React.FormEvent<HTMLInputElement>) => {

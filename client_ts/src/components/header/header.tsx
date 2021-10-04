@@ -25,7 +25,6 @@ const Header = () => {
         <Main>
             <Logo src={logo} alt='whatyougonnado?'/>
             <Links>
-                <NavLink to='/tasks'>Tasks</NavLink>
                 <NavLink to='/registration'><RegBTN/></NavLink>
                 <NavLink to='/login'><LoginBTN/></NavLink>
             </Links>

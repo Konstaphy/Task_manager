@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './Font.css'
-import {BrowserRouter, Redirect, Route} from 'react-router-dom'
+import {Redirect, Route} from 'react-router-dom'
 import Header from "./components/header/header";
 import Registration from "./components/auth/registration/reg";
 import Login from "./components/auth/login/login";
@@ -36,14 +36,28 @@ const App = () => {
 
         )
     }
+    if (!state.logged) {
+        return (
+            <SDiv>
+                <Redirect to='/login'/>
+                <MainTheme/>
+                <Header/>
+                <div className="wrapper">
+                    <Route path='/registration'><Registration/></Route>
+                    <Route path='/login'><Login/></Route>
+                </div>
+
+            </SDiv>
+
+
+        )
+    }
 
     return (
         <SDiv>
             <MainTheme/>
             <Header/>
             <div className="wrapper">
-                <Route path='/registration'><Registration/></Route>
-                <Route path='/login'><Login/></Route>
                 <Route path='/tasks'><Tasks/></Route>
             </div>
         </SDiv>
