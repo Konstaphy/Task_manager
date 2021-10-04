@@ -11,12 +11,13 @@ const Login: React.FC = () => {
     const state = useTypedSelector(state => state.auth)
     const dispatch = useDispatch()
 
-    const Login = () => {
-        axiosInstance.post('http://localhost:5000/api/login', {
+    const Login = async () => {
+        await axiosInstance.post('http://localhost:5000/api/login', {
             username: state.username,
             password: state.password
         }).then(r => {
             console.log(r.data)
+            localStorage.setItem('token', r.data.accessToken);
         })
     }
 

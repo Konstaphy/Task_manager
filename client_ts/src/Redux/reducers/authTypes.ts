@@ -13,6 +13,7 @@ export enum authActionTypes {
     setEmail = 'setEmail',
     setUsername = 'setUsername',
     setPassword = 'setPassword',
+    setLogged = 'setLogged',
     login = 'login',
     login_SUCCESS = 'login.s',
     login_ERROR = 'login.e',
@@ -58,9 +59,20 @@ interface loginSetPassword {
     payload: string
 }
 
+interface loginSetLogged {
+    type: authActionTypes.setLogged
+}
+
 
 //Registration
 //Setting current values
 
 //ACTION TYPE
-export type authActionsType = login | loginError | loginSuccess | loginSetUsername | loginSetEmail | loginSetPassword
+export type authActionsType =
+    login
+    | loginError
+    | loginSuccess
+    | loginSetUsername
+    | loginSetEmail
+    | loginSetPassword
+    | loginSetLogged

@@ -17,6 +17,8 @@ export const authReducer = (state = defaultState, action: authActionsType): auth
             return {...state, email: action.payload}
         case (authActionTypes.setPassword):
             return {...state, password: action.payload}
+        case (authActionTypes.setLogged):
+            return {...state, logged: true}
         default:
             return state
     }

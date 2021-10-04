@@ -14,9 +14,12 @@ const App = () => {
     const state = useTypedSelector(state => state.auth)
 
     useEffect(() => {
-        axiosInstance.get('http://localhost:5000/api/refresh').then((r) => {
+        axiosInstance.get('/api/refresh').then((r) => {
+            // localStorage.setItem('token', r.data.accessToken);
             console.log(r)
+
         })
+
     }, [])
 
     return (
