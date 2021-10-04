@@ -1,63 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import styled, {createGlobalStyle} from "styled-components";
-import Header from "./components/header/header";
+import React from 'react';
 import './Font.css'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {Route} from 'react-router-dom'
+import Header from "./components/header/header";
 import Registration from "./components/auth/registration/reg";
 import Login from "./components/auth/login/login";
 import Tasks from "./components/tasks/tasks";
-import {refresh} from "./http/api";
-import {useDispatch} from "react-redux";
-import {actionUsersTypes} from "./models/authTypes";
-
-const MainTheme = createGlobalStyle`
-
-  body {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-
-  .wrapper {
-    max-width: 920px;
-    margin: auto;
-  }
-
-  label, input {
-    cursor: pointer;
-  }
-`
-
-const SDiv = styled(Router)`
-  padding: 0;
-  margin: 0;
-`
+import {SDiv, MainTheme} from './appStyles'
+import {useTypedSelector} from "./hooks/hooks";
 
 
 const App = () => {
-
-    const [payload, setPayload] = useState(null)
-    const [fetched, setFetched] = useState(false)
-
-    const dispatch = useDispatch()
-    useEffect(() => {
-        refresh().then(res => {
-            setPayload(res)
-        }).finally(() => {
-            setFetched(true)
-        })
-    }, [])
-
-    if (payload && (typeof payload == "object")) {
-        dispatch({type: actionUsersTypes.login, payload: payload})
-    }
-
-
-    if (!fetched) {
-        return (
-            <>Loading...</>
-        )
-    }
+    const state = useTypedSelector(state => state.auth)
 
     return (
         <SDiv>
@@ -68,9 +21,9 @@ const App = () => {
                 <Route path='/login'><Login/></Route>
                 <Route path='/tasks'><Tasks/></Route>
             </div>
-
         </SDiv>
     );
+
 };
 
 export default App;
