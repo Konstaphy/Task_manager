@@ -10,6 +10,8 @@ import {useTypedSelector} from "./hooks/hooks";
 import axiosInstance from "./server";
 import {useDispatch} from "react-redux";
 import {authActionTypes} from "./Redux/reducers/authTypes";
+import Profile from "./components/profile/profile";
+import PopupMsg from "./components/popup-msg";
 
 
 const App = () => {
@@ -18,21 +20,23 @@ const App = () => {
 
     useEffect(() => {
         axiosInstance.get('/api/refresh').then((r) => {
+            console.log(r)
+            if (r.data.Error) {
+                throw new Error(r.data.Description)
+            }
             localStorage.setItem('token', r.data.accessToken);
             dispatch({type: authActionTypes.setUsername, payload: r.data.user.username})
             dispatch({type: authActionTypes.setEmail, payload: r.data.user.email})
             dispatch({type: authActionTypes.setUserID, payload: r.data.user.user_id})
             dispatch({type: authActionTypes.setLogged})
-
-        }).finally(() => {
+        }).catch(e => e).finally(() => {
             dispatch({type: authActionTypes.setFetched})
-
         })
     }, [dispatch])
 
     if (!state.fetched) {
         return (
-            <h1>Loading...</h1>
+            <PopupMsg error={false} text='Loading...'/>
 
         )
     }
@@ -51,18 +55,19 @@ const App = () => {
 
 
         )
+    } else {
+        return (
+            <SDiv>
+                <Redirect to='/profile'/>
+                <MainTheme/>
+                <Header/>
+                <div className="wrapper">
+                    <Route path='/tasks'><Tasks/></Route>
+                    <Route path='/profile'><Profile/></Route>
+                </div>
+            </SDiv>
+        );
     }
-
-    return (
-        <SDiv>
-            <MainTheme/>
-            <Header/>
-            <div className="wrapper">
-                <Route path='/tasks'><Tasks/></Route>
-            </div>
-        </SDiv>
-    );
-
 };
 
 export default App;

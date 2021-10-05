@@ -16,7 +16,8 @@ export enum authActionTypes {
     setPassword = 'setPassword',
     setLogged = 'setLogged',
     setUserID = 'setUserID',
-    setFetched = 'setFetched'
+    setFetched = 'setFetched',
+    setError = 'setError'
 }
 
 // ACTION
@@ -49,6 +50,11 @@ interface loginSetFetched {
     type: authActionTypes.setFetched
 }
 
+interface loginSetError {
+    type: authActionTypes.setError,
+    payload: string
+}
+
 //Registration
 //Setting current values
 
@@ -60,3 +66,4 @@ export type authActionsType =
     | loginSetLogged
     | loginSetUserID
     | loginSetFetched
+    | loginSetError

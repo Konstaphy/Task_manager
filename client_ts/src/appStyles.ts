@@ -18,6 +18,10 @@ export const MainTheme = createGlobalStyle`
     cursor: pointer;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   * {
     font-family: 'Quantico', sans-serif;
   }

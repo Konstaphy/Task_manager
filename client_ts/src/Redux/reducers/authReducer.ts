@@ -22,6 +22,8 @@ export const authReducer = (state = defaultState, action: authActionsType): auth
             return {...state, logged: true}
         case (authActionTypes.setFetched):
             return {...state, fetched: true}
+        case (authActionTypes.setError):
+            return {...state, error: action.payload}
         default:
             return state
     }

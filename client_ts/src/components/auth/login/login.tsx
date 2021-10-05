@@ -6,9 +6,11 @@ import {useTypedSelector} from "../../../hooks/hooks";
 import {useDispatch} from "react-redux";
 import {authActionTypes} from "../../../Redux/reducers/authTypes";
 import {Redirect} from "react-router-dom";
+import PopupMsg from "../../popup-msg";
 
 
 const Login: React.FC = () => {
+
     const state = useTypedSelector(state => state.auth)
     const dispatch = useDispatch()
 
@@ -17,9 +19,13 @@ const Login: React.FC = () => {
             username: state.username,
             password: state.password
         }).then(r => {
-            console.log(r.data)
+            if (r.data.Error) {
+                dispatch({type: authActionTypes.setError, payload: r.data.Description})
+                setTimeout(() => {
+                    dispatch({type: authActionTypes.setError, payload: null})
+                }, 5000)
+            }
             localStorage.setItem('token', r.data.accessToken);
-            return <Redirect to='/tasks'/>
         })
 
     }
@@ -35,6 +41,8 @@ const Login: React.FC = () => {
     if (state.logged) {
         return <Redirect to="/tasks"/>
     }
+
+    const error = state.error !== null ? <PopupMsg error={true} text={state.error}/> : <></>
 
     return (
         <Box>
@@ -57,6 +65,8 @@ const Login: React.FC = () => {
                             Login
                         </button>
                     </Submit>
+                    {error}
+
                 </Form>
             </LoginForm>
         </Box>
