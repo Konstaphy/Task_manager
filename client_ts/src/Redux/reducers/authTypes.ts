@@ -1,7 +1,19 @@
 // STATE
-export interface authState {
+interface registration {
+    username: string,
+    email: string,
+    password: string,
+}
+
+interface login {
     username: string,
     password: string,
+}
+
+export interface authState {
+    login: login,
+    registration: registration,
+    username: string,
     email: string,
     logged: boolean,
     user_id: number,
@@ -17,7 +29,10 @@ export enum authActionTypes {
     setLogged = 'setLogged',
     setUserID = 'setUserID',
     setFetched = 'setFetched',
-    setError = 'setError'
+    setError = 'setError',
+    regSetUsername = 'setUNREG',
+    regSetEmail = 'setEMREG',
+    regSetPassword = 'setPWREG',
 }
 
 // ACTION
@@ -56,6 +71,21 @@ interface loginSetError {
 }
 
 //Registration
+interface regSetEmail {
+    type: authActionTypes.regSetEmail,
+    payload: string
+}
+
+interface regSetPassword {
+    type: authActionTypes.regSetPassword,
+    payload: string
+}
+
+interface regSetUsername {
+    type: authActionTypes.regSetUsername,
+    payload: string
+}
+
 //Setting current values
 
 //ACTION TYPE
@@ -67,3 +97,7 @@ export type authActionsType =
     | loginSetUserID
     | loginSetFetched
     | loginSetError
+    | regSetEmail
+    | regSetPassword
+    | regSetUsername
+

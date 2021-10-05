@@ -20,7 +20,6 @@ const App = () => {
 
     useEffect(() => {
         axiosInstance.get('/api/refresh').then((r) => {
-            console.log(r)
             if (r.data.Error) {
                 throw new Error(r.data.Description)
             }
@@ -37,7 +36,6 @@ const App = () => {
     if (!state.fetched) {
         return (
             <PopupMsg error={false} text='Loading...'/>
-
         )
     }
     if (!state.logged) {

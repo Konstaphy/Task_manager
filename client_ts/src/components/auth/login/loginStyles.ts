@@ -37,7 +37,7 @@ export const Logo = styled.div`
     margin: auto;
   }
 `
-export const Form = styled.div`
+export const Form = styled.form`
   margin: auto;
   width: 100%;
   max-width: 620px;

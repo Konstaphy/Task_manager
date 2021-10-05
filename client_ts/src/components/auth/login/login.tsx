@@ -1,23 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import logo from '../../assets/logo.svg'
 import {Box, Inp, Form, LoginForm, Logo, Submit, DescInp} from "./loginStyles";
 import axiosInstance from "../../../server";
 import {useTypedSelector} from "../../../hooks/hooks";
 import {useDispatch} from "react-redux";
 import {authActionTypes} from "../../../Redux/reducers/authTypes";
-import {Redirect} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import PopupMsg from "../../popup-msg";
 
 
 const Login: React.FC = () => {
-
+    const history = useHistory()
     const state = useTypedSelector(state => state.auth)
     const dispatch = useDispatch()
 
     const Login = async () => {
         await axiosInstance.post('http://localhost:5000/api/login', {
             username: state.username,
-            password: state.password
+            password: state.login.password
         }).then(r => {
             if (r.data.Error) {
                 dispatch({type: authActionTypes.setError, payload: r.data.Description})
@@ -26,9 +26,12 @@ const Login: React.FC = () => {
                 }, 5000)
             }
             localStorage.setItem('token', r.data.accessToken);
+            dispatch({type: authActionTypes.setLogged})
+            if (state.logged)
+                history.push('/profile')
         })
-
     }
+
 
     const changeUsername = (e: React.FormEvent<HTMLInputElement>) => {
         dispatch({type: authActionTypes.setUsername, payload: e.currentTarget.value})
@@ -36,10 +39,6 @@ const Login: React.FC = () => {
 
     const changePassword = (e: React.FormEvent<HTMLInputElement>) => {
         dispatch({type: authActionTypes.setPassword, payload: e.currentTarget.value})
-    }
-
-    if (state.logged) {
-        return <Redirect to="/tasks"/>
     }
 
     const error = state.error !== null ? <PopupMsg error={true} text={state.error}/> : <></>
@@ -55,13 +54,13 @@ const Login: React.FC = () => {
                     <DescInp>
                         Username
                     </DescInp>
-                    <Inp type='text' onChange={(e) => changeUsername(e)} value={state.username}/>
+                    <Inp type='text' onChange={(e) => changeUsername(e)} value={state.login.username}/>
                     <DescInp>
                         Password
                     </DescInp>
-                    <Inp type='text' onChange={(e) => changePassword(e)} value={state.password}/>
+                    <Inp type='password' onChange={(e) => changePassword(e)} value={state.login.password}/>
                     <Submit>
-                        <button onClick={() => Login()}>
+                        <button type='button' onClick={() => Login()}>
                             Login
                         </button>
                     </Submit>
