@@ -11,7 +11,7 @@ class Service {
         `SELECT user_id FROM users where (email = $1) OR (username = $2)`,
         [email, username]
     )
-    if (candidate.rows.length !== 0) throw new Error('User already exists')
+    if (candidate.rows.length !== 0) return ({Error: 400, Description: 'User already exists'})
     // Checks if user with that email exists
 
     const newUser = await pg.query(
@@ -29,27 +29,27 @@ class Service {
 
   // LOGIN
   async login (user, password) {
-    if (user.rows.length === 0) {
-      throw new Error('User not found')
-    }
+      if (user.rows.length === 0) {
+        return {Error: 400, Description: 'User not found'}
+      }
 
-    // getting hashed password
-    const userPW = user.rows[0].password
+      // getting hashed password
+      const userPW = user.rows[0].password
 
-    // comparing passwords
-    const compared = await bcrypt.compare(password, userPW)
-    if (!compared) {
-      throw new Error('Invalid password')
-    }
+      // comparing passwords
+      const compared = await bcrypt.compare(password, userPW)
+      if (!compared) {
+        return {Error: 400, Description: 'Invalid password'}
+      }
 
-    // creating user model with dto pattern
-    const userInstance = new userDTO(user.rows[0])
+      // creating user model with dto pattern
+      const userInstance = new userDTO(user.rows[0])
 
-    const tokens = tokenLogic.getToken({...userInstance}) // Getting JWT token with that information
+      const tokens = tokenLogic.getToken({...userInstance}) // Getting JWT token with that information
 
-    await tokenLogic.saveToken(userInstance.user_id, tokens.refreshToken) // Saving refresh token to DB
+      await tokenLogic.saveToken(userInstance.user_id, tokens.refreshToken) // Saving refresh token to DB
 
-    return{ ...tokens, user: userInstance}
+      return{ ...tokens, user: userInstance}
   }
 
   async loginWithUsername (username, password) {
@@ -67,7 +67,7 @@ class Service {
   async refresh (refreshToken) {
     // Checking if token is null
     if (!refreshToken) {
-      throw new Error('User unauthorised')
+        return {Error: 400, Description: 'User unauthorised'}
     }
 
     // Validating jwt
@@ -79,7 +79,7 @@ class Service {
 
     // Validating if user is unauthorised
     if(!userData || !token) {
-      throw new Error('User unauthorised')
+        return {Error: 400, Description: 'User unauthorised'}
     }
 
     // Getting actual user data

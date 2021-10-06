@@ -6,7 +6,7 @@ const mw = require('../logic/auth.middleware')
 router.post("/registration", controller.registration);
 router.post("/login", controller.login);
 router.post("/logout", controller.logout);
-router.get('/refresh', controller.refresh)
+router.get('/refresh', mw, controller.refresh)
 
 module.exports = router;
  

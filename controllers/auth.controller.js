@@ -10,16 +10,16 @@ class Controller {
     try{
       const { username, email, password } = req.body; // Getting user parameters
 
+      // Validating information
       if (!validator.isEmail(email)) {
-        return res.json({"message": "Invalid email"})
+        return res.json({Error: 400, Description: "Invalid email"})
       }
       if (validator.isEmpty(username) || username.length < 5) {
-        return res.json({"message": "Invalid username"})
+        return res.json({Error: 400, Description: "Invalid username"})
       }
       if (validator.isEmpty(password) || password.length < 5) {
-        return res.json({"message": "Invalid password"})
+        return res.json({Error: 400, Description: "Invalid password"})
       }
-      // Validating information
 
       const userData = await authLogic.registration(username, email, password) // Register user to DB
 
