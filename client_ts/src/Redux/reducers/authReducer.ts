@@ -32,7 +32,21 @@ export const authReducer = (state = defaultState, action: authActionsType): auth
         case (authActionTypes.setPassword):
             return {...state, login: {password: action.payload, username: state.login.username}}
         case (authActionTypes.setLogged):
-            return {...state, logged: true}
+            return {
+                ...state,
+                registration: {
+                    username: '',
+                    email: '',
+                    password: ''
+                },
+                login: {
+                    username: '',
+                    password: ''
+                },
+                logged: true
+            }
+        case (authActionTypes.setLoggedOut):
+            return {...state, logged: false}
         case (authActionTypes.setFetched):
             return {...state, fetched: true}
         case (authActionTypes.setError):
@@ -58,7 +72,8 @@ export const authReducer = (state = defaultState, action: authActionsType): auth
                 email: action.payload
             }
         case (authActionTypes.regSetPassword):
-            return {...state,
+            return {
+                ...state,
                 registration: {
                     password: action.payload,
                     username: state.registration.username,

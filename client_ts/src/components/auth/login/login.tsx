@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import logo from '../../assets/logo.svg'
 import {Box, Inp, Form, LoginForm, Logo, Submit, DescInp} from "./loginStyles";
 import axiosInstance from "../../../server";
@@ -19,16 +19,18 @@ const Login: React.FC = () => {
             username: state.username,
             password: state.login.password
         }).then(r => {
+            console.log(r)
             if (r.data.Error) {
                 dispatch({type: authActionTypes.setError, payload: r.data.Description})
                 setTimeout(() => {
                     dispatch({type: authActionTypes.setError, payload: null})
                 }, 5000)
+            } else {
+                localStorage.setItem('token', r.data.accessToken);
+                dispatch({type: authActionTypes.setLogged})
+                if (state.logged)
+                    history.push('/profile')
             }
-            localStorage.setItem('token', r.data.accessToken);
-            dispatch({type: authActionTypes.setLogged})
-            if (state.logged)
-                history.push('/profile')
         })
     }
 

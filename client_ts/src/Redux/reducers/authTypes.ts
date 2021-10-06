@@ -33,6 +33,7 @@ export enum authActionTypes {
     regSetUsername = 'setUNREG',
     regSetEmail = 'setEMREG',
     regSetPassword = 'setPWREG',
+    setLoggedOut = 'setLoggedOut'
 }
 
 // ACTION
@@ -54,6 +55,10 @@ interface loginSetPassword {
 
 interface loginSetLogged {
     type: authActionTypes.setLogged
+}
+
+interface loginSetLoggedOut {
+    type: authActionTypes.setLoggedOut
 }
 
 interface loginSetUserID {
@@ -100,4 +105,5 @@ export type authActionsType =
     | regSetEmail
     | regSetPassword
     | regSetUsername
+    | loginSetLoggedOut
 

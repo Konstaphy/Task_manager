@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from "../../assets/logo.svg";
-import {Box, Inp, DescInp, Submit, Privacy, Form, LoginForm, Logo} from "./regStyles";
+import {Box, Inp, DescInp, Submit, Form, LoginForm, Logo} from "./regStyles";
 import {Redirect, useHistory} from "react-router-dom";
 import {useTypedSelector} from "../../../hooks/hooks";
 import {useDispatch} from "react-redux";
@@ -39,11 +39,13 @@ const Registration: React.FC = () => {
                 setTimeout(() => {
                     dispatch({type: authActionTypes.setError, payload: null})
                 }, 5000)
+            } else {
+                localStorage.setItem('token', r.data.accessToken);
+                dispatch({type: authActionTypes.setLogged})
+                if (state.logged)
+                    history.push('/profile')
             }
-            localStorage.setItem('token', r.data.accessToken);
-            dispatch({type: authActionTypes.setLogged})
-            if (state.logged)
-                history.push('/profile')
+
         })
     }
 
