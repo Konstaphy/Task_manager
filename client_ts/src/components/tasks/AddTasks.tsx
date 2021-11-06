@@ -3,6 +3,28 @@ import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../hooks/hooks";
 import {tasksActionTypes} from "../../Redux/reducers/tasksTypes";
 import axiosInstance from "../../server";
+import styled from "styled-components";
+
+const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: calc(100% - 48px);
+
+  p {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  input {
+    width: 50%;
+    font-size: 14px;
+    height: 20px;
+    padding: 3px;
+  }
+`
 
 const AddTasks = () => {
     const dispatch = useDispatch()
@@ -25,11 +47,11 @@ const AddTasks = () => {
         })
     }
     return (
-        <div>
-            Add new post
+        <Main>
+            <p>Add new post</p>
             <input type="text" value={state.tasks.newTaskText} onChange={(e) => handleChange(e)}/>
             <button onClick={() => addTask()}>Add task</button>
-        </div>
+        </Main>
     );
 };
 

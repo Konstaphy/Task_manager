@@ -6,12 +6,14 @@ interface taskType {
     completed: boolean
 }
 
+
 const Task = ({text, completed}: taskType) => {
 
     return (
         <Main>
             <TaskTitle>
                 <p>{text}</p>
+
             </TaskTitle>
         </Main>
     );

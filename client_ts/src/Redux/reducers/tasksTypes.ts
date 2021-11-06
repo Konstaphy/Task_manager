@@ -34,7 +34,7 @@ interface tasksSetEveryTask {
 
 interface tasksSetOneTask {
     type: tasksActionTypes.setTaskToActive,
-    payload: task
+    payload: task | null
 }
 
 interface toggleFetched {

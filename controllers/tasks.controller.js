@@ -9,6 +9,13 @@ class TasksController {
     );
     res.json(newTask);
   }
+  async deleteTask(req, res) {
+    const { task_id } = req.body;
+    await db.query(
+        `DELETE FROM tasks WHERE task_id = $1`, [task_id]
+    );
+    res.json(`${task_id} has been deleted`);
+  }
   async getTasksByUser(req, res) {
     const id = req.params.id;
     if (id === '0') return res.status(404).json({'error': 'You are not authorised'})
