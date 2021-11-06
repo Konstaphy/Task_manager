@@ -22,7 +22,11 @@ const Profile = () => {
     return (
         <div>
             <h1>{state.username}</h1>
-            <h3>{state.email}</h3>
+            <form>
+                <input type="file" name="avatar"/>
+                <input type="submit"/>
+            </form>
+            <h3>{state.email}<br/>{state.user_id}</h3>
             <button type='button' onClick={() => signOut()}>Sign out</button>
         </div>
     );

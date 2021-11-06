@@ -27,9 +27,11 @@ const Login: React.FC = () => {
                 }, 5000)
             } else {
                 localStorage.setItem('token', r.data.accessToken);
+                dispatch({type: authActionTypes.setUsername, payload: r.data.user.username})
+                dispatch({type: authActionTypes.setEmail, payload: r.data.user.email})
+                dispatch({type: authActionTypes.setUserID, payload: r.data.user.user_id})
                 dispatch({type: authActionTypes.setLogged})
-                if (state.logged)
-                    history.push('/profile')
+                history.push('/profile')
             }
         })
     }

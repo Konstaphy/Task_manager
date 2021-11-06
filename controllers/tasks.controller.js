@@ -11,7 +11,6 @@ class TasksController {
   }
   async getTasksByUser(req, res) {
     const id = req.params.id;
-    console.log(id)
     if (id === '0') return res.status(404).json({'error': 'You are not authorised'})
     const task = await db.query(`SELECT * from tasks where user_id = $1`, [id]);
     res.json(task.rows);

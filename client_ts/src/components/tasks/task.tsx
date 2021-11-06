@@ -1,25 +1,18 @@
 import React from 'react';
-import {Main, TaskDescription, TargetButton, TaskTitle, TaskTitleNav, TaskTitleDesc} from './taskStyles'
+import {Main, TaskTitle} from './taskStyles'
 
-const Task = () => {
+interface taskType {
+    text: string,
+    completed: boolean
+}
+
+const Task = ({text, completed}: taskType) => {
+
     return (
         <Main>
-            <TargetButton>
-                <span>
-                    o
-                </span>
-            </TargetButton>
-            <TaskDescription>
-                <TaskTitle>
-                    <p>Hello</p>
-                </TaskTitle>
-                <TaskTitleDesc>
-                    <p>Hello</p>
-                </TaskTitleDesc>
-                <TaskTitleNav>
-                    <p>Hello</p>
-                </TaskTitleNav>
-            </TaskDescription>
+            <TaskTitle>
+                <p>{text}</p>
+            </TaskTitle>
         </Main>
     );
 };

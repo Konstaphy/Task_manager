@@ -47,6 +47,8 @@ export const authReducer = (state = defaultState, action: authActionsType): auth
             }
         case (authActionTypes.setLoggedOut):
             return {...state, logged: false}
+        case (authActionTypes.setUserID):
+            return {...state, user_id: action.payload}
         case (authActionTypes.setFetched):
             return {...state, fetched: true}
         case (authActionTypes.setError):

@@ -56,7 +56,7 @@ const App = () => {
     } else {
         return (
             <SDiv>
-                <Redirect to='/profile'/>
+                {window.location.href.split('/')[3] === "" ? <Redirect to={'/profile'}/> : <></>}
                 <MainTheme/>
                 <Header/>
                 <div className="wrapper">
