@@ -4,7 +4,9 @@ const defaultState: tasksState = {
     tasks: [],
     active_task: null,
     count: 0,
-    fetched: false
+    type: "NONE",
+    fetched: false,
+    newTaskText: ""
 }
 
 export const tasksReducer = (state = defaultState, action: tasksActionsType): tasksState => {
@@ -20,10 +22,17 @@ export const tasksReducer = (state = defaultState, action: tasksActionsType): ta
             return {
                 ...state,
                 active_task: action.payload,
+                type: "READING"
             }
         }
         case(tasksActionTypes.toggleFetched): {
             return {...state, fetched: !state.fetched}
+        }
+        case(tasksActionTypes.toggleType): {
+            return {...state, type: state.type = "ADDING"}
+        }
+        case(tasksActionTypes.setNewTaskText): {
+            return {...state, newTaskText: action.payload}
         }
         default:
             return state

@@ -6,17 +6,23 @@ export interface task {
     text: string
 }
 
+type types = "ADDING" | "READING" | "NONE"
+
 export interface tasksState {
     tasks: task[],
     active_task: task | null,
     count: number,
-    fetched: boolean
+    type: types,
+    fetched: boolean,
+    newTaskText: string
 }
 
 export enum tasksActionTypes {
     setTasks = "SET_TASKS",
     setTaskToActive = "SET_TASK",
-    toggleFetched = "SET_FETCHED"
+    toggleFetched = "SET_FETCHED",
+    toggleType = "TOGGLE_TYPE",
+    setNewTaskText = "SET_NEW_TASK_TEXT"
 }
 
 // ACTION
@@ -35,10 +41,21 @@ interface toggleFetched {
     type: tasksActionTypes.toggleFetched
 }
 
+interface toggleTypes {
+    type: tasksActionTypes.toggleType
+}
+
+interface setNewTaskText {
+    type: tasksActionTypes.setNewTaskText,
+    payload: string
+}
+
 //ACTION TYPE
 export type tasksActionsType =
     | tasksSetOneTask
     | tasksSetEveryTask
     | toggleFetched
+    | toggleTypes
+    | setNewTaskText
 
 

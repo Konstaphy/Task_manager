@@ -6,6 +6,7 @@ import {useTypedSelector} from "../../hooks/hooks";
 import axiosInstance from "../../server";
 import {tasksActionTypes, task} from "../../Redux/reducers/tasksTypes";
 import ActiveTask from "./activeTask";
+import AddTasks from "./AddTasks";
 
 
 const Tasks: FC = () => {
@@ -14,13 +15,16 @@ const Tasks: FC = () => {
 
     useEffect(() => {
         axiosInstance.get(`/api/tasks/${state.auth.user_id}`).then((r) => {
-            console.log(r.data)
             dispatch({type: tasksActionTypes.setTasks, payload: r.data})
         })
     }, [state.auth.user_id, dispatch])
 
     const setActive = (task: task) => {
         dispatch({type: tasksActionTypes.setTaskToActive, payload: task})
+    }
+
+    const setAdding = () => {
+        dispatch({type: tasksActionTypes.toggleType})
     }
 
     return (
@@ -34,12 +38,14 @@ const Tasks: FC = () => {
                         </div>
                     )
                 })}
-                <Add>
-                    +
+                <Add onClick={() => {
+                    setAdding()
+                }}>
+                    whatyougonnado?
                 </Add>
             </LeftBox>
             <RightBox>
-                <ActiveTask/>
+                {state.tasks.type === "ADDING" ? <AddTasks/> : <ActiveTask/>}
             </RightBox>
 
         </Main>

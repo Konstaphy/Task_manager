@@ -2,10 +2,10 @@ const db = require("../db");
 
 class TasksController {
   async createTask(req, res) {
-    const { text, date, completed, user_id } = req.body;
+    const { text, date, user_id } = req.body;
     const newTask = await db.query(
       `INSERT INTO tasks (text, date, completed, user_id) values ($1, $2, $3, $4) RETURNING *`,
-      [text, date, completed, user_id]
+      [text, date, false, user_id]
     );
     res.json(newTask);
   }

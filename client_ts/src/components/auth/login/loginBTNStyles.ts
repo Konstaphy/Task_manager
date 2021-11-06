@@ -7,7 +7,7 @@ export const Space = styled.button`
   background-color: white;
   font-size: 14px;
   line-height: 28px;
-  padding: 0px 30px;
+  padding: 0 30px;
   border-radius: 30px;
   height: 34px;
   margin: 7px 10px;

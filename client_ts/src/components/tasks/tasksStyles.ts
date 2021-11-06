@@ -22,12 +22,14 @@ export const RightBox = styled.div`
 `
 
 export const Add = styled.div`
-  color: #fff;
-  width: 100px;
-  height: 50px;
+  color: #000;
+  width: 100%;
+  background-color: #41DCD3;
+  height: 30px;
   display: flex;
+  cursor: pointer;
   justify-content: center;
   align-items: center;
-  font-size: 25px;
-  background-color: #a83a3a;
+  font-size: 12px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.22);
 `
