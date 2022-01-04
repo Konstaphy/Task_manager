@@ -1,0 +1,27 @@
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  max-width: 920px;
+  margin: auto;
+}
+
+label, input {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+* {
+  font-family: 'Quantico', sans-serif;
+}
+
+.deleting{
+  margin: 0;
+  padding: 0;
+}

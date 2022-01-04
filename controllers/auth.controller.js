@@ -41,6 +41,7 @@ class Controller {
   async login(req, res, next) {
     try {
       // Get information about user
+
       const {username, password} = req.body
 
       const userData = await authLogic.loginWithUsername(username, password)

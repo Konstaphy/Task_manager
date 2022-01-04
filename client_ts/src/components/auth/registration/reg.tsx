@@ -1,12 +1,12 @@
 import React from 'react';
 import logo from "../../assets/logo.svg";
-import {Box, Inp, DescInp, Submit, Form, LoginForm, Logo} from "./regStyles";
+import './registration.css'
 import {Redirect, useHistory} from "react-router-dom";
 import {useTypedSelector} from "../../../hooks/hooks";
 import {useDispatch} from "react-redux";
 import {authActionTypes} from "../../../Redux/reducers/authTypes";
 import axiosInstance from "../../../server";
-import PopupMsg from "../../popup-msg";
+import PopupMsg from "../../PopUpMessage/popup-msg";
 
 
 const Registration: React.FC = () => {
@@ -54,34 +54,38 @@ const Registration: React.FC = () => {
     const error = state.error !== null ? <PopupMsg error={true} text={state.error}/> : <></>
 
     return (
-        <Box>
-            <LoginForm>
-                <Logo>
-                    <img src={logo} alt=""/>
-                    <p>Register a new account</p>
-                </Logo>
-                <Form>
-                    <DescInp>
-                        Username
-                    </DescInp>
-                    <Inp type='text' value={state.registration.username} onChange={(e) => changeUsername(e)}/>
-                    <DescInp>
-                        Email
-                    </DescInp>
-                    <Inp type='email' value={state.registration.email} onChange={(e) => changeEmail(e)}/>
-                    <DescInp>
-                        Password
-                    </DescInp>
-                    <Inp type='password' value={state.registration.password} onChange={(e) => changePassword(e)}/>
-                    <Submit>
-                        <button onClick={() => register()}>
-                            Register
-                        </button>
-                    </Submit>
-                </Form>
-            </LoginForm>
-            {error}
-        </Box>
+        <>
+            <div className="video__bg">
+                <div className={"login__box"}>
+                    <div className={"login__form"}>
+                        <div className={"login__logo"}>
+                            <img src={logo} alt=""/>
+                            <p>Register new account</p>
+                        </div>
+                        <div className={"form"}>
+                            <div className={"form__desc"}>
+                                Username
+                            </div>
+                            <input className={"form__input"} type='text' onChange={(e) => changeUsername(e)} value={state.login.username}/>
+                            <div className={"form__desc"}>
+                                Password
+                            </div>
+                            <input className={"form__input"} type='password' onChange={(e) => changePassword(e)} value={state.login.password}/>
+                            <div className={"form__desc"}>
+                                Email
+                            </div>
+                            <input className={"form__input"} type='email' onChange={(e) => changePassword(e)} value={state.login.password}/>
+                            <div className={"form__submit"}>
+                                <button type='button' onClick={() => register()}>
+                                    Register
+                                </button>
+                            </div>
+                            {error}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
 
