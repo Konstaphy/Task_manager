@@ -2,31 +2,26 @@ const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 const cp = require("cookie-parser");
-const path = require("path");
-
-const multer = require('multer')
-
-
 
 const userRouter = require("./routes/user.routes");
 const tasksRouter = require("./routes/task.routes");
-const imageRouter = require("./routes/image.routes");
 const authRouter = require("./routes/auth.routes");
 
 
 const app = express();
-const PORT = process.env.PORT || 5050;
+const PORT = 5000;
 
-app.use(express.json());
-app.use(cp());
-app.use(cors({
-  credentials: true,
-  origin: 'http://localhost:3000'
-}));
+app.use(cors);
+// app.use(express.json());
+// app.use(cp());
+
+app.get("/api", (req, res) => {
+  res.json("HELLO")
+})
+app.use("/api", authRouter);
 app.use("/api", userRouter);
 app.use("/api", tasksRouter);
-app.use("/api", imageRouter);
-app.use("/api", authRouter);
+
 
 
 const start = async () => {
@@ -39,4 +34,6 @@ const start = async () => {
   }
 };
 
-start().catch();
+start().catch((e) => {
+  console.log(e)
+});

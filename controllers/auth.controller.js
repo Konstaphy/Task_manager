@@ -42,10 +42,12 @@ class Controller {
     try {
       // Get information about user
 
+      console.log('logged')
       const {username, password} = req.body
 
+      console.log('logged')
       const userData = await authLogic.loginWithUsername(username, password)
-
+      console.log('logged')
       // Caching refreshToken
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -55,6 +57,7 @@ class Controller {
       // Callback
       next()
 
+      console.log('logged')
       // Returning tokens and data on client
       res.json(userData);
 
@@ -89,6 +92,8 @@ class Controller {
   // Refresh token
   async refresh (req, res, next) {
       try{
+
+        console.log('huy1')
         // Getting current refresh cookie
         const {refreshToken} = req.cookies
 

@@ -14,9 +14,11 @@ class Service {
         if (candidate.rows.length !== 0) return ({Error: 400, Description: 'User already exists'})
         // Checks if user with that email exists
 
+        password = bcrypt.hashSync(password, 7)
+
         const newUser = await pg.query(
             `INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *`,
-            [username, email, bcrypt.hashSync(password, 7), "USER"]
+            [username, email, `${password}`, "USER"]
         ); // Creating DB instance
 
         const userInstance = new userDTO(newUser.rows[0]) // Creating object as user pattern

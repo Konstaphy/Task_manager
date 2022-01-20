@@ -48,7 +48,7 @@ const Login: React.FC = () => {
 
     return (
         <>
-            <div className="video__bg">
+            <div className="login__video-bg">
                 <div className={"login__box"}>
                     <div className={"login__form"}>
                         <div className={"login__logo"}>

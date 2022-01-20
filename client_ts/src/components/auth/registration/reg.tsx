@@ -66,15 +66,15 @@ const Registration: React.FC = () => {
                             <div className={"form__desc"}>
                                 Username
                             </div>
-                            <input className={"form__input"} type='text' onChange={(e) => changeUsername(e)} value={state.login.username}/>
+                            <input className={"form__input"} type='text' onChange={(e) => changeUsername(e)} value={state.registration.username}/>
                             <div className={"form__desc"}>
                                 Password
                             </div>
-                            <input className={"form__input"} type='password' onChange={(e) => changePassword(e)} value={state.login.password}/>
+                            <input className={"form__input"} type='password' onChange={(e) => changePassword(e)} value={state.registration.password}/>
                             <div className={"form__desc"}>
                                 Email
                             </div>
-                            <input className={"form__input"} type='email' onChange={(e) => changePassword(e)} value={state.login.password}/>
+                            <input className={"form__input"} type='email' onChange={(e) => changeEmail(e)} value={state.registration.email}/>
                             <div className={"form__submit"}>
                                 <button type='button' onClick={() => register()}>
                                     Register
