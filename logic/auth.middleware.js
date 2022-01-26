@@ -8,10 +8,6 @@ module.exports = function (req, res, next) {
         }
         const accessToken = authHeader.split(" ")[1]
 
-        if (!accessToken) {
-            return res.json({Error: 400, Description: 'User unauthenticated'})
-        }
-
         const userData = tokenLogic.validateAccToken(accessToken)
 
         if (!userData) {

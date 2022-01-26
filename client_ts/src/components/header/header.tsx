@@ -1,10 +1,10 @@
 import React from 'react';
 import logo from '../assets/logo.svg'
-import RegBTN from "../auth/registration/regBTN";
-import LoginBTN from "../auth/login/loginBTN";
 import {NavLink} from "react-router-dom";
 import {Links, Main, Logo, Button} from './headerStyles'
 import {useTypedSelector} from "../../hooks/hooks";
+import LoginBTN from "../auth/login/LoginButton/loginBTN";
+import RegBTN from "../auth/registration/RegButton/regBTN";
 
 
 const Header = () => {

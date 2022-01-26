@@ -39,12 +39,12 @@ class Controller {
   }
 
   async login(req, res, next) {
+    // res.json()
     try {
       // Get information about user
       const {username, password} = req.body
 
       const userData = await authLogic.loginWithUsername(username, password)
-
       // Caching refreshToken
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -53,7 +53,6 @@ class Controller {
 
       // Callback
       next()
-
       // Returning tokens and data on client
       res.json(userData);
 

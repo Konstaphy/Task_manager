@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
 import './Font.css'
-import {Redirect, Route} from 'react-router-dom'
+import {BrowserRouter, Redirect, Route} from 'react-router-dom'
 import Header from "./components/header/header";
 import Registration from "./components/auth/registration/reg";
 import Login from "./components/auth/login/login";
 import Tasks from "./components/tasks/tasks";
-import {SDiv, MainTheme} from './appStyles'
 import {useTypedSelector} from "./hooks/hooks";
 import axiosInstance from "./server";
 import {useDispatch} from "react-redux";
 import {authActionTypes} from "./Redux/reducers/authTypes";
 import Profile from "./components/profile/profile";
-import PopupMsg from "./components/popup-msg";
+import './app.css'
+import PopupMsg from "./components/PopUpMessage/popup-msg";
 
 
 const App = () => {
@@ -24,12 +24,16 @@ const App = () => {
                 throw new Error(r.data.Description)
             }
             localStorage.setItem('token', r.data.accessToken);
+            // TODO: в один диспатч
             dispatch({type: authActionTypes.setUsername, payload: r.data.user.username})
             dispatch({type: authActionTypes.setEmail, payload: r.data.user.email})
             dispatch({type: authActionTypes.setUserID, payload: r.data.user.user_id})
             dispatch({type: authActionTypes.setLogged})
-        }).catch(e => e).finally(() => {
-            dispatch({type: authActionTypes.setFetched})
+        })
+            .catch(e => {
+                console.log(e)})
+            .finally(() => {
+                dispatch({type: authActionTypes.setFetched})
         })
     }, [dispatch])
 
@@ -40,30 +44,30 @@ const App = () => {
     }
     if (!state.logged) {
         return (
-            <SDiv>
-                <Redirect to='/login'/>
-                <MainTheme/>
-                <Header/>
-                <div className="wrapper">
+            <BrowserRouter>
+                <div className="deleting">
+                    <Redirect to='/login'/>
+                    <Header/>
                     <Route path='/registration'><Registration/></Route>
                     <Route path='/login'><Login/></Route>
                 </div>
-
-            </SDiv>
+            </BrowserRouter>
 
 
         )
     } else {
         return (
-            <SDiv>
-                {window.location.href.split('/')[3] === "" ? <Redirect to={'/profile'}/> : <></>}
-                <MainTheme/>
-                <Header/>
-                <div className="wrapper">
-                    <Route path='/tasks'><Tasks/></Route>
-                    <Route path='/profile'><Profile/></Route>
+            <BrowserRouter>
+                <div className="deleting">
+                    {/*TODO: wtf is that*/}
+                    {window.location.href.split('/')[3] === "" ? <Redirect to={'/profile'}/> : <></>}
+                    <Header/>
+                    <div className="wrapper">
+                        <Route path='/tasks'><Tasks/></Route>
+                        <Route path='/profile'><Profile/></Route>
+                    </div>
                 </div>
-            </SDiv>
+            </BrowserRouter>
         );
     }
 };

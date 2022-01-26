@@ -8,7 +8,7 @@ class TokenLogic{
             expiresIn: "24h",
         }); // generating access jwt token
         const refreshToken = jwt.sign(payload, process.env.SECRETKEYREFRESH, {
-            expiresIn: "24d",
+            expiresIn: "31d",
         }); // generating refresh jwt token
         return {accessToken, refreshToken};
     }
