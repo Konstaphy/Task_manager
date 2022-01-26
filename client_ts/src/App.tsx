@@ -24,12 +24,16 @@ const App = () => {
                 throw new Error(r.data.Description)
             }
             localStorage.setItem('token', r.data.accessToken);
+            // TODO: в один диспатч
             dispatch({type: authActionTypes.setUsername, payload: r.data.user.username})
             dispatch({type: authActionTypes.setEmail, payload: r.data.user.email})
             dispatch({type: authActionTypes.setUserID, payload: r.data.user.user_id})
             dispatch({type: authActionTypes.setLogged})
-        }).catch(e => e).finally(() => {
-            dispatch({type: authActionTypes.setFetched})
+        })
+            .catch(e => {
+                console.log(e)})
+            .finally(() => {
+                dispatch({type: authActionTypes.setFetched})
         })
     }, [dispatch])
 

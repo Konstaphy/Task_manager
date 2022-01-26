@@ -15,8 +15,9 @@ const Login: React.FC = () => {
     const dispatch = useDispatch()
 
     const Login = async () => {
-        await axiosInstance.post('http://localhost:5050/api/login', {
-            username: state.username,
+        console.log(state.login.username)
+        await axiosInstance.post('/api/login', {
+            username: state.login.username,
             password: state.login.password
         }).then(r => {
             if (r.data.Error) {
