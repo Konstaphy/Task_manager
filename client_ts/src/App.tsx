@@ -2,16 +2,16 @@ import React, { FC, useEffect } from "react";
 import "./Font.css";
 import { BrowserRouter, Redirect, Route } from "react-router-dom";
 import Header from "./components/header/header";
-import Registration from "./components/auth/registration/reg";
+import Registration from "./components/auth/registration/registration";
 import Login from "./components/auth/login/login";
 import Tasks from "./components/tasks/tasks";
 import { useTypedSelector } from "./hooks/hooks";
 import axiosInstance from "./server";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "./Redux/reducers/authTypes";
+import { authActionTypes } from "./redux/reducers/authTypes";
 import Profile from "./components/profile/profile";
 import "./app.css";
-import PopupMsg from "./components/PopUpMessage/popup-msg";
+import ModalMessage from "./components/modalMessage/modalMessage";
 
 const App: FC = () => {
     const state = useTypedSelector(state => state.auth);
@@ -40,7 +40,7 @@ const App: FC = () => {
     }, [dispatch]);
 
     if (!state.fetched) {
-        return <PopupMsg error={false} text="Loading..." />;
+        return <ModalMessage error={false} text="Loading..." />;
     }
     if (!state.logged) {
         return (

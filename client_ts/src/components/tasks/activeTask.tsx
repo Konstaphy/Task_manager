@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { useTypedSelector } from "../../hooks/hooks";
 import axiosInstance from "../../server";
-import { tasksActionTypes } from "../../Redux/reducers/tasksTypes";
+import { tasksActionTypes } from "../../redux/reducers/tasksTypes";
 import { useDispatch } from "react-redux";
 
 const Main = styled.div`

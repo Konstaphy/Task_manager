@@ -4,9 +4,9 @@ import Task from "./task";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../../hooks/hooks";
 import axiosInstance from "../../server";
-import { tasksActionTypes, task } from "../../Redux/reducers/tasksTypes";
+import { tasksActionTypes, task } from "../../redux/reducers/tasksTypes";
 import ActiveTask from "./activeTask";
-import AddTasks from "./AddTasks";
+import AddTasks from "./addTasks";
 
 const Tasks: FC = (): JSX.Element => {
     const state = useTypedSelector(state => state);

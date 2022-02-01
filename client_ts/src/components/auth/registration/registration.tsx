@@ -4,9 +4,9 @@ import "./registration.css";
 import { Redirect, useHistory } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/hooks";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "../../../Redux/reducers/authTypes";
+import { authActionTypes } from "../../../redux/reducers/authTypes";
 import axiosInstance from "../../../server";
-import PopupMsg from "../../PopUpMessage/popup-msg";
+import ModalMessage from "../../modalMessage/modalMessage";
 
 const Registration: React.FC = () => {
     const history = useHistory();
@@ -51,7 +51,7 @@ const Registration: React.FC = () => {
             });
     };
 
-    const error = state.error !== null ? <PopupMsg error={true} text={state.error} /> : <></>;
+    const error = state.error !== null ? <ModalMessage error={true} text={state.error} /> : <></>;
 
     return (
         <>

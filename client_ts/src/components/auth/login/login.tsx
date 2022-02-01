@@ -3,9 +3,9 @@ import logo from "../../assets/logo.svg";
 import axiosInstance from "../../../server";
 import { useTypedSelector } from "../../../hooks/hooks";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "../../../Redux/reducers/authTypes";
+import { authActionTypes } from "../../../redux/reducers/authTypes";
 import { useHistory } from "react-router-dom";
-import PopupMsg from "../../PopUpMessage/popup-msg";
+import ModalMessage from "../../modalMessage/modalMessage";
 import "./login.css";
 
 const Login: React.FC = () => {
@@ -41,7 +41,7 @@ const Login: React.FC = () => {
         dispatch({ type: authActionTypes.setPassword, payload: e.currentTarget.value });
     };
 
-    const error = state.error !== null ? <PopupMsg error={true} text={state.error} /> : <></>;
+    const error = state.error !== null ? <ModalMessage error={true} text={state.error} /> : <></>;
 
     return (
         <>

@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "../../Redux/reducers/authTypes";
-import "./popUpMessage.css";
+import { authActionTypes } from "../../redux/reducers/authTypes";
+import "./modalMessage.scss";
 
 interface PopUpMessageProps {
     text: null | string;
     error: boolean;
 }
 
-const PopupMsg: FC<PopUpMessageProps> = props => {
+const ModalMessage: FC<PopUpMessageProps> = props => {
     const dispatch = useDispatch();
     const closeMsg = () => {
         dispatch({ type: authActionTypes.setError, payload: null });
@@ -21,4 +21,4 @@ const PopupMsg: FC<PopUpMessageProps> = props => {
     );
 };
 
-export default PopupMsg;
+export default ModalMessage;
