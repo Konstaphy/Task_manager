@@ -1,5 +1,5 @@
 import React from "react";
-import { Main, TaskTitle } from "./taskStyles";
+import "./task.scss";
 
 interface taskType {
     text: string;
@@ -8,11 +8,11 @@ interface taskType {
 
 const Task = ({ text }: taskType): JSX.Element => {
     return (
-        <Main>
-            <TaskTitle>
+        <div className={"task"}>
+            <div className={"task__title"}>
                 <p>{text}</p>
-            </TaskTitle>
-        </Main>
+            </div>
+        </div>
     );
 };
 

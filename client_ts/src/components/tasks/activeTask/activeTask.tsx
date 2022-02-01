@@ -1,25 +1,9 @@
 import React, { FC } from "react";
-import styled from "styled-components";
+import "./activeTask.scss";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../../../hooks/hooks";
 import axiosInstance from "../../../server";
 import { tasksActionTypes } from "../../../redux/reducers/tasksTypes";
-
-const Main = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-`;
-const Title = styled.div`
-    font-size: 16px;
-`;
-
-const DeleteButton = styled.div`
-    width: 200px;
-    height: 50px;
-    background-color: indianred;
-`;
 
 const ActiveTask: FC = () => {
     const state = useTypedSelector(state => state);
@@ -34,16 +18,18 @@ const ActiveTask: FC = () => {
         });
     };
     return (
-        <Main>
-            <Title>
+        <div className={"activeTask"}>
+            <div className={"activeTask__title"}>
                 {state.tasks.active_task?.text}
-                {state.tasks.active_task === null ? (
+                {state.tasks.active_task ? (
                     <></>
                 ) : (
-                    <DeleteButton onClick={() => DeleteTask()}>Delete</DeleteButton>
+                    <div className={"activeTask__delete-button"} onClick={() => DeleteTask()}>
+                        Delete
+                    </div>
                 )}
-            </Title>
-        </Main>
+            </div>
+        </div>
     );
 };
 

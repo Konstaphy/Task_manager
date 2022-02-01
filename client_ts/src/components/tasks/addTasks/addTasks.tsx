@@ -1,30 +1,9 @@
 import React, { ChangeEvent, FC } from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 import { tasksActionTypes } from "../../../redux/reducers/tasksTypes";
 import axiosInstance from "../../../server";
 import { useTypedSelector } from "../../../hooks/hooks";
-
-const Main = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    height: calc(100% - 48px);
-
-    p {
-        font-size: 18px;
-        margin: 0;
-    }
-
-    input {
-        width: 50%;
-        font-size: 14px;
-        height: 20px;
-        padding: 3px;
-    }
-`;
+import "./addTasks.scss";
 
 const AddTasks: FC = () => {
     const dispatch = useDispatch();
@@ -49,11 +28,11 @@ const AddTasks: FC = () => {
             });
     };
     return (
-        <Main>
+        <div className={"add-task__button"}>
             <p>Add new post</p>
             <input type="text" value={state.tasks.newTaskText} onChange={e => handleChange(e)} />
             <button onClick={() => addTask()}>Add task</button>
-        </Main>
+        </div>
     );
 };
 

@@ -1,5 +1,4 @@
 import React, { FC, useEffect } from "react";
-import { Main, RightBox, LeftBox, Add } from "./tasksStyles";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../../hooks/hooks";
 import axiosInstance from "../../server";
@@ -7,6 +6,7 @@ import { tasksActionTypes, task } from "../../redux/reducers/tasksTypes";
 import Task from "./task/task";
 import AddTasks from "./addTasks/addTasks";
 import ActiveTask from "./activeTask/activeTask";
+import "./tasks.scss";
 
 const Tasks: FC = (): JSX.Element => {
     const state = useTypedSelector(state => state);
@@ -27,8 +27,8 @@ const Tasks: FC = (): JSX.Element => {
     };
 
     return (
-        <Main>
-            <LeftBox>
+        <div className={"tasks"}>
+            <div className={"tasks__left"}>
                 <p>Tasks</p>
                 {state.tasks.tasks.map(elem => {
                     return (
@@ -37,16 +37,17 @@ const Tasks: FC = (): JSX.Element => {
                         </div>
                     );
                 })}
-                <Add
+                <button
+                    className={"tasks__add-button"}
                     onClick={() => {
                         setAdding();
                     }}
                 >
                     whatyougonnado?
-                </Add>
-            </LeftBox>
-            <RightBox>{state.tasks.type === "ADDING" ? <AddTasks /> : <ActiveTask />}</RightBox>
-        </Main>
+                </button>
+            </div>
+            <div className={"tasks__right"}>{state.tasks.type === "ADDING" ? <AddTasks /> : <ActiveTask />}</div>
+        </div>
     );
 };
 
