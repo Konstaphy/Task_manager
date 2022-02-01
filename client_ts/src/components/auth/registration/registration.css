@@ -1,4 +1,4 @@
-.video__bg{
+.video__bg {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -7,7 +7,7 @@
     background-color: indigo;
 }
 
-.login__box{
+.login__box {
     width: max-content;
     background-color: #fff;
     height: auto;
@@ -15,14 +15,14 @@
     border-radius: 6px;
 }
 
-.login__form{
+.login__form {
     height: auto;
     max-width: 620px;
     width: 100%;
     margin: 100px auto;
 }
 
-.login__logo{
+.login__logo {
     display: grid;
     grid-template-columns: 1fr 2fr;
     height: auto;
@@ -55,7 +55,7 @@
     display: grid;
 }
 
-.form .form__desc{
+.form .form__desc {
     font-family: 'Quantico', sans-serif;
     font-weight: bold;
     font-size: 18px;
@@ -72,7 +72,7 @@ input.form__input {
     width: calc(100% - 44px);
 }
 
-input.form__input:focus{
+input.form__input:focus {
     outline: none;
 }
 

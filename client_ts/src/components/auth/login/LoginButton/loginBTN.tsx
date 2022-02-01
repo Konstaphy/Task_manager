@@ -1,13 +1,8 @@
-import React from 'react';
-import {Space} from './loginBTNStyles'
+import React, { FC } from "react";
+import { Space } from "./loginBTNStyles";
 
-
-const LoginBTN = () => {
-    return (
-        <Space>
-            login
-        </Space>
-    );
+const LoginBTN: FC = () => {
+    return <Space>login</Space>;
 };
 
 export default LoginBTN;

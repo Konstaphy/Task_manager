@@ -1,12 +1,8 @@
-import React from 'react';
-import {Space} from "./regBTNStyles";
+import React, { FC } from "react";
+import { Space } from "./regButtonStyles";
 
-const RegBTN = () => {
-    return (
-        <Space>
-            register
-        </Space>
-    );
+const RegBTN: FC = () => {
+    return <Space>register</Space>;
 };
 
 export default RegBTN;

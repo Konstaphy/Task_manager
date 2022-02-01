@@ -53,11 +53,11 @@ class Controller {
 
       // Callback
       next()
-      // Returning tokens and data on client
+
+      // Returning tokens and data to client
       res.json(userData);
 
     } catch (e) {
-      console.log(e);
       res.status(500);
     }
   }

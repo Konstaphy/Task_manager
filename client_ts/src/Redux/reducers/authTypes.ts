@@ -1,94 +1,94 @@
 // STATE
 interface registration {
-    username: string,
-    email: string,
-    password: string,
+    username: string;
+    email: string;
+    password: string;
 }
 
 interface login {
-    username: string,
-    password: string,
+    username: string;
+    password: string;
 }
 
 export interface authState {
-    login: login,
-    registration: registration,
-    username: string,
-    email: string,
-    logged: boolean,
-    user_id: number,
-    error: null | string,
-    fetched: boolean
+    login: login;
+    registration: registration;
+    username: string;
+    email: string;
+    logged: boolean;
+    user_id: number;
+    error: null | string;
+    fetched: boolean;
 }
 
 // ACTION.TYPES
 export enum authActionTypes {
-    setEmail = 'setEmail',
-    setUsername = 'setUsername',
-    setPassword = 'setPassword',
-    setLogged = 'setLogged',
-    setUserID = 'setUserID',
-    setFetched = 'setFetched',
-    setError = 'setError',
-    regSetUsername = 'setUNREG',
-    regSetEmail = 'setEMREG',
-    regSetPassword = 'setPWREG',
-    setLoggedOut = 'setLoggedOut'
+    setEmail = "setEmail",
+    setUsername = "setUsername",
+    setPassword = "setPassword",
+    setLogged = "setLogged",
+    setUserID = "setUserID",
+    setFetched = "setFetched",
+    setError = "setError",
+    regSetUsername = "setUNREG",
+    regSetEmail = "setEMREG",
+    regSetPassword = "setPWREG",
+    setLoggedOut = "setLoggedOut",
 }
 
 // ACTION
 //login
 interface loginSetUsername {
-    type: authActionTypes.setUsername,
-    payload: string
+    type: authActionTypes.setUsername;
+    payload: string;
 }
 
 interface loginSetEmail {
-    type: authActionTypes.setEmail,
-    payload: string
+    type: authActionTypes.setEmail;
+    payload: string;
 }
 
 interface loginSetPassword {
-    type: authActionTypes.setPassword,
-    payload: string
+    type: authActionTypes.setPassword;
+    payload: string;
 }
 
 interface loginSetLogged {
-    type: authActionTypes.setLogged
+    type: authActionTypes.setLogged;
 }
 
 interface loginSetLoggedOut {
-    type: authActionTypes.setLoggedOut
+    type: authActionTypes.setLoggedOut;
 }
 
 interface loginSetUserID {
-    type: authActionTypes.setUserID,
-    payload: number
+    type: authActionTypes.setUserID;
+    payload: number;
 }
 
 interface loginSetFetched {
-    type: authActionTypes.setFetched
+    type: authActionTypes.setFetched;
 }
 
 interface loginSetError {
-    type: authActionTypes.setError,
-    payload: string
+    type: authActionTypes.setError;
+    payload: string;
 }
 
 //Registration
 interface regSetEmail {
-    type: authActionTypes.regSetEmail,
-    payload: string
+    type: authActionTypes.regSetEmail;
+    payload: string;
 }
 
 interface regSetPassword {
-    type: authActionTypes.regSetPassword,
-    payload: string
+    type: authActionTypes.regSetPassword;
+    payload: string;
 }
 
 interface regSetUsername {
-    type: authActionTypes.regSetUsername,
-    payload: string
+    type: authActionTypes.regSetUsername;
+    payload: string;
 }
 
 //Setting current values
@@ -105,5 +105,4 @@ export type authActionsType =
     | regSetEmail
     | regSetPassword
     | regSetUsername
-    | loginSetLoggedOut
-
+    | loginSetLoggedOut;

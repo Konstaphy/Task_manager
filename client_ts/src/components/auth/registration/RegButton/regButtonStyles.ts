@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const Space = styled.button`
     text-decoration: none;
-    border: 1px solid #41dcd3;
-    background-color: white;
+    border: none;
+    background-color: #41dcd3;
     font-size: 14px;
     line-height: 28px;
-    padding: 0 30px;
+    padding: 0px 30px;
     border-radius: 30px;
     height: 34px;
     margin: 7px 10px;
@@ -14,6 +14,6 @@ export const Space = styled.button`
     font-family: "Quantico", sans-serif;
 
     &:hover {
-        background-color: #f1fff8;
+        background-color: #31ccc3;
     }
 `;
