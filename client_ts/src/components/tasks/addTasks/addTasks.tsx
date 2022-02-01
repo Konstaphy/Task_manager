@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FC } from "react";
 import { useDispatch } from "react-redux";
-import { useTypedSelector } from "../../hooks/hooks";
-import axiosInstance from "../../server";
 import styled from "styled-components";
-import { tasksActionTypes } from "../../redux/reducers/tasksTypes";
+import { tasksActionTypes } from "../../../redux/reducers/tasksTypes";
+import axiosInstance from "../../../server";
+import { useTypedSelector } from "../../../hooks/hooks";
 
 const Main = styled.div`
     display: flex;

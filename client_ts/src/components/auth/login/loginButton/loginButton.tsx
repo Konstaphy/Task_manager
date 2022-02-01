@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { Space } from "./loginButtonStyles";
+import "./loginButton.scss";
 
 const LoginButton: FC = () => {
-    return <Space>login</Space>;
+    return <button className={"space"}>login</button>;
 };
 
 export default LoginButton;

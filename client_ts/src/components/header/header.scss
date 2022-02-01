@@ -1,0 +1,33 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 10px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+
+  .header__logo {
+    padding: 10px;
+  }
+
+  .header__links {
+    display: flex;
+    padding: 0;
+    margin: 0;
+
+    .header__links__button {
+      text-decoration: none;
+      border: none;
+      font-size: 12px;
+      line-height: 48px;
+      margin: auto 10px;
+      color: black;
+      font-family: "Quantico", sans-serif;
+      text-underline: none;
+
+      &:hover,
+      .active & {
+        text-shadow: 1px 1px 0 #41dcd3;
+      }
+    }
+  }
+}

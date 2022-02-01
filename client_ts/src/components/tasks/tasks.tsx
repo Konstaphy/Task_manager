@@ -1,12 +1,12 @@
 import React, { FC, useEffect } from "react";
 import { Main, RightBox, LeftBox, Add } from "./tasksStyles";
-import Task from "./task";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../../hooks/hooks";
 import axiosInstance from "../../server";
 import { tasksActionTypes, task } from "../../redux/reducers/tasksTypes";
-import ActiveTask from "./activeTask";
-import AddTasks from "./addTasks";
+import Task from "./task/task";
+import AddTasks from "./addTasks/addTasks";
+import ActiveTask from "./activeTask/activeTask";
 
 const Tasks: FC = (): JSX.Element => {
     const state = useTypedSelector(state => state);

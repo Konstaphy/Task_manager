@@ -6,13 +6,14 @@ import { useDispatch } from "react-redux";
 import { authActionTypes } from "../../../redux/reducers/authTypes";
 import { useHistory } from "react-router-dom";
 import ModalMessage from "../../modalMessage/modalMessage";
-import "./login.css";
+import "./login.scss";
 
 const Login: React.FC = () => {
     const history = useHistory();
     const state = useTypedSelector(state => state.auth);
     const dispatch = useDispatch();
 
+    //TODO: оч всратые диспатчи
     const Login = async () => {
         const loginResponce = await axiosInstance.post("/api/login", {
             username: state.login.username,
@@ -43,6 +44,7 @@ const Login: React.FC = () => {
 
     const error = state.error !== null ? <ModalMessage error={true} text={state.error} /> : <></>;
 
+    //TODO: деструктуризовать
     return (
         <>
             <div className="login__video-bg">

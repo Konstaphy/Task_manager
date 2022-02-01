@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { Space } from "./registrationButtonStyles";
+import "./registrationButton.scss";
 
 const RegistrationButton: FC = () => {
-    return <Space>register</Space>;
+    return <button className={"space"}>register</button>;
 };
 
 export default RegistrationButton;

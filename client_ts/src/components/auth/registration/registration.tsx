@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../assets/logo.svg";
-import "./registration.css";
+import "./registration.scss";
 import { Redirect, useHistory } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/hooks";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,7 @@ import { authActionTypes } from "../../../redux/reducers/authTypes";
 import axiosInstance from "../../../server";
 import ModalMessage from "../../modalMessage/modalMessage";
 
+//TODO: классы и диспатчи ахуенные конечно, деструктуризация лютая нужна
 const Registration: React.FC = () => {
     const history = useHistory();
     const state = useTypedSelector(state => state.auth);
@@ -53,6 +54,7 @@ const Registration: React.FC = () => {
 
     const error = state.error !== null ? <ModalMessage error={true} text={state.error} /> : <></>;
 
+    // нейминги краш
     return (
         <>
             <div className="video__bg">
