@@ -1,5 +1,4 @@
 .active-task {
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -24,11 +23,10 @@
       border-radius: 2px;
       cursor: pointer;
 
-      p {
+      > p {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 1rem;
       }
     }
   }

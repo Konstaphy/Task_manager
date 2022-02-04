@@ -57,25 +57,22 @@ const App: FC = () => {
                 </div>
             </BrowserRouter>
         );
-    } else {
-        return (
-            <BrowserRouter>
-                <div className="deleting">
-                    {/*TODO: wtf is that*/}
-                    {window.location.href.split("/")[3] === "" ? <Redirect to={"/profile"} /> : <></>}
-                    <Header />
-                    <div className="wrapper">
-                        <Route path="/tasks">
-                            <Tasks />
-                        </Route>
-                        <Route path="/profile">
-                            <Profile />
-                        </Route>
-                    </div>
-                </div>
-            </BrowserRouter>
-        );
     }
+    return (
+        <BrowserRouter>
+            {/*TODO: wtf is that*/}
+            {window.location.href.split("/")[3] === "" ? <Redirect to={"/profile"} /> : <></>}
+            <Header />
+            <div className="wrapper">
+                <Route path="/tasks">
+                    <Tasks />
+                </Route>
+                <Route path="/profile">
+                    <Profile />
+                </Route>
+            </div>
+        </BrowserRouter>
+    );
 };
 
 export default App;

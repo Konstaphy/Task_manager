@@ -26,15 +26,14 @@
         height: auto;
         margin: 10px auto;
 
-        img {
+        > img {
           margin: auto;
           height: 48px;
           padding-right: 10px;
           border-right: black 1px solid;
         }
 
-        p {
-          font-family: 'Quantico', sans-serif;
+        > p {
           font-weight: bold;
           font-size: 24px;
           line-height: 48px;
@@ -53,19 +52,16 @@
         display: grid;
 
         .form__desc {
-          font-family: 'Quantico', sans-serif;
           font-weight: bold;
           font-size: 18px;
-          text-align: left;
           padding: 15px 0 5px 30px;
           margin: 0;
         }
 
-        input.form__input {
+        .form__input {
           font-size: 18px;
           padding: 7px 20px;
           border: #656565 2px solid;
-          font-family: 'Quantico', sans-serif;
           width: calc(100% - 44px);
 
           &:focus {
@@ -78,12 +74,10 @@
           margin: 15px auto;
           display: grid;
 
-          button {
-            border: none;
+          > button {
             margin: auto;
             width: auto;
             padding: 10px;
-            font-family: 'Quantico', sans-serif;
             font-size: 20px;
             font-weight: bold;
           }

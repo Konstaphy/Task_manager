@@ -1,24 +1,8 @@
-body {
+* {
+    font-family: 'Quantico', sans-serif;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-}
-
-.wrapper {
-    max-width: 1110px;
-    margin: auto;
-}
-
-label, input {
-    cursor: pointer;
-}
-
-a {
-    text-decoration: none;
-}
-
-* {
-    font-family: 'Quantico', sans-serif;
 }
 
 button {
@@ -26,7 +10,12 @@ button {
     border: none;
 }
 
-.deleting {
-    margin: 0;
-    padding: 0;
+.wrapper {
+    max-width: 1110px;
+    margin: auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }

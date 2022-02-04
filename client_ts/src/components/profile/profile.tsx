@@ -4,6 +4,7 @@ import axiosInstance from "../../server";
 import { useDispatch } from "react-redux";
 import { authActionTypes } from "../../redux/reducers/authTypes";
 import { useHistory } from "react-router-dom";
+import "./profile.scss";
 
 const Profile: FC = () => {
     const history = useHistory();
@@ -22,18 +23,14 @@ const Profile: FC = () => {
     };
 
     return (
-        <div>
-            <h1>{state.username}</h1>
-            <form>
-                <input type="file" name="avatar" />
-                <input type="submit" />
-            </form>
-            <h3>
-                {state.email}
-                <br />
-                {state.user_id}
+        <div className={"profile"}>
+            <h1 className={"profile__username"}>{state.username}</h1>
+            <h3 className={"profile__credentials"}>
+                <p className={"profile__credentials__email"}>{state.email}</p>
+                <hr className={"profile__credentials__hr"} />
+                <p className={"profile__credentials__id"}>{state.user_id}</p>
             </h3>
-            <button type="button" onClick={() => signOut()}>
+            <button type="button" onClick={() => signOut()} className={"profile__sign-out-button"}>
                 Sign out
             </button>
         </div>
