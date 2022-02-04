@@ -5,7 +5,8 @@
     box-sizing: border-box;
 }
 
-button {
+button, input {
+    padding: 4px 8px;
     outline: none;
     border: none;
 }

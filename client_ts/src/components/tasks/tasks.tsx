@@ -37,12 +37,7 @@ const Tasks: FC = (): JSX.Element => {
                         </div>
                     );
                 })}
-                <button
-                    className={"tasks__add-button"}
-                    onClick={() => {
-                        setAdding();
-                    }}
-                >
+                <button className={"tasks__add-button"} onClick={setAdding}>
                     whatyougonnado?
                 </button>
             </div>

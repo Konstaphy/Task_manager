@@ -60,8 +60,6 @@ const App: FC = () => {
     }
     return (
         <BrowserRouter>
-            {/*TODO: wtf is that*/}
-            {window.location.href.split("/")[3] === "" ? <Redirect to={"/profile"} /> : <></>}
             <Header />
             <div className="wrapper">
                 <Route path="/tasks">
@@ -69,6 +67,9 @@ const App: FC = () => {
                 </Route>
                 <Route path="/profile">
                     <Profile />
+                </Route>
+                <Route path="/">
+                    <Redirect to="/profile" />
                 </Route>
             </div>
         </BrowserRouter>

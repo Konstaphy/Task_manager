@@ -14,23 +14,24 @@ const AddTasks: FC = () => {
     };
 
     const addTask = () => {
-        axiosInstance
-            .post("/api/createTask", {
-                text: state.tasks.newTaskText,
-                date: new Date(),
-                user_id: state.auth.user_id,
-            })
-            .then(() => {
-                dispatch({ type: tasksActionTypes.setNewTaskText, payload: "" });
-                axiosInstance.get(`/api/tasks/${state.auth.user_id}`).then(r => {
-                    dispatch({ type: tasksActionTypes.setTasks, payload: r.data });
+        if (state.tasks.newTaskText.length > 2)
+            axiosInstance
+                .post("/api/createTask", {
+                    text: state.tasks.newTaskText,
+                    date: new Date(),
+                    user_id: state.auth.user_id,
+                })
+                .then(() => {
+                    dispatch({ type: tasksActionTypes.setNewTaskText, payload: "" });
+                    axiosInstance.get(`/api/tasks/${state.auth.user_id}`).then(r => {
+                        dispatch({ type: tasksActionTypes.setTasks, payload: r.data });
+                    });
                 });
-            });
     };
     return (
         <div className={"add-task__button"}>
-            <p>Add new post</p>
-            <input type="text" value={state.tasks.newTaskText} onChange={e => handleChange(e)} />
+            <p>Add new task</p>
+            <input type="text" value={state.tasks.newTaskText} onChange={e => handleChange(e)} placeholder={"title"} />
             <button onClick={() => addTask()}>Add task</button>
         </div>
     );

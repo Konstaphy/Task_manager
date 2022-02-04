@@ -12,9 +12,14 @@
   }
 
   > input {
+    border: 1px #00000030 solid;
     width: 50%;
     font-size: 14px;
-    height: 20px;
+    height: 30px;
     padding: 3px;
+  }
+
+  > button {
+    padding: 4px 8px;
   }
 }
