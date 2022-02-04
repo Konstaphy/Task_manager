@@ -1,0 +1,33 @@
+.active-task {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .active-task__instance {
+    display: flex;
+    justify-content: space-between;
+    border: 1px #00000030 solid;
+    align-items: center;
+    height: 40px;
+    padding: 0 20px;
+
+    .active-task__title {
+      font-size: 16px;
+    }
+
+    .active-task__delete-button {
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      cursor: pointer;
+
+      > p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

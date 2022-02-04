@@ -1,0 +1,28 @@
+.block {
+  padding: 3px;
+  background-color: #fff;
+  position: absolute;
+  bottom: 20px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  display: flex;
+  width: 50%;
+  font-size: 12px;
+  max-width: 320px;
+  border: 1px solid;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+
+  > h4 {
+    margin: 0;
+  }
+
+  > p {
+    font-size: 8px;
+    margin: 0;
+  }
+}
