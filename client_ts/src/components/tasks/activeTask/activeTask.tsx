@@ -18,14 +18,14 @@ const ActiveTask: FC = () => {
         });
     };
     return (
-        <div className={"activeTask"}>
-            <div className={"activeTask__title"}>
-                {state.tasks.active_task?.text}
-                {state.tasks.active_task ? (
+        <div className={"active-task"}>
+            <div className={"active-task__instance"}>
+                <p className={"active-task__title"}>{state.tasks.active_task?.text}</p>
+                {!state.tasks.active_task ? (
                     <></>
                 ) : (
-                    <div className={"activeTask__delete-button"} onClick={() => DeleteTask()}>
-                        Delete
+                    <div className={"active-task__delete-button"} onClick={() => DeleteTask()}>
+                        <p>&#10006;</p>
                     </div>
                 )}
             </div>
