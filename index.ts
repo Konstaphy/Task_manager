@@ -1,8 +1,7 @@
 import express from "express";
-import "dotenv/config";
 import cors from "cors";
 import cp from "cookie-parser";
-
+import "dotenv/config";
 import authRouter from "./routes/authRoutes";
 import userRouter from "./routes/userRoutes";
 import taskRouter from "./routes/taskRoutes";

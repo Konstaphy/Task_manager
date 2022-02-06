@@ -1,11 +1,11 @@
 import { pool } from "../db";
-import userDTO, { User } from "../dtos/userDTO";
+import userDTO from "../dtos/userDTO";
 import { TokenService } from "./tokenService";
+import bcrypt from "bcrypt";
 
 const tokenService = new TokenService();
 
-import bcrypt from "bcrypt";
-
+//TODO: деструктуризация
 export class AuthService {
   async registration(username: string, email: string, password: string) {
     const candidate = await pool.query(

@@ -5,18 +5,22 @@ import { pool } from "../db";
 //TODO: types
 export class TokenService {
   getToken(payload: any) {
-    const accessToken = jwt.sign(payload, process.env.SECRETKEY ?? "", {
+    const accessToken = jwt.sign(payload, process.env.SECRET_KEY ?? "", {
       expiresIn: "24h",
-    }); // generating access jwt token
-    const refreshToken = jwt.sign(payload, process.env.SECRETKEYREFRESH ?? "", {
-      expiresIn: "31d",
-    }); // generating refresh jwt token
+    });
+    const refreshToken = jwt.sign(
+      payload,
+      process.env.SECRET_KEY_REFRESH ?? "",
+      {
+        expiresIn: "31d",
+      }
+    );
     return { accessToken, refreshToken };
   }
 
   validateAccToken(token: string) {
     try {
-      return jwt.verify(token, process.env.SECRETKEY ?? "");
+      return jwt.verify(token, process.env.SECRET_KEY ?? "");
     } catch (e) {
       return null;
     }
@@ -24,7 +28,7 @@ export class TokenService {
 
   validateRefToken(token: string) {
     try {
-      return jwt.verify(token, process.env.SECRETKEYREFRESH ?? "");
+      return jwt.verify(token, process.env.SECRET_KEY_REFRESH ?? "");
     } catch (e) {
       return null;
     }

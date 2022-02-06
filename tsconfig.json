@@ -22,4 +22,5 @@
     "noImplicitAny": true,
     "useDefineForClassFields": true
   },
+  "exclude": ["client_ts"]
 }
