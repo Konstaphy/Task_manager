@@ -46,13 +46,15 @@ const App: FC = () => {
         return (
             <BrowserRouter>
                 <div className="deleting">
-                    <Redirect to="/login" />
                     <Header />
                     <Route path="/registration">
                         <Registration />
                     </Route>
                     <Route path="/login">
                         <Login />
+                    </Route>
+                    <Route exact path="*">
+                        <Redirect to="/login" />
                     </Route>
                 </div>
             </BrowserRouter>
