@@ -14,13 +14,11 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "noImplicitAny": true,
-    "useDefineForClassFields": true
   },
   "exclude": ["client_ts"]
 }
