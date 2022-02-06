@@ -1,17 +1,16 @@
-const authLogic = require("../logic/auth.logic");
+const authLogic = require("../services/authService");
 const pg = require("../db");
 
 const validator = require("validator");
-const tokenLogic = require("../logic/token.logic");
+const tokenLogic = require("../services/tokenService");
 
 require("dotenv").config();
 
 class Controller {
   async registration(req, res, next) {
     try {
-      const { username, email, password } = req.body; // Getting user parameters
+      const { username, email, password } = req.body;
 
-      // Validating information
       if (!validator.isEmail(email)) {
         return res.json({ Error: 400, Description: "Invalid email" });
       }
@@ -22,39 +21,35 @@ class Controller {
         return res.json({ Error: 400, Description: "Invalid password" });
       }
 
-      const userData = await authLogic.registration(username, email, password); // Register user to DB
+      const userData = await authLogic.registration(username, email, password);
 
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
 
-      next(); // Callback
+      next();
 
-      res.json(userData);
+      return res.json(userData);
     } catch (e) {
       res.status(500).json("Error: " + e);
     }
   }
 
   async login(req, res, next) {
-    // res.json()
     try {
-      // Get information about user
       const { username, password } = req.body;
 
       const userData = await authLogic.loginWithUsername(username, password);
-      // Caching refreshToken
+
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
 
-      // Callback
       next();
 
-      // Returning tokens and data to client
-      res.json(userData);
+      return res.json(userData);
     } catch (e) {
       res.status(500);
     }

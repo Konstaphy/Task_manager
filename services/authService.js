@@ -1,6 +1,6 @@
 const pg = require("../db");
-const userDTO = require("../DTO_library/user.dto");
-const tokenLogic = require("../logic/token.logic");
+const userDTO = require("../dtos/userDTO");
+const tokenLogic = require("./tokenService");
 
 const bcrypt = require("bcrypt");
 
