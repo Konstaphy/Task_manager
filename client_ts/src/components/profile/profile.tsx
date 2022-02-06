@@ -3,23 +3,16 @@ import { useTypedSelector } from "../../hooks/hooks";
 import axiosInstance from "../../server";
 import { useDispatch } from "react-redux";
 import { authActionTypes } from "../../redux/reducers/authTypes";
-import { useHistory } from "react-router-dom";
 import "./profile.scss";
 
 const Profile: FC = () => {
-    const history = useHistory();
     const state = useTypedSelector(state => state.auth);
     const dispatch = useDispatch();
 
     const signOut = () => {
-        axiosInstance
-            .post("/api/logout")
-            .then(() => {
-                dispatch({ type: authActionTypes.setLoggedOut });
-            })
-            .then(() => {
-                if (!state.logged) history.push("/profile");
-            });
+        axiosInstance.post("/api/logout").then(() => {
+            dispatch({ type: authActionTypes.setLoggedOut });
+        });
     };
 
     return (
