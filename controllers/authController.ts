@@ -1,13 +1,17 @@
-const authLogic = require("../services/authService");
-const pg = require("../db");
+import { AuthService } from "../services/authService";
+import { pool } from "../db";
 
-const validator = require("validator");
-const tokenLogic = require("../services/tokenService");
+import validator from "validator";
+import { TokenService } from "../services/tokenService";
 
-require("dotenv").config();
+const tokenService = new TokenService();
 
-class Controller {
-  async registration(req, res, next) {
+import "dotenv/config";
+
+const authService = new AuthService();
+
+export class AuthController {
+  async registration(req: any, res: any, next: any) {
     try {
       const { username, email, password } = req.body;
 
@@ -21,7 +25,11 @@ class Controller {
         return res.json({ Error: 400, Description: "Invalid password" });
       }
 
-      const userData = await authLogic.registration(username, email, password);
+      const userData: any = await authService.registration(
+        username,
+        email,
+        password
+      );
 
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -36,11 +44,14 @@ class Controller {
     }
   }
 
-  async login(req, res, next) {
+  async login(req: any, res: any, next: any) {
     try {
       const { username, password } = req.body;
 
-      const userData = await authLogic.loginWithUsername(username, password);
+      const userData: any = await authService.loginWithUsername(
+        username,
+        password
+      );
 
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -55,12 +66,11 @@ class Controller {
     }
   }
 
-  // Logout
-  async logout(req, res, next) {
+  async logout(req: any, res: any, next: any) {
     try {
       const { refreshToken } = req.cookies;
 
-      await pg.query(`DELETE FROM tokens where token = $1`, [refreshToken]);
+      await pool.query(`DELETE FROM tokens where token = $1`, [refreshToken]);
 
       res.clearCookie("refreshToken");
 
@@ -70,8 +80,7 @@ class Controller {
     }
   }
 
-  // Refresh token
-  async refresh(req, res, next) {
+  async refresh(req: any, res: any, next: any) {
     try {
       const authHeader = req.headers.authorization;
       if (!authHeader) {
@@ -79,7 +88,7 @@ class Controller {
       }
       const accessToken = authHeader.split(" ")[1];
 
-      const userIsValid = tokenLogic.validateAccToken(accessToken);
+      const userIsValid = tokenService.validateAccToken(accessToken);
 
       if (!userIsValid) {
         return res.json({ Error: 401, Description: "Token expired" });
@@ -89,7 +98,7 @@ class Controller {
 
       const { refreshToken } = req.cookies;
 
-      const userData = await authLogic.refresh(refreshToken);
+      const userData: any = await authService.refresh(refreshToken);
 
       if (!userData.Error) {
         res.cookie("refreshToken", userData.refreshToken, {
@@ -106,5 +115,3 @@ class Controller {
     }
   }
 }
-
-module.exports = new Controller();
