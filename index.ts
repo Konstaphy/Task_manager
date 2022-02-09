@@ -9,6 +9,10 @@ import taskRouter from "./routes/taskRoutes";
 const app = express();
 const PORT = 5000;
 
+if (!process.env.DATABASE_USER){
+  console.error("No .env file or database credentials are not included in it")
+}
+
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
 app.use(cp());
