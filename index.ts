@@ -5,9 +5,15 @@ import "dotenv/config";
 import authRouter from "./routes/authRoutes";
 import userRouter from "./routes/userRoutes";
 import taskRouter from "./routes/taskRoutes";
+import * as http from "http";
+import { setupWebSocket } from "./setupWebSocket";
 
 const app = express();
 const PORT = 5000;
+
+const server = http.createServer(app);
+
+setupWebSocket(server)
 
 if (!process.env.DATABASE_USER){
   console.error("No .env file or database credentials are not included in it")

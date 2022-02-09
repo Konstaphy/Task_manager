@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import "./Font.css";
 import { BrowserRouter, Redirect, Route } from "react-router-dom";
 import Header from "./components/header/header";
@@ -14,10 +14,18 @@ import "./app.css";
 import ModalMessage from "./components/modalMessage/modalMessage";
 
 const App: FC = () => {
+    const socket = useRef<WebSocket | null>(null);
     const state = useTypedSelector(state => state.auth);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        socket.current = new WebSocket("ws://localhost:5001");
+
+        socket.current.onopen = () => {
+            console.log("open");
+        };
+
+        //TODO: в отдельный файл
         axiosInstance
             .get("/api/refresh")
             .then(r => {
