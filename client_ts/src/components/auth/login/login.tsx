@@ -1,11 +1,11 @@
 import React from "react";
-import logo from "../../assets/logo.svg";
-import axiosInstance from "../../../server";
-import { useTypedSelector } from "../../../hooks/hooks";
+import logo from "assets/logo.svg";
+import axiosInstance from "server";
+import { useTypedSelector } from "hooks/hooks";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "../../../redux/reducers/authTypes";
+import { authActionTypes } from "redux/reducers/authTypes";
 import { useHistory } from "react-router-dom";
-import ModalMessage from "../../modalMessage/modalMessage";
+import ModalMessage from "components/modalMessage/modalMessage";
 import "./login.scss";
 
 const Login: React.FC = () => {

@@ -1,4 +1,4 @@
-import { authActionsType, authActionTypes, authState } from "./authTypes";
+import { authActionsType, authActionTypes, authState } from "redux/reducers/authTypes";
 
 const defaultState: authState = {
     registration: {

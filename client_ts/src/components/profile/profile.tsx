@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { useTypedSelector } from "../../hooks/hooks";
-import axiosInstance from "../../server";
+import { useTypedSelector } from "hooks/hooks";
+import axiosInstance from "server";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "../../redux/reducers/authTypes";
+import { authActionTypes } from "redux/reducers/authTypes";
 import "./profile.scss";
 
 const Profile: FC = () => {

@@ -19,6 +19,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "noImplicitAny": true,
+
   },
   "exclude": ["client_ts"]
 }

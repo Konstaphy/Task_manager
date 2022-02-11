@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FC } from "react";
 import { useDispatch } from "react-redux";
-import { tasksActionTypes } from "../../../redux/reducers/tasksTypes";
-import axiosInstance from "../../../server";
-import { useTypedSelector } from "../../../hooks/hooks";
+import { tasksActionTypes } from "redux/reducers/tasksTypes";
+import axiosInstance from "server";
+import { useTypedSelector } from "hooks/hooks";
 import "./addTasks.scss";
 
 const AddTasks: FC = () => {

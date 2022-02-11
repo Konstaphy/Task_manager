@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import "./loggedOutHeaderLinks.scss";
-import RegistrationButton from "../../../auth/registration/registrationButton/registrationButton";
-import LoginButton from "../../../auth/login/loginButton/loginButton";
+import RegistrationButton from "components/auth/registration/registrationButton/registrationButton";
+import LoginButton from "components/auth/login/loginButton/loginButton";
 
 const LoggedOutHeaderLinks: FC = () => {
     return (

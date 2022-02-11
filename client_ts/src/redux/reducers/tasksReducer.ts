@@ -1,4 +1,4 @@
-import { tasksActionsType, tasksActionTypes, tasksState } from "./tasksTypes";
+import { tasksActionsType, tasksActionTypes, tasksState } from "redux/reducers/tasksTypes";
 
 const defaultState: tasksState = {
     tasks: [],

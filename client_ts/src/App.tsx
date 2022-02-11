@@ -1,17 +1,17 @@
 import React, { FC, useEffect, useRef } from "react";
-import "./Font.css";
+import "font.css";
 import { BrowserRouter, Redirect, Route } from "react-router-dom";
-import Header from "./components/header/header";
-import Registration from "./components/auth/registration/registration";
-import Login from "./components/auth/login/login";
-import Tasks from "./components/tasks/tasks";
-import { useTypedSelector } from "./hooks/hooks";
-import axiosInstance from "./server";
+import Header from "components/header/header";
+import Registration from "components/auth/registration/registration";
+import Login from "components/auth/login/login";
+import Tasks from "components/tasks/tasks";
+import { useTypedSelector } from "hooks/hooks";
+import axiosInstance from "server";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "./redux/reducers/authTypes";
-import Profile from "./components/profile/profile";
-import "./app.css";
-import ModalMessage from "./components/modalMessage/modalMessage";
+import { authActionTypes } from "redux/reducers/authTypes";
+import Profile from "components/profile/profile";
+import "app.css";
+import ModalMessage from "components/modalMessage/modalMessage";
 
 const App: FC = () => {
     const socket = useRef<WebSocket | null>(null);

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "../../redux/reducers/authTypes";
+import { authActionTypes } from "redux/reducers/authTypes";
 import "./modalMessage.scss";
 
 interface PopUpMessageProps {

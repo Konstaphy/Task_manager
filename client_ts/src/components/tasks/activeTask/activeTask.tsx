@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import "./activeTask.scss";
 import { useDispatch } from "react-redux";
-import { useTypedSelector } from "../../../hooks/hooks";
-import axiosInstance from "../../../server";
-import { tasksActionTypes } from "../../../redux/reducers/tasksTypes";
+import { useTypedSelector } from "hooks/hooks";
+import axiosInstance from "server";
+import { tasksActionTypes } from "redux/reducers/tasksTypes";
 
 const ActiveTask: FC = () => {
     const state = useTypedSelector(state => state);

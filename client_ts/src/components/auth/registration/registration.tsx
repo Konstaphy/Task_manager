@@ -1,12 +1,12 @@
 import React from "react";
-import logo from "../../assets/logo.svg";
+import logo from "assets/logo.svg";
 import "./registration.scss";
 import { Redirect, useHistory } from "react-router-dom";
-import { useTypedSelector } from "../../../hooks/hooks";
+import { useTypedSelector } from "hooks/hooks";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "../../../redux/reducers/authTypes";
-import axiosInstance from "../../../server";
-import ModalMessage from "../../modalMessage/modalMessage";
+import { authActionTypes } from "redux/reducers/authTypes";
+import axiosInstance from "server";
+import ModalMessage from "components/modalMessage/modalMessage";
 
 //TODO: классы и диспатчи ахуенные конечно, деструктуризация лютая нужна
 const Registration: React.FC = () => {

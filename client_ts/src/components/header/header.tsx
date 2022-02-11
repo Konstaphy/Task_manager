@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import logo from "../assets/logo.svg";
-import { useTypedSelector } from "../../hooks/hooks";
+import logo from "assets/logo.svg";
+import { useTypedSelector } from "hooks/hooks";
 import "./header.scss";
 import LoggedInHeaderLinks from "./linkTypes/loggedInHeaderLinks/loggedInHeaderLinks";
 import LoggedOutHeaderLinks from "./linkTypes/loggedOutHeaderLinks/loggedOutHeaderLinks";
