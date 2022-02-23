@@ -9,14 +9,15 @@ import * as http from "http";
 import { setupWebSocket } from "./setupWebSocket";
 
 const app = express();
+console.log("huy");
 const PORT = 5000;
 
 const server = http.createServer(app);
 
-setupWebSocket(server)
+setupWebSocket(server);
 
-if (!process.env.DATABASE_USER){
-  console.error("No .env file or database credentials are not included in it")
+if (!process.env.DATABASE_USER) {
+  console.error("No .env file or database credentials are not included in it");
 }
 
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
