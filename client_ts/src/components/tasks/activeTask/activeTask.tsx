@@ -24,7 +24,7 @@ const ActiveTask: FC = () => {
     return (
         <div className={"active-task"}>
             <div className={"active-task__instance"}>
-                <p className={"active-task__title"}>{state.tasks.active_task?.text}</p>
+                <p className={"active-task__title"}>{state.tasks.active_task?.message}</p>
                 <div className={"active-task__delete-button"} onClick={() => DeleteTask()}>
                     <p>&#10006;</p>
                 </div>

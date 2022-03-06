@@ -19,11 +19,6 @@ const App: FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        socket.current = new WebSocket("ws://localhost:5001");
-
-        socket.current.onopen = () => {
-            console.log("open");
-        };
 
         //TODO: в отдельный файл
         axiosInstance
@@ -32,7 +27,7 @@ const App: FC = () => {
                 if (r.data.Error) {
                     throw new Error(r.data.Description);
                 }
-                localStorage.setItem("token", r.data.accessToken);
+                localStorage.setItem("refreshToken", r.data.refresh_token);
                 // TODO: в один диспатч
                 dispatch({ type: authActionTypes.setUsername, payload: r.data.user.username });
                 dispatch({ type: authActionTypes.setEmail, payload: r.data.user.email });

@@ -37,10 +37,10 @@ export class TokenService {
   async findToken(refreshToken: string) {
     try {
       const tokenDB = await pool.query(
-        `SELECT * FROM tokens WHERE token = $1`,
+        `SELECT * FROM tokens WHERE refresh_token = $1`,
         [refreshToken]
       );
-      return tokenDB.rows[0].token;
+      return tokenDB.rows[0].refresh_token;
     } catch (e) {
       throw new Error();
     }
@@ -48,19 +48,19 @@ export class TokenService {
 
   async saveToken(user_id: number, refreshToken: string) {
     const tokenData = await pool.query(
-      `select user_id from tokens where user_id = $1`,
+      `select user_id from Tokens where user_id = $1`,
       [user_id]
     );
 
     if (tokenData.rows.length !== 0) {
       return await pool.query(
-        `update tokens set token = $1 where user_id = $2`,
+        `update Tokens set refresh_token = $1 where user_id = $2`,
         [refreshToken, user_id]
       );
     }
 
     return await pool.query(
-      `insert into tokens (user_id, token) values ($1, $2) returning *`,
+      `insert into tokens (user_id, refresh_token) values ($1, $2) returning *`,
       [user_id, refreshToken]
     );
   }

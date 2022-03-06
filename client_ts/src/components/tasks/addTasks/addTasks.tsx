@@ -18,7 +18,6 @@ const AddTasks: FC = () => {
             axiosInstance
                 .post("/api/createTask", {
                     text: state.tasks.newTaskText,
-                    date: new Date(),
                     user_id: state.auth.user_id,
                 })
                 .then(() => {

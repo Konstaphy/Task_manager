@@ -33,7 +33,7 @@ const Tasks: FC = (): JSX.Element => {
                 {state.tasks.tasks.map(elem => {
                     return (
                         <div onClick={() => setActive(elem)} key={elem.task_id}>
-                            <Task text={elem.text} completed={elem.completed} />
+                            <Task text={elem.message} completed={elem.completed} />
                         </div>
                     );
                 })}

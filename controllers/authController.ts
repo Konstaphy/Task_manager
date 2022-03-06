@@ -70,7 +70,7 @@ export class AuthController {
     try {
       const { refreshToken } = req.cookies;
 
-      await pool.query(`DELETE FROM tokens where token = $1`, [refreshToken]);
+      await pool.query(`DELETE FROM tokens where refresh_token = $1`, [refreshToken]);
 
       res.clearCookie("refreshToken");
 
@@ -83,8 +83,9 @@ export class AuthController {
   async refresh(req: any, res: any, next: any) {
     try {
       const authHeader = req.headers.authorization;
+      console.log(authHeader)
       if (!authHeader) {
-        return res.json({ Error: 400, Description: "User unauthenticated" });
+        return res.json({ Error: 400, Description: "User unauthenticated 0" });
       }
       const accessToken = authHeader.split(" ")[1];
 

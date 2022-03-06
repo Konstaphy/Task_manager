@@ -3,7 +3,8 @@ export interface task {
     completed: boolean;
     task_id: number;
     date: Date;
-    text: string;
+    message: string;
+    description: string;
 }
 
 type types = "ADDING" | "READING" | "NONE";

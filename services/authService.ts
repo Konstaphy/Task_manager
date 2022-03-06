@@ -9,7 +9,7 @@ const tokenService = new TokenService();
 export class AuthService {
   async registration(username: string, email: string, password: string) {
     const candidate = await pool.query(
-      `SELECT user_id FROM users where (email = $1) OR (username = $2)`,
+      `SELECT user_id FROM Users where (email = $1) OR (name = $2)`,
       [email, username]
     );
     if (candidate.rows.length !== 0)
@@ -18,8 +18,8 @@ export class AuthService {
     password = bcrypt.hashSync(password, 7);
 
     const newUser = await pool.query(
-      `INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *`,
-      [username, email, `${password}`, "USER"]
+      `INSERT INTO Users (name, email, password) VALUES ($1, $2, $3) RETURNING *`,
+      [username, email, password]
     );
 
     const userInstance = new userDTO(newUser.rows[0]); // Creating object as user pattern
@@ -53,7 +53,7 @@ export class AuthService {
 
   async loginWithUsername(username: string, password: string) {
     const neededUser = await pool.query(
-      `SELECT * FROM users where username = $1`,
+      `SELECT * FROM Users where name = $1`,
       [username]
     );
     return await this.login(neededUser, password);
@@ -61,7 +61,7 @@ export class AuthService {
 
   async loginWithEmail(email: string, password: string) {
     const neededUser = await pool.query(
-      `SELECT * FROM users where email = $1`,
+      `SELECT * FROM Users where email = $1`,
       [email]
     );
     return await this.login(neededUser, password);
@@ -69,7 +69,7 @@ export class AuthService {
 
   async refresh(refreshToken: string) {
     if (!refreshToken) {
-      return { Error: 400, Description: "User unauthorised" };
+      return { Error: 400, Description: "User unauthorised 1" };
     }
 
     const userData: any = await tokenService.validateRefToken(refreshToken);
@@ -77,10 +77,10 @@ export class AuthService {
     const token: string = await tokenService.findToken(refreshToken);
 
     if (!userData || !token) {
-      return { Error: 400, Description: "User unauthorised" };
+      return { Error: 400, Description: "User unauthorised 2" };
     }
 
-    const user = await pool.query(`SELECT * FROM users where user_id = $1`, [
+    const user = await pool.query(`SELECT * FROM Users where user_id = $1`, [
       userData.user_id,
     ]);
 
