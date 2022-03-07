@@ -82,7 +82,6 @@ export class AuthController {
   async refresh(req: any, res: any, next: any) {
     try {
       const authHeader = req.headers.authorization;
-      console.log(authHeader);
       if (!authHeader) {
         return res.json({ Error: 400, Description: "User unauthenticated 0" });
       }

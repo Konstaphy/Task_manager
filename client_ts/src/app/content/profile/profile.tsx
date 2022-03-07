@@ -8,7 +8,6 @@ const Profile: FC = () => {
     const dispatch = useDispatch();
 
     const signOut = () => {
-        console.log("huy");
         // axiosInstance.post("/api/logout").then(() => {
         //     dispatch({ type: AuthActionTypes.setLoggedOut });
         // });

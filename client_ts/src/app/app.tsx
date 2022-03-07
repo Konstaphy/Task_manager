@@ -21,7 +21,6 @@ const App: FC = () => {
         // todo: async await
         ApiService.GetCurrent()
             .then(r => {
-                console.log(r);
                 dispatch(setUser(r));
             })
             .catch(e => {

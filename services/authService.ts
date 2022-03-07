@@ -73,13 +73,9 @@ export class AuthService {
       return { Error: 400, Description: "User unauthorised 2" };
     }
 
-    console.log(userData.user_id);
-
     const user = await pool.query(`SELECT * FROM Users where user_id = $1`, [
-      userData.user_id,
+      userData.userId,
     ]);
-
-    console.log(user);
 
     const userIns = new userDTO(user.rows[0]);
     const tokens = tokenService.getToken({ ...userIns });
