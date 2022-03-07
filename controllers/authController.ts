@@ -7,11 +7,16 @@ import { TokenService } from "../services/tokenService";
 const tokenService = new TokenService();
 
 import "dotenv/config";
+import { NextFunction, Request, Response } from "express";
+import { RefreshApiResponse } from "../models/refresh";
+import { ErrorHandler } from "../models/error";
+import { sendError } from "../utils/sendError";
+import { Constants } from "../static/constants";
 
 const authService = new AuthService();
 
 export class AuthController {
-  async registration(req: any, res: any, next: any) {
+  async registration(req: Request, res: Response, next: NextFunction) {
     try {
       const { name, email, password } = req.body;
 
@@ -25,32 +30,35 @@ export class AuthController {
         return res.json({ Error: 400, Description: "Invalid password" });
       }
 
-      const userData: any = await authService.registration(
-        name,
-        email,
-        password
-      );
+      const userData:
+        | RefreshApiResponse
+        | ErrorHandler = await authService.registration(name, email, password);
 
-      res.cookie("refreshToken", userData.refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-      });
-
-      next();
-
-      return res.json(userData);
+      if (!(userData instanceof ErrorHandler)) {
+        res.cookie("refreshToken", userData.refreshToken, {
+          maxAge: 30 * 24 * 60 * 60 * 1000,
+          httpOnly: true,
+        });
+        next();
+        return res.json(userData);
+      }
     } catch (e) {
       res.status(500).json("Error: " + e);
     }
   }
 
-  async login(req: any, res: any, next: any) {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { name, password } = req.body;
 
-      const userData: any = await authService.loginWithUsername(name, password);
+      const userData = await authService.loginWithUsername(name, password);
 
-      res.cookie("refreshToken", userData.refreshToken, {
+      if (userData instanceof ErrorHandler) {
+        sendError(userData);
+        return;
+      }
+
+      res.cookie(Constants.CookieToken, userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
@@ -63,46 +71,44 @@ export class AuthController {
     }
   }
 
-  async logout(req: any, res: any, next: any) {
+  async logout(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken } = req.cookies;
-
-      console.log(refreshToken);
 
       await pool.query(`DELETE FROM tokens where refresh_token = $1`, [
         refreshToken,
       ]);
 
-      res.clearCookie("token");
+      res.clearCookie(Constants.CookieToken);
 
-      return res.json("Success");
+      return res.status(200);
     } catch (e) {
-      next(e);
+      res.status(500);
     }
   }
 
-  async refresh(req: any, res: any, next: any) {
+  async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const authHeader = req.headers.authorization;
       if (!authHeader) {
-        return res.json({ Error: 400, Description: "User unauthenticated 0" });
+        sendError(new ErrorHandler(401, "User unauthenticated"));
+        return;
       }
       const accessToken = authHeader.split(" ")[1];
 
       const userIsValid = tokenService.validateAccToken(accessToken);
 
       if (!userIsValid) {
-        return res.json({ Error: 401, Description: "Token expired" });
+        sendError(new ErrorHandler(401, "User unauthenticated"));
+        return;
       }
-
-      req.user = userIsValid;
 
       const { refreshToken } = req.cookies;
 
       const userData: any = await authService.refresh(refreshToken);
 
       if (!userData.Error) {
-        res.cookie("refreshToken", userData.refreshToken, {
+        res.cookie(Constants.CookieToken, userData.refreshToken, {
           httpOnly: true,
           maxAge: 30 * 24 * 60 * 60 * 1000,
         });
@@ -112,7 +118,7 @@ export class AuthController {
 
       return res.json(userData);
     } catch (e) {
-      res.status(500).json(e);
+      res.status(500);
     }
   }
 }

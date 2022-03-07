@@ -2,9 +2,7 @@ import React, { FC, useEffect } from "react";
 import "../font.css";
 import { BrowserRouter, Redirect, Route } from "react-router-dom";
 import Header from "app/content/header/header";
-import Profile from "app/content/profile/profile";
 import "./app.css";
-import Tasks from "./content/tasks/tasks";
 import { getCurrent } from "../redux/actionCreators/getCurrent";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../redux/store";
@@ -13,6 +11,7 @@ import { CommonStore } from "../redux/reducers/commonSlice";
 import Auth from "./auth/auth";
 import Content from "./content/content";
 
+// TODO: loading
 const App: FC = () => {
     const userState = useTypedSelector(state => state.user);
     const globalState = useTypedSelector(state => state.common);

@@ -3,18 +3,20 @@ import userDTO, { UserFromDB } from "../models/userDTO";
 import { TokenService } from "./tokenService";
 import bcrypt from "bcrypt";
 import { QueryResult } from "pg";
+import { ErrorHandler } from "../models/error";
+import { RefreshApiResponse } from "../models/refresh";
 
 const tokenService = new TokenService();
 
-//TODO: деструктуризация
 export class AuthService {
   async registration(name: string, email: string, password: string) {
     const candidate = await pool.query(
       `SELECT user_id FROM Users where (email = $1) OR (name = $2)`,
       [email, name]
     );
-    if (candidate.rows.length !== 0)
-      return { Error: 400, Description: "User already exists" };
+    if (candidate.rows.length !== 0) {
+      return new ErrorHandler(403, "User already exists");
+    }
 
     password = bcrypt.hashSync(password, 7);
 
@@ -31,9 +33,12 @@ export class AuthService {
     return { ...tokens, user: userInstance };
   }
 
-  async login(user: QueryResult<UserFromDB>, password: string) {
+  async login(
+    user: QueryResult<UserFromDB>,
+    password: string
+  ): Promise<RefreshApiResponse | ErrorHandler> {
     if (user.rows.length === 0) {
-      return { Error: 400, Description: "User not found" };
+      return new ErrorHandler(403, "User not found");
     }
 
     const userPW = user.rows[0].password;
@@ -41,7 +46,7 @@ export class AuthService {
     const compared = await bcrypt.compare(password, userPW);
 
     if (!compared) {
-      return { Error: 400, Description: "Invalid password" };
+      return new ErrorHandler(403, "Invalid password");
     }
 
     const userInstance = new userDTO(user.rows[0]);
@@ -53,7 +58,10 @@ export class AuthService {
     return { ...tokens, user: userInstance };
   }
 
-  async loginWithUsername(username: string, password: string) {
+  async loginWithUsername(
+    username: string,
+    password: string
+  ): Promise<RefreshApiResponse | ErrorHandler> {
     const neededUser = await pool.query(`SELECT * FROM Users where name = $1`, [
       username,
     ]);
@@ -62,7 +70,7 @@ export class AuthService {
 
   async refresh(refreshToken: string) {
     if (!refreshToken) {
-      return { Error: 400, Description: "User unauthorised 1" };
+      return new ErrorHandler(403, "User unauthenticated");
     }
 
     const userData: any = await tokenService.validateRefToken(refreshToken);
@@ -70,7 +78,7 @@ export class AuthService {
     const token: string = await tokenService.findToken(refreshToken);
 
     if (!userData || !token) {
-      return { Error: 400, Description: "User unauthorised 2" };
+      return new ErrorHandler(403, "User unauthenticated");
     }
 
     const user = await pool.query(`SELECT * FROM Users where user_id = $1`, [
