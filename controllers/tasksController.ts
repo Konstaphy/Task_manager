@@ -1,6 +1,6 @@
 import { pool } from "../db";
 import { Request, Response } from "express";
-import { ErrorHandler } from "../models/error";
+import { ErrorHandler } from "../models/common/error";
 
 export class TasksController {
   async createTask(req: Request, res: Response) {

@@ -3,7 +3,7 @@ import "../font.css";
 import { BrowserRouter, Redirect, Route } from "react-router-dom";
 import Header from "app/content/header/header";
 import "./app.css";
-import { getCurrent } from "../redux/actionCreators/getCurrent";
+import { getCurrent } from "../redux/actionCreators/auth/getCurrent";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../redux/store";
 import ModalMessage from "../elements/modalMessage/modalMessage";

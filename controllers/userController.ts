@@ -1,9 +1,9 @@
 import { pool } from "../db";
 import { Request, Response } from "express";
-import { UserFromDB } from "../models/userDTO";
+import { UserFromDB } from "../models/dtos/userDTO";
 import { QueryResult } from "pg";
 import { sendError } from "../utils/sendError";
-import { ErrorHandler } from "../models/error";
+import { ErrorHandler } from "../models/common/error";
 
 export class UserController {
   async getUsers(req: Request, res: Response) {

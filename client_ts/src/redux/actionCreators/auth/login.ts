@@ -1,7 +1,7 @@
-import { ApiService } from "../../service/api/apiService";
+import { ApiService } from "../../../service/api/apiService";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { LoginRequest } from "../../../../models/login";
-import UserDTO from "../../../../models/userDTO";
+import { LoginRequest } from "../../../../../models/http/login";
+import UserDTO from "../../../../../models/dtos/userDTO";
 
 export const login = createAsyncThunk(
     "user/login",

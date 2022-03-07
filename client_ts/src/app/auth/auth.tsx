@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../content/header/header";
 import { Redirect, Route } from "react-router-dom";
-import Registration from "./registration/registration";
+import SignUp from "./registration/signUp";
 import Login from "./login/login";
 
 interface AuthProps {}
@@ -11,7 +11,7 @@ const Auth: React.FC<AuthProps> = () => {
         <div className="deleting">
             <Header />
             <Route path="/registration">
-                <Registration />
+                <SignUp />
             </Route>
             <Route path="/login">
                 <Login />

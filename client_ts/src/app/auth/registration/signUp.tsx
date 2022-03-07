@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import logo from "assets/logo.svg";
-import "./registration.scss";
+import "./signUp.scss";
 import { Redirect, useHistory } from "react-router-dom";
 import { useTypedDispatch, useTypedSelector } from "../../../redux/store";
 import ModalMessage from "../../../elements/modalMessage/modalMessage";
 import AuthInput from "../authInput/authInput";
 
 //TODO: классы и диспатчи ахуенные конечно, деструктуризация лютая нужна
-const Registration: React.FC = () => {
+const SignUp: React.FC = () => {
     const history = useHistory();
     const state = useTypedSelector(state => state.user);
     const dispatch = useTypedDispatch();
@@ -71,4 +71,4 @@ const Registration: React.FC = () => {
     );
 };
 
-export default Registration;
+export default SignUp;

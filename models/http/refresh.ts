@@ -1,4 +1,4 @@
-import UserDTO from "./userDTO";
+import UserDTO from "../dtos/userDTO";
 
 export interface RefreshApiResponse {
   accessToken: string;

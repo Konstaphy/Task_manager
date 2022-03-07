@@ -8,15 +8,15 @@ const tokenService = new TokenService();
 
 import "dotenv/config";
 import { NextFunction, Request, Response } from "express";
-import { RefreshApiResponse } from "../models/refresh";
-import { ErrorHandler } from "../models/error";
+import { RefreshApiResponse } from "../models/http/refresh";
+import { ErrorHandler } from "../models/common/error";
 import { sendError } from "../utils/sendError";
 import { Constants } from "../static/constants";
 
 const authService = new AuthService();
 
 export class AuthController {
-  async registration(req: Request, res: Response, next: NextFunction) {
+  async signUp(req: Request, res: Response, next: NextFunction) {
     try {
       const { name, email, password } = req.body;
 
@@ -34,14 +34,16 @@ export class AuthController {
         | RefreshApiResponse
         | ErrorHandler = await authService.registration(name, email, password);
 
-      if (!(userData instanceof ErrorHandler)) {
-        res.cookie("refreshToken", userData.refreshToken, {
-          maxAge: 30 * 24 * 60 * 60 * 1000,
-          httpOnly: true,
-        });
-        next();
-        return res.json(userData);
+      if (userData instanceof ErrorHandler) {
+        sendError(userData);
+        return;
       }
+      res.cookie("refreshToken", userData.refreshToken, {
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
+      next();
+      return res.json(userData);
     } catch (e) {
       res.status(500).json("Error: " + e);
     }

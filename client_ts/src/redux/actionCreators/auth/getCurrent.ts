@@ -1,4 +1,4 @@
-import { ApiService } from "../../service/api/apiService";
+import { ApiService } from "../../../service/api/apiService";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getCurrent = createAsyncThunk("user/getCurrent", async () => {

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TaskDTO } from "../../../../../models/taskDTO";
-import { createTask } from "../../actionCreators/createTask";
-import UserDTO from "../../../../../models/userDTO";
+import { TaskDTO } from "../../../../../models/dtos/taskDTO";
+import { createTask } from "../../actionCreators/tasks/createTask";
+import UserDTO from "../../../../../models/dtos/userDTO";
 import { stat } from "fs";
 
 interface TasksState {

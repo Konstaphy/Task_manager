@@ -1,9 +1,10 @@
 import axios from "axios";
 import { Endpoints } from "./endpoints";
-import UserDTO, { UserFromDB } from "../../../../models/userDTO";
-import { TaskRequestDTO, TaskDTO } from "../../../../models/taskDTO";
-import { RefreshApiResponse } from "../../../../models/refresh";
-import { LoginRequest } from "../../../../models/login";
+import UserDTO, { UserFromDB } from "../../../../models/dtos/userDTO";
+import { TaskRequestDTO, TaskDTO } from "../../../../models/dtos/taskDTO";
+import { RefreshApiResponse } from "../../../../models/http/refresh";
+import { LoginRequest } from "../../../../models/http/login";
+import { SignUpRequest } from "../../../../models/http/signUp";
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:5000/api/",
@@ -23,6 +24,10 @@ export class ApiService {
     };
     public static Login = async (userData: LoginRequest): Promise<RefreshApiResponse> => {
         const user = await axiosInstance.post(Endpoints.Login, userData);
+        return user.data;
+    };
+    public static SignUp = async (userData: SignUpRequest): Promise<RefreshApiResponse> => {
+        const user = await axiosInstance.post(Endpoints.SignUp, userData);
         return user.data;
     };
     public static Logout = async (): Promise<void> => {

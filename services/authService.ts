@@ -1,10 +1,10 @@
 import { pool } from "../db";
-import userDTO, { UserFromDB } from "../models/userDTO";
+import userDTO, { UserFromDB } from "../models/dtos/userDTO";
 import { TokenService } from "./tokenService";
 import bcrypt from "bcrypt";
 import { QueryResult } from "pg";
-import { ErrorHandler } from "../models/error";
-import { RefreshApiResponse } from "../models/refresh";
+import { ErrorHandler } from "../models/common/error";
+import { RefreshApiResponse } from "../models/http/refresh";
 
 const tokenService = new TokenService();
 
