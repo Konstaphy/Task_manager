@@ -67,11 +67,13 @@ export class AuthController {
     try {
       const { refreshToken } = req.cookies;
 
+      console.log(refreshToken);
+
       await pool.query(`DELETE FROM tokens where refresh_token = $1`, [
         refreshToken,
       ]);
 
-      res.clearCookie("refreshToken");
+      res.clearCookie("token");
 
       return res.json("Success");
     } catch (e) {

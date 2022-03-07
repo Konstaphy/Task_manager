@@ -3,6 +3,7 @@ import { Endpoints } from "./endpoints";
 import UserDTO, { UserFromDB } from "../../../../models/userDTO";
 import { TaskRequestDTO, TaskResponseDTO } from "../../../../models/taskResponseDTO";
 import { RefreshApiResponse } from "../../../../models/refresh";
+import { LoginRequest } from "../../../../models/login";
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:5000/api/",
@@ -17,17 +18,15 @@ axiosInstance.interceptors.request.use(config => {
 export class ApiService {
     // AUTH
     public static GetCurrent = async (): Promise<RefreshApiResponse> => {
-        const data = await axiosInstance.get(Endpoints.Refresh);
-        return data.data;
+        const user = await axiosInstance.get(Endpoints.Refresh);
+        return user.data;
     };
-    public static Login = async (name: string, password: string): Promise<UserDTO> => {
-        const token = await axiosInstance.post(Endpoints.Login, { name, password });
-        console.log(token);
-        localStorage.setItem("refreshToken", token.data.refresh_token);
-        return token.data.user;
+    public static Login = async (userData: LoginRequest): Promise<RefreshApiResponse> => {
+        const user = await axiosInstance.post(Endpoints.Login, userData);
+        return user.data;
     };
     public static Logout = async (): Promise<void> => {
-        await axiosInstance.get(Endpoints.Logout);
+        await axiosInstance.post(Endpoints.Logout);
     };
 
     // TASKS

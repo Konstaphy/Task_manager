@@ -4,16 +4,14 @@ import "./profile.scss";
 import { ApiService } from "../../../service/api/apiService";
 import { UserStore } from "../../../redux/reducers/user/userSlice";
 import { useTypedSelector } from "../../../redux/store";
+import { logout } from "../../../redux/actionCreators/logout";
 
 const Profile: FC = () => {
     const state = useTypedSelector(state => state.user);
     const dispatch = useDispatch();
 
-    const { setUser } = UserStore.actions;
-
     const signOut = async () => {
-        await ApiService.Logout;
-        dispatch(setUser(undefined));
+        dispatch(logout());
     };
 
     return (
