@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import UserDTO from "../../../../../dtos/userDTO";
-import { GetCurrent } from "../../actionCreators/refresh";
+import UserDTO from "../../../../../models/userDTO";
+import { getCurrent } from "../../actionCreators/getCurrent";
 
 interface UserState {
     user?: UserDTO;
@@ -19,7 +19,7 @@ export const UserStore = createSlice({
         },
     },
     extraReducers: {
-        [GetCurrent.fulfilled.type]: (state, action: PayloadAction<UserDTO | undefined>) => {
+        [getCurrent.fulfilled.type]: (state, action: PayloadAction<UserDTO | undefined>) => {
             console.log(action.payload);
             state.user = action.payload;
         },

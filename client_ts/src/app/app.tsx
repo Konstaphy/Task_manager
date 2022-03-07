@@ -8,7 +8,7 @@ import { ApiService } from "service/api/apiService";
 import { UserStore } from "redux/reducers/user/userSlice";
 import { CommonStore } from "../redux/reducers/commonSlice";
 import Tasks from "./content/tasks/tasks";
-import { GetCurrent } from "../redux/actionCreators/refresh";
+import { getCurrent } from "../redux/actionCreators/getCurrent";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../redux/store";
 
@@ -18,7 +18,7 @@ const App: FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(GetCurrent());
+        dispatch(getCurrent());
     }, []);
 
     if (globalState.fetching) {

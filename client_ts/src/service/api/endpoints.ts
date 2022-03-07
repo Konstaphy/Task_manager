@@ -3,4 +3,5 @@ export enum Endpoints {
     Login = "login",
     Logout = "logout",
     Task = "task",
+    CreateTask = "createTask",
 }

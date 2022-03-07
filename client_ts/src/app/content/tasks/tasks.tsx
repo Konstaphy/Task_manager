@@ -6,7 +6,7 @@ import ActiveTask from "app/content/tasks/activeTask/activeTask";
 import "./tasks.scss";
 import { ApiService } from "../../../service/api/apiService";
 import { TasksStore } from "../../../redux/reducers/tasks/tasksSlice";
-import { TaskDTO } from "../../../../../dtos/taskDTO";
+import { TaskResponseDTO } from "../../../../../models/taskResponseDTO";
 import { useTypedDispatch, useTypedSelector } from "../../../redux/store";
 
 const Tasks: FC = (): JSX.Element => {

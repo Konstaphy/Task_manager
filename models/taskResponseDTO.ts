@@ -6,18 +6,24 @@ export interface Task {
   completed: boolean;
 }
 
-export class TaskDTO {
+export class TaskRequestDTO {
   userId: number;
-  taskId: number;
   message: string;
   description: string;
+  constructor(task: Task) {
+    this.userId = task.user_id;
+    this.description = task.description;
+    this.message = task.message;
+  }
+}
+
+export class TaskResponseDTO extends TaskRequestDTO {
+  taskId: number;
   completed: boolean;
 
   constructor(task: Task) {
-    this.userId = task.user_id;
+    super(task);
     this.taskId = task.task_id;
-    this.description = task.description;
-    this.message = task.message;
     this.completed = task.completed;
   }
 }

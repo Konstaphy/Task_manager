@@ -1,39 +1,39 @@
-// import React, { ChangeEvent, FC } from "react";
-// import { useDispatch } from "react-redux";
-// import { tasksActionTypes } from "redux/reducers/tasksTypes";
-// import axiosInstance from "server";
-// import { useTypedSelector } from "hooks/hooks";
-// import "./addTasks.scss";
-//
-// const AddTasks: FC = () => {
-//     const dispatch = useDispatch();
-//     const state = useTypedSelector(state => state);
-//
-//     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-//         dispatch({ type: tasksActionTypes.setNewTaskText, payload: e.target.value });
-//     };
-//
-//     const addTask = () => {
-//         if (state.tasks.newTaskText.length > 2)
-//             axiosInstance
-//                 .post("/api/createTask", {
-//                     text: state.tasks.newTaskText,
-//                     user_id: state.auth.userId,
-//                 })
-//                 .then(() => {
-//                     dispatch({ type: tasksActionTypes.setNewTaskText, payload: "" });
-//                     axiosInstance.get(`/api/tasks/${state.auth.userId}`).then(r => {
-//                         dispatch({ type: tasksActionTypes.setTasks, payload: r.data });
-//                     });
-//                 });
-//     };
-//     return (
-//         <div className={"add-task__button"}>
-//             <p>Add new task</p>
-//             <input type="text" value={state.tasks.newTaskText} onChange={e => handleChange(e)} placeholder={"title"} />
-//             <button onClick={() => addTask()}>Add task</button>
-//         </div>
-//     );
-// };
-//
-export default "AddTasks";
+import React, { ChangeEvent, FC, useState } from "react";
+import { useDispatch } from "react-redux";
+import "./addTasks.scss";
+import { useTypedDispatch, useTypedSelector } from "../../../../redux/store";
+import { ApiService } from "../../../../service/api/apiService";
+import { TaskRequestDTO, TaskResponseDTO } from "../../../../../../models/taskResponseDTO";
+import { createTask } from "../../../../redux/actionCreators/createTask";
+
+const AddTasks: FC = () => {
+    const [taskName, setTaskName] = useState("");
+    const [taskDescription, setTaskDescription] = useState("");
+
+    const dispatch = useTypedDispatch();
+    const tasksState = useTypedSelector(state => state.tasks);
+    const usersState = useTypedSelector(state => state.user);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setTaskName(e.target.value);
+    };
+
+    const addTask = async () => {
+        if (!usersState.user?.userId) throw 401;
+        const task: TaskRequestDTO = {
+            message: taskName,
+            description: taskDescription,
+            userId: usersState.user?.userId,
+        };
+        if (taskName.length > 2) dispatch(createTask(task));
+    };
+    return (
+        <div className={"add-task__button"}>
+            <p>Add new task</p>
+            <input type="text" value={taskName} onChange={e => handleChange(e)} placeholder="title" />
+            <button onClick={addTask}>Add task</button>
+        </div>
+    );
+};
+
+export default AddTasks;

@@ -1,5 +1,5 @@
 import { pool } from "../db";
-import userDTO, { UserFromDB } from "../dtos/userDTO";
+import userDTO, { UserFromDB } from "../models/userDTO";
 import { TokenService } from "./tokenService";
 import bcrypt from "bcrypt";
 import { QueryResult } from "pg";

@@ -2,10 +2,10 @@ import { pool } from "../db";
 
 export class TasksController {
   async createTask(req: any, res: any) {
-    const { text, user_id } = req.body;
+    const { message, description, userId } = req.body;
     const newTask = await pool.query(
       `INSERT INTO tasks (message, description, completed, user_id) values ($1, $2, $3, $4) RETURNING *`,
-      [text, "", false, user_id]
+      [message, description, false, userId]
     );
     res.json(newTask);
   }
