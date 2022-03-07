@@ -18,11 +18,11 @@ const AddTasks: FC = () => {
             axiosInstance
                 .post("/api/createTask", {
                     text: state.tasks.newTaskText,
-                    user_id: state.auth.user_id,
+                    user_id: state.auth.userId,
                 })
                 .then(() => {
                     dispatch({ type: tasksActionTypes.setNewTaskText, payload: "" });
-                    axiosInstance.get(`/api/tasks/${state.auth.user_id}`).then(r => {
+                    axiosInstance.get(`/api/tasks/${state.auth.userId}`).then(r => {
                         dispatch({ type: tasksActionTypes.setTasks, payload: r.data });
                     });
                 });

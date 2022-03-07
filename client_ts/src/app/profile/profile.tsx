@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { useTypedSelector } from "hooks/hooks";
 import axiosInstance from "server";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "redux/reducers/authTypes";
+import { AuthActionTypes } from "redux/reducers/authTypes";
 import "./profile.scss";
 
 const Profile: FC = () => {
@@ -11,7 +11,7 @@ const Profile: FC = () => {
 
     const signOut = () => {
         axiosInstance.post("/api/logout").then(() => {
-            dispatch({ type: authActionTypes.setLoggedOut });
+            dispatch({ type: AuthActionTypes.setLoggedOut });
         });
     };
 
@@ -21,7 +21,7 @@ const Profile: FC = () => {
             <h3 className={"profile__credentials"}>
                 <p className={"profile__credentials__email"}>{state.email}</p>
                 <hr className={"profile__credentials__hr"} />
-                <p className={"profile__credentials__id"}>{state.user_id}</p>
+                <p className={"profile__credentials__id"}>{state.userId}</p>
             </h3>
             <button type="button" onClick={() => signOut()} className={"profile__sign-out-button"}>
                 Sign out

@@ -3,9 +3,9 @@ import logo from "assets/logo.svg";
 import axiosInstance from "server";
 import { useTypedSelector } from "hooks/hooks";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "redux/reducers/authTypes";
+import { AuthActionTypes } from "redux/reducers/authTypes";
 import { useHistory } from "react-router-dom";
-import ModalMessage from "components/modalMessage/modalMessage";
+import ModalMessage from "app/modalMessage/modalMessage";
 import "./login.scss";
 
 const Login: React.FC = () => {
@@ -20,26 +20,26 @@ const Login: React.FC = () => {
             password: state.login.password,
         });
         if (loginResponce.data.Error) {
-            dispatch({ type: authActionTypes.setError, payload: loginResponce.data.Description });
+            dispatch({ type: AuthActionTypes.setError, payload: loginResponce.data.Description });
             setTimeout(() => {
-                dispatch({ type: authActionTypes.setError, payload: null });
+                dispatch({ type: AuthActionTypes.setError, payload: null });
             }, 5000);
         } else {
             localStorage.setItem("token", loginResponce.data.accessToken);
-            dispatch({ type: authActionTypes.setUsername, payload: loginResponce.data.user.username });
-            dispatch({ type: authActionTypes.setEmail, payload: loginResponce.data.user.email });
-            dispatch({ type: authActionTypes.setUserID, payload: loginResponce.data.user.user_id });
-            dispatch({ type: authActionTypes.setLogged });
+            dispatch({ type: AuthActionTypes.SetUsername, payload: loginResponce.data.user.username });
+            dispatch({ type: AuthActionTypes.setEmail, payload: loginResponce.data.user.email });
+            dispatch({ type: AuthActionTypes.setUserID, payload: loginResponce.data.user.user_id });
+            dispatch({ type: AuthActionTypes.setLogged });
             history.push("/profile");
         }
     };
 
     const changeUsername = (e: React.FormEvent<HTMLInputElement>) => {
-        dispatch({ type: authActionTypes.setUsername, payload: e.currentTarget.value });
+        dispatch({ type: AuthActionTypes.SetUsername, payload: e.currentTarget.value });
     };
 
     const changePassword = (e: React.FormEvent<HTMLInputElement>) => {
-        dispatch({ type: authActionTypes.setPassword, payload: e.currentTarget.value });
+        dispatch({ type: AuthActionTypes.setPassword, payload: e.currentTarget.value });
     };
 
     const error = state.error !== null ? <ModalMessage error={true} text={state.error} /> : <></>;

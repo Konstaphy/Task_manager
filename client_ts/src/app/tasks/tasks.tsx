@@ -3,20 +3,20 @@ import { useDispatch } from "react-redux";
 import { useTypedSelector } from "hooks/hooks";
 import axiosInstance from "server";
 import { tasksActionTypes, task } from "redux/reducers/tasksTypes";
-import Task from "components/tasks/task/task";
-import AddTasks from "components/tasks/addTasks/addTasks";
-import ActiveTask from "components/tasks/activeTask/activeTask";
-import "components/tasks/tasks.scss";
+import Task from "app/tasks/task/task";
+import AddTasks from "app/tasks/addTasks/addTasks";
+import ActiveTask from "app/tasks/activeTask/activeTask";
+import "app/tasksscss";
 
 const Tasks: FC = (): JSX.Element => {
     const state = useTypedSelector(state => state);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        axiosInstance.get(`/api/tasks/${state.auth.user_id}`).then(r => {
+        axiosInstance.get(`/api/tasks/${state.auth.userId}`).then(r => {
             dispatch({ type: tasksActionTypes.setTasks, payload: r.data });
         });
-    }, [state.auth.user_id, dispatch]);
+    }, [state.auth.userId, dispatch]);
 
     const setActive = (task: task) => {
         dispatch({ type: tasksActionTypes.setTaskToActive, payload: task });

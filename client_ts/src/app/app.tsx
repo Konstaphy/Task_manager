@@ -1,44 +1,36 @@
 import React, { FC, useEffect, useRef } from "react";
-import "font.css";
+import "../font.css";
 import { BrowserRouter, Redirect, Route } from "react-router-dom";
-import Header from "components/header/header";
-import Registration from "components/auth/registration/registration";
-import Login from "components/auth/login/login";
-import Tasks from "components/tasks/tasks";
+import Header from "app/header/header";
+import Registration from "app/auth/registration/registration";
+import Login from "app/auth/login/login";
+import Tasks from "app/tasks/tasks";
 import { useTypedSelector } from "hooks/hooks";
-import axiosInstance from "server";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "redux/reducers/authTypes";
-import Profile from "components/profile/profile";
-import "app.css";
-import ModalMessage from "components/modalMessage/modalMessage";
+import Profile from "app/profile/profile";
+import "./app.cssss";
+import ModalMessage from "app/modalMessage/modalMessage";
+import { ApiService } from "../service/api/apiService";
 
 const App: FC = () => {
-    const socket = useRef<WebSocket | null>(null);
     const state = useTypedSelector(state => state.auth);
     const dispatch = useDispatch();
 
     useEffect(() => {
-
         //TODO: в отдельный файл
-        axiosInstance
-            .get("/api/refresh")
+        ApiService.GetCurrent()
             .then(r => {
-                if (r.data.Error) {
-                    throw new Error(r.data.Description);
-                }
-                localStorage.setItem("refreshToken", r.data.refresh_token);
                 // TODO: в один диспатч
-                dispatch({ type: authActionTypes.setUsername, payload: r.data.user.username });
-                dispatch({ type: authActionTypes.setEmail, payload: r.data.user.email });
-                dispatch({ type: authActionTypes.setUserID, payload: r.data.user.user_id });
-                dispatch({ type: authActionTypes.setLogged });
+                dispatch({ type: AuthActionTypes.SetUsername, payload: r.username });
+                dispatch({ type: AuthActionTypes.setEmail, payload: r.email });
+                dispatch({ type: AuthActionTypes.setUserID, payload: r.data.user.user_id });
+                dispatch({ type: AuthActionTypes.setLogged });
             })
             .catch(e => {
                 console.log(e);
             })
             .finally(() => {
-                dispatch({ type: authActionTypes.setFetched });
+                dispatch({ type: AuthActionTypes.setFetched });
             });
     }, [dispatch]);
 

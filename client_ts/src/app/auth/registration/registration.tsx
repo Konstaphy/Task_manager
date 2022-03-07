@@ -4,9 +4,9 @@ import "./registration.scss";
 import { Redirect, useHistory } from "react-router-dom";
 import { useTypedSelector } from "hooks/hooks";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "redux/reducers/authTypes";
+import { AuthActionTypes } from "redux/reducers/authTypes";
 import axiosInstance from "server";
-import ModalMessage from "components/modalMessage/modalMessage";
+import ModalMessage from "app/modalMessage/modalMessage";
 
 //TODO: классы и диспатчи ахуенные конечно, деструктуризация лютая нужна
 const Registration: React.FC = () => {
@@ -19,13 +19,13 @@ const Registration: React.FC = () => {
     }
 
     const changeUsername = (e: React.FormEvent<HTMLInputElement>): void => {
-        dispatch({ type: authActionTypes.regSetUsername, payload: e.currentTarget.value });
+        dispatch({ type: AuthActionTypes.regSetUsername, payload: e.currentTarget.value });
     };
     const changePassword = (e: React.FormEvent<HTMLInputElement>): void => {
-        dispatch({ type: authActionTypes.regSetPassword, payload: e.currentTarget.value });
+        dispatch({ type: AuthActionTypes.regSetPassword, payload: e.currentTarget.value });
     };
     const changeEmail = (e: React.FormEvent<HTMLInputElement>): void => {
-        dispatch({ type: authActionTypes.regSetEmail, payload: e.currentTarget.value });
+        dispatch({ type: AuthActionTypes.regSetEmail, payload: e.currentTarget.value });
     };
 
     const register = () => {
@@ -37,16 +37,16 @@ const Registration: React.FC = () => {
             })
             .then(r => {
                 if (r.data.Error) {
-                    dispatch({ type: authActionTypes.setError, payload: r.data.Description });
+                    dispatch({ type: AuthActionTypes.setError, payload: r.data.Description });
                     setTimeout(() => {
-                        dispatch({ type: authActionTypes.setError, payload: null });
+                        dispatch({ type: AuthActionTypes.setError, payload: null });
                     }, 5000);
                 } else {
                     localStorage.setItem("token", r.data.accessToken);
-                    dispatch({ type: authActionTypes.setUsername, payload: r.data.user.username });
-                    dispatch({ type: authActionTypes.setEmail, payload: r.data.user.email });
-                    dispatch({ type: authActionTypes.setUserID, payload: r.data.user.user_id });
-                    dispatch({ type: authActionTypes.setLogged });
+                    dispatch({ type: AuthActionTypes.SetUsername, payload: r.data.user.username });
+                    dispatch({ type: AuthActionTypes.setEmail, payload: r.data.user.email });
+                    dispatch({ type: AuthActionTypes.setUserID, payload: r.data.user.user_id });
+                    dispatch({ type: AuthActionTypes.setLogged });
                     history.push("/profile");
                 }
             });
