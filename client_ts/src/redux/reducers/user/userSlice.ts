@@ -13,7 +13,7 @@ export const UserStore = createSlice({
     name: "user",
     initialState,
     reducers: {
-        setUser(state, action: PayloadAction<UserDTO>) {
+        setUser(state, action: PayloadAction<UserDTO | undefined>) {
             state.user = action.payload;
         },
     },

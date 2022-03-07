@@ -20,7 +20,11 @@ export class ApiService {
     };
     public static Login = async (name: string, password: string): Promise<UserDTO> => {
         const token = await axiosInstance.post(Endpoints.Login, { name, password });
+        console.log(token);
         localStorage.setItem("refreshToken", token.data.refresh_token);
         return token.data.user;
+    };
+    public static Logout = async (): Promise<void> => {
+        await axiosInstance.get(Endpoints.Logout);
     };
 }

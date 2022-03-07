@@ -2,15 +2,18 @@ import React, { FC } from "react";
 import { useTypedSelector } from "hooks/hooks";
 import { useDispatch } from "react-redux";
 import "./profile.scss";
+import { ApiService } from "../../../service/api/apiService";
+import { UserStore } from "../../../redux/reducers/user/userSlice";
 
 const Profile: FC = () => {
     const state = useTypedSelector(state => state.user);
     const dispatch = useDispatch();
 
-    const signOut = () => {
-        // axiosInstance.post("/api/logout").then(() => {
-        //     dispatch({ type: AuthActionTypes.setLoggedOut });
-        // });
+    const { setUser } = UserStore.actions;
+
+    const signOut = async () => {
+        await ApiService.Logout;
+        dispatch(setUser(undefined));
     };
 
     return (

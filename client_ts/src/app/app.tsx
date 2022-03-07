@@ -31,27 +31,29 @@ const App: FC = () => {
             });
     }, [dispatch]);
 
-    // if (!globalState.fetching) {
-    //     return <ModalMessage error={false} text="Loading..." />;
-    // }
-    // if (!state.user) {
-    //     return (
-    //         <BrowserRouter>
-    //             <div className="deleting">
-    //                 <Header />
-    //                 <Route path="/registration">
-    //                     <Registration />
-    //                 </Route>
-    //                 <Route path="/login">
-    //                     <Login />
-    //                 </Route>
-    //                 <Route exact path="*">
-    //                     <Redirect to="/login" />
-    //                 </Route>
-    //             </div>
-    //         </BrowserRouter>
-    //     );
-    // }
+    if (!globalState.fetching) {
+        return <>Loading...</>;
+        // return <ModalMessage error={false} text="Loading..." />;
+    }
+    if (!state.user) {
+        return <></>;
+        // return (
+        //     <BrowserRouter>
+        //         <div className="deleting">
+        //             <Header />
+        //             <Route path="/registration">
+        //                 <Registration />
+        //             </Route>
+        //             <Route path="/login">
+        //                 <Login />
+        //             </Route>
+        //             <Route exact path="*">
+        //                 <Redirect to="/login" />
+        //             </Route>
+        //         </div>
+        //     </BrowserRouter>
+        // );
+    }
     return (
         <BrowserRouter>
             <Header />
