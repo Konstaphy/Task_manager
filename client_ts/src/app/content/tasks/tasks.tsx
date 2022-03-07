@@ -1,6 +1,5 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useTypedDispatch, useTypedSelector } from "hooks/hooks";
 import Task from "app/content/tasks/task/task";
 import AddTasks from "app/content/tasks/addTasks/addTasks";
 import ActiveTask from "app/content/tasks/activeTask/activeTask";
@@ -8,6 +7,7 @@ import "./tasks.scss";
 import { ApiService } from "../../../service/api/apiService";
 import { TasksStore } from "../../../redux/reducers/tasks/tasksSlice";
 import { TaskDTO } from "../../../../../dtos/taskDTO";
+import { useTypedDispatch, useTypedSelector } from "../../../redux/store";
 
 const Tasks: FC = (): JSX.Element => {
     const userState = useTypedSelector(state => state.user);
@@ -23,8 +23,8 @@ const Tasks: FC = (): JSX.Element => {
     }, [userState.user?.userId, dispatch]);
 
     return (
-        <div className={"tasks"}>
-            <div className={"tasks__left"}>
+        <div className="tasks">
+            <div className="tasks__left">
                 <p>Tasks</p>
                 {tasks?.map(elem => {
                     return (
@@ -33,9 +33,9 @@ const Tasks: FC = (): JSX.Element => {
                         </div>
                     );
                 })}
-                <button className={"tasks__add-button"}>whatyougonnado?</button>
+                <button className="tasks__add-button">whatyougonnado?</button>
             </div>
-            <div className={"tasks__right"}>
+            <div className="tasks__right">
                 <ActiveTask />
             </div>
         </div>

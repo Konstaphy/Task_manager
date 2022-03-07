@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import { useTypedSelector } from "hooks/hooks";
 import { useDispatch } from "react-redux";
 import "./profile.scss";
 import { ApiService } from "../../../service/api/apiService";
 import { UserStore } from "../../../redux/reducers/user/userSlice";
+import { useTypedSelector } from "../../../redux/store";
 
 const Profile: FC = () => {
     const state = useTypedSelector(state => state.user);

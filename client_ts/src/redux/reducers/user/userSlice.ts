@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import UserDTO from "../../../../../dtos/userDTO";
+import { GetCurrent } from "../../actionCreators/refresh";
 
 interface UserState {
     user?: UserDTO;
@@ -14,6 +15,12 @@ export const UserStore = createSlice({
     initialState,
     reducers: {
         setUser(state, action: PayloadAction<UserDTO | undefined>) {
+            state.user = action.payload;
+        },
+    },
+    extraReducers: {
+        [GetCurrent.fulfilled.type]: (state, action: PayloadAction<UserDTO | undefined>) => {
+            console.log(action.payload);
             state.user = action.payload;
         },
     },

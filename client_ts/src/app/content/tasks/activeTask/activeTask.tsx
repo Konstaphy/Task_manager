@@ -1,8 +1,6 @@
 import React, { FC } from "react";
 import "./activeTask.scss";
-// import { useDispatch } from "react-redux";
-import { useTypedSelector } from "hooks/hooks";
-// import axiosInstance from "server";
+import { useTypedSelector } from "../../../../redux/store";
 
 const ActiveTask: FC = () => {
     const { tasks } = useTypedSelector(state => state.tasks);
@@ -19,10 +17,10 @@ const ActiveTask: FC = () => {
     //     return <></>;
     // }
     return (
-        <div className={"active-task"}>
-            <div className={"active-task__instance"}>
-                <p className={"active-task__title"}>{tasks ? tasks[0]?.message : ""}</p>
-                <div className={"active-task__delete-button"}>
+        <div className="active-task">
+            <div className="active-task__instance">
+                <p className="active-task__title">{tasks ? tasks[0]?.message : ""}</p>
+                <div className="active-task__delete-button">
                     <p>&#10006;</p>
                 </div>
             </div>
