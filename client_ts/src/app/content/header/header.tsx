@@ -6,10 +6,10 @@ import LoggedInHeaderLinks from "./linkTypes/loggedInHeaderLinks/loggedInHeaderL
 import LoggedOutHeaderLinks from "./linkTypes/loggedOutHeaderLinks/loggedOutHeaderLinks";
 
 const Header: FC = () => {
-    const state = useTypedSelector(state => state.auth);
+    const state = useTypedSelector(state => state.user);
 
     const renderLinks = () => {
-        if (state.logged) {
+        if (state.user) {
             return <LoggedInHeaderLinks />;
         }
         return <LoggedOutHeaderLinks />;

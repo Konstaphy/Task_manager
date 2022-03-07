@@ -1,8 +1,8 @@
-import React, { FC } from "react";
-import "./activeTask.scss";
-import { useDispatch } from "react-redux";
-import { useTypedSelector } from "hooks/hooks";
-import axiosInstance from "server";
+// import React, { FC } from "react";
+// import "./activeTask.scss";
+// import { useDispatch } from "react-redux";
+// import { useTypedSelector } from "hooks/hooks";
+// import axiosInstance from "server";
 
 // const ActiveTask: FC = () => {
 // TODO: все запросы в апи сервис
@@ -29,4 +29,4 @@ import axiosInstance from "server";
 // );
 // };
 //
-// export default ActiveTask;
+export default "ActiveTask";

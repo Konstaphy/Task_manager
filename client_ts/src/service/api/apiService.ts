@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Endpoints } from "./endpoints";
-import { User } from "../../../../dtos/userDTO";
+import UserDTO, { User } from "../../../../dtos/userDTO";
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:5000/api/",
@@ -13,8 +13,9 @@ axiosInstance.interceptors.request.use(config => {
 });
 
 export class ApiService {
-    public static GetCurrent = async (): Promise<User> => {
+    public static GetCurrent = async (): Promise<UserDTO> => {
         const token = await axiosInstance.get(Endpoints.Refresh);
+        console.log(token);
         localStorage.setItem("refreshToken", token.data.refresh_token);
         return token.data.user;
     };

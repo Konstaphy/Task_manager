@@ -1,67 +1,65 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, useEffect } from "react";
 import "../font.css";
 import { BrowserRouter, Redirect, Route } from "react-router-dom";
-import Header from "app/header/header";
-import Registration from "app/auth/registration/registration";
-import Login from "app/auth/login/login";
-import Tasks from "app/tasks/tasks";
-import { useTypedSelector } from "hooks/hooks";
-import { useDispatch } from "react-redux";
-import Profile from "app/profile/profile";
-import "./app.cssss";
-import ModalMessage from "app/modalMessage/modalMessage";
-import { ApiService } from "../service/api/apiService";
+import Header from "app/content/header/header";
+import { useTypedDispatch, useTypedSelector } from "hooks/hooks";
+import Profile from "app/content/profile/profile";
+import "./app.css";
+import { ApiService } from "service/api/apiService";
+import { UserStore } from "redux/reducers/user/userSlice";
+import { CommonStore } from "../redux/reducers/commonSlice";
 
 const App: FC = () => {
-    const state = useTypedSelector(state => state.auth);
-    const dispatch = useDispatch();
+    const state = useTypedSelector(state => state.user);
+    const globalState = useTypedSelector(state => state.common);
+    const dispatch = useTypedDispatch();
+
+    const { setUser } = UserStore.actions;
+    const { setFetched } = CommonStore.actions;
 
     useEffect(() => {
-        //TODO: в отдельный файл
+        // todo: async await
         ApiService.GetCurrent()
             .then(r => {
-                // TODO: в один диспатч
-                dispatch({ type: AuthActionTypes.SetUsername, payload: r.username });
-                dispatch({ type: AuthActionTypes.setEmail, payload: r.email });
-                dispatch({ type: AuthActionTypes.setUserID, payload: r.data.user.user_id });
-                dispatch({ type: AuthActionTypes.setLogged });
+                console.log(r);
+                dispatch(setUser(r));
             })
             .catch(e => {
                 console.log(e);
             })
             .finally(() => {
-                dispatch({ type: AuthActionTypes.setFetched });
+                dispatch(setFetched(false));
             });
     }, [dispatch]);
 
-    if (!state.fetched) {
-        return <ModalMessage error={false} text="Loading..." />;
-    }
-    if (!state.logged) {
-        return (
-            <BrowserRouter>
-                <div className="deleting">
-                    <Header />
-                    <Route path="/registration">
-                        <Registration />
-                    </Route>
-                    <Route path="/login">
-                        <Login />
-                    </Route>
-                    <Route exact path="*">
-                        <Redirect to="/login" />
-                    </Route>
-                </div>
-            </BrowserRouter>
-        );
-    }
+    // if (!globalState.fetching) {
+    //     return <ModalMessage error={false} text="Loading..." />;
+    // }
+    // if (!state.user) {
+    //     return (
+    //         <BrowserRouter>
+    //             <div className="deleting">
+    //                 <Header />
+    //                 <Route path="/registration">
+    //                     <Registration />
+    //                 </Route>
+    //                 <Route path="/login">
+    //                     <Login />
+    //                 </Route>
+    //                 <Route exact path="*">
+    //                     <Redirect to="/login" />
+    //                 </Route>
+    //             </div>
+    //         </BrowserRouter>
+    //     );
+    // }
     return (
         <BrowserRouter>
             <Header />
             <div className="wrapper">
-                <Route path="/tasks">
-                    <Tasks />
-                </Route>
+                {/*<Route path="/tasks">*/}
+                {/*    <Tasks />*/}
+                {/*</Route>*/}
                 <Route path="/profile">
                     <Profile />
                 </Route>
