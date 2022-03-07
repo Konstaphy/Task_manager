@@ -16,5 +16,8 @@ export const TasksStore = createSlice({
         addTask(state, action: PayloadAction<TaskDTO>) {
             state.tasks?.push(action.payload);
         },
+        setTasks(state, action: PayloadAction<TaskDTO[]>) {
+            state.tasks = [...action.payload];
+        },
     },
 });

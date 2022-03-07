@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Endpoints } from "./endpoints";
 import UserDTO, { UserFromDB } from "../../../../dtos/userDTO";
+import { TaskDTO } from "../../../../dtos/taskDTO";
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:5000/api/",
@@ -13,6 +14,7 @@ axiosInstance.interceptors.request.use(config => {
 });
 
 export class ApiService {
+    // AUTH
     public static GetCurrent = async (): Promise<UserDTO> => {
         const token = await axiosInstance.get(Endpoints.Refresh);
         localStorage.setItem("refreshToken", token.data.refresh_token);
@@ -26,5 +28,12 @@ export class ApiService {
     };
     public static Logout = async (): Promise<void> => {
         await axiosInstance.get(Endpoints.Logout);
+    };
+
+    // TASKS
+    public static GetTasks = async (userId?: number): Promise<TaskDTO[]> => {
+        if (!userId) return [];
+        const tasks = await axiosInstance.get(`${Endpoints.Task}/${userId}`);
+        return tasks.data;
     };
 }

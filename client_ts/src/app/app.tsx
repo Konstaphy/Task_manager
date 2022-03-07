@@ -8,6 +8,7 @@ import "./app.css";
 import { ApiService } from "service/api/apiService";
 import { UserStore } from "redux/reducers/user/userSlice";
 import { CommonStore } from "../redux/reducers/commonSlice";
+import Tasks from "./content/tasks/tasks";
 
 const App: FC = () => {
     const state = useTypedSelector(state => state.user);
@@ -31,7 +32,7 @@ const App: FC = () => {
             });
     }, [dispatch]);
 
-    if (!globalState.fetching) {
+    if (globalState.fetching) {
         return <>Loading...</>;
         // return <ModalMessage error={false} text="Loading..." />;
     }
@@ -58,9 +59,9 @@ const App: FC = () => {
         <BrowserRouter>
             <Header />
             <div className="wrapper">
-                {/*<Route path="/tasks">*/}
-                {/*    <Tasks />*/}
-                {/*</Route>*/}
+                <Route path="/tasks">
+                    <Tasks />
+                </Route>
                 <Route path="/profile">
                     <Profile />
                 </Route>
