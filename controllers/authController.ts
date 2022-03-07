@@ -13,12 +13,12 @@ const authService = new AuthService();
 export class AuthController {
   async registration(req: any, res: any, next: any) {
     try {
-      const { username, email, password } = req.body;
+      const { name, email, password } = req.body;
 
       if (!validator.isEmail(email)) {
         return res.json({ Error: 400, Description: "Invalid email" });
       }
-      if (validator.isEmpty(username) || username.length < 5) {
+      if (validator.isEmpty(name) || name.length < 5) {
         return res.json({ Error: 400, Description: "Invalid username" });
       }
       if (validator.isEmpty(password) || password.length < 5) {
@@ -26,7 +26,7 @@ export class AuthController {
       }
 
       const userData: any = await authService.registration(
-        username,
+        name,
         email,
         password
       );
@@ -46,12 +46,9 @@ export class AuthController {
 
   async login(req: any, res: any, next: any) {
     try {
-      const { username, password } = req.body;
+      const { name, password } = req.body;
 
-      const userData: any = await authService.loginWithUsername(
-        username,
-        password
-      );
+      const userData: any = await authService.loginWithUsername(name, password);
 
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -70,7 +67,9 @@ export class AuthController {
     try {
       const { refreshToken } = req.cookies;
 
-      await pool.query(`DELETE FROM tokens where refresh_token = $1`, [refreshToken]);
+      await pool.query(`DELETE FROM tokens where refresh_token = $1`, [
+        refreshToken,
+      ]);
 
       res.clearCookie("refreshToken");
 
@@ -83,7 +82,7 @@ export class AuthController {
   async refresh(req: any, res: any, next: any) {
     try {
       const authHeader = req.headers.authorization;
-      console.log(authHeader)
+      console.log(authHeader);
       if (!authHeader) {
         return res.json({ Error: 400, Description: "User unauthenticated 0" });
       }

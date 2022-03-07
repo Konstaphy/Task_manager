@@ -1,20 +1,18 @@
-export interface User {
+export interface UserFromDB {
   user_id: number;
-  username: string;
+  name: string;
   email: string;
-  role: string;
+  password: string;
 }
 
 export default class UserDTO {
-  user_id;
-  username;
+  userId;
+  name;
   email;
-  role;
 
-  constructor(model: User) {
-    this.user_id = model.user_id;
-    this.username = model.username;
+  constructor(model: UserFromDB) {
+    this.userId = model.user_id;
+    this.name = model.name;
     this.email = model.email;
-    this.role = model.role;
   }
 }
