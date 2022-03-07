@@ -8,8 +8,10 @@ import Tasks from "./content/tasks/tasks";
 import { getCurrent } from "../redux/actionCreators/getCurrent";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../redux/store";
-import Registration from "./auth/registration/registration";
-import Login from "./auth/login/login";
+import ModalMessage from "../elements/modalMessage/modalMessage";
+import { CommonStore } from "../redux/reducers/commonSlice";
+import Auth from "./auth/auth";
+import Content from "./content/content";
 
 const App: FC = () => {
     const userState = useTypedSelector(state => state.user);
@@ -20,42 +22,21 @@ const App: FC = () => {
         dispatch(getCurrent());
     }, []);
 
-    if (globalState.fetching) {
-        return <>Loading...</>;
-        // return <ModalMessage error={false} text="Loading..." />;
-    }
     if (!userState.user) {
         return (
             <BrowserRouter>
-                <div className="deleting">
-                    <Header />
-                    <Route path="/registration">
-                        <Registration />
-                    </Route>
-                    <Route path="/login">
-                        <Login />
-                    </Route>
-                    <Route exact path="*">
-                        <Redirect to="/login" />
-                    </Route>
-                </div>
+                <Auth />
+                <ModalMessage
+                    text={globalState.fetching}
+                    resetText={() => dispatch(CommonStore.actions.setFetched(""))}
+                />
             </BrowserRouter>
         );
     }
     return (
         <BrowserRouter>
             <Header />
-            <div className="wrapper">
-                <Route path="/tasks">
-                    <Tasks />
-                </Route>
-                <Route path="/profile">
-                    <Profile />
-                </Route>
-                <Route path="/">
-                    <Redirect to="/profile" />
-                </Route>
-            </div>
+            <Content />
         </BrowserRouter>
     );
 };

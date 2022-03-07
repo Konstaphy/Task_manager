@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import "./addTasks.scss";
 import { useTypedDispatch, useTypedSelector } from "../../../../redux/store";
 import { ApiService } from "../../../../service/api/apiService";
-import { TaskRequestDTO, TaskResponseDTO } from "../../../../../../models/taskResponseDTO";
+import { TaskRequestDTO, TaskDTO } from "../../../../../../models/taskDTO";
 import { createTask } from "../../../../redux/actionCreators/createTask";
 
 const AddTasks: FC = () => {

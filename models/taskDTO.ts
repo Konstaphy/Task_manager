@@ -17,7 +17,7 @@ export class TaskRequestDTO {
   }
 }
 
-export class TaskResponseDTO extends TaskRequestDTO {
+export class TaskDTO extends TaskRequestDTO {
   taskId: number;
   completed: boolean;
 

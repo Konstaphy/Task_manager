@@ -8,6 +8,5 @@ ReactDOM.render(
     <Provider store={setupStore()}>
         <App />
     </Provider>,
-    // <></>,
     document.getElementById("root")
 );

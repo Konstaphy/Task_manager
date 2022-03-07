@@ -2,16 +2,16 @@ import React, { FC } from "react";
 import "./modalMessage.scss";
 
 interface PopUpMessageProps {
-    text: null | string;
-    isOpen: boolean;
-    toggleOpen: () => void;
+    text?: null | string;
+    resetText: () => void;
 }
 
 const ModalMessage: FC<PopUpMessageProps> = props => {
     const closeMsg = () => {
-        props.toggleOpen();
+        props.resetText();
     };
-    if (!props.isOpen) return <></>;
+
+    if (!props.text) return <></>;
     return (
         <div className="modalMessage" onClick={() => closeMsg()}>
             <h4>{props.text}</h4>

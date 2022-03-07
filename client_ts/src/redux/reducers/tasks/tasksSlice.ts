@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TaskResponseDTO } from "../../../../../models/taskResponseDTO";
+import { TaskDTO } from "../../../../../models/taskDTO";
 import { createTask } from "../../actionCreators/createTask";
 import UserDTO from "../../../../../models/userDTO";
 import { stat } from "fs";
 
 interface TasksState {
-    tasks?: TaskResponseDTO[];
+    tasks?: TaskDTO[];
 }
 
 const initialState: TasksState = {
@@ -16,15 +16,15 @@ export const TasksStore = createSlice({
     name: "user",
     initialState,
     reducers: {
-        addTask(state, action: PayloadAction<TaskResponseDTO>) {
+        addTask(state, action: PayloadAction<TaskDTO>) {
             state.tasks?.push(action.payload);
         },
-        setTasks(state, action: PayloadAction<TaskResponseDTO[]>) {
+        setTasks(state, action: PayloadAction<TaskDTO[]>) {
             state.tasks = [...action.payload];
         },
     },
     extraReducers: {
-        [createTask.fulfilled.type]: (state, action: PayloadAction<TaskResponseDTO | undefined>) => {
+        [createTask.fulfilled.type]: (state, action: PayloadAction<TaskDTO | undefined>) => {
             if (!state.tasks) state.tasks = [];
             if (action.payload) state.tasks.push(action.payload);
         },

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Endpoints } from "./endpoints";
 import UserDTO, { UserFromDB } from "../../../../models/userDTO";
-import { TaskRequestDTO, TaskResponseDTO } from "../../../../models/taskResponseDTO";
+import { TaskRequestDTO, TaskDTO } from "../../../../models/taskDTO";
 import { RefreshApiResponse } from "../../../../models/refresh";
 import { LoginRequest } from "../../../../models/login";
 
@@ -30,12 +30,12 @@ export class ApiService {
     };
 
     // TASKS
-    public static GetTasks = async (userId?: number): Promise<TaskResponseDTO[]> => {
+    public static GetTasks = async (userId?: number): Promise<TaskDTO[]> => {
         if (!userId) return [];
         const tasks = await axiosInstance.get(`${Endpoints.Task}/${userId}`);
         return tasks.data;
     };
-    public static CreateTask = async (task: TaskRequestDTO): Promise<TaskResponseDTO> => {
+    public static CreateTask = async (task: TaskRequestDTO): Promise<TaskDTO> => {
         const putTask = await axiosInstance.post(Endpoints.CreateTask, task);
         return putTask.data;
     };
