@@ -3,6 +3,7 @@ export enum Endpoints {
     Login = "login",
     SignUp = "login",
     Logout = "logout",
-    Task = "task",
+    Tasks = "tasks",
     CreateTask = "createTask",
+    DeleteTask = "deleteTask",
 }

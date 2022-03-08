@@ -1,22 +1,15 @@
-import React, { ChangeEvent, FC, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { FC, useState } from "react";
 import "./addTasks.scss";
-import { useTypedDispatch, useTypedSelector } from "../../../../redux/store";
-import { ApiService } from "../../../../service/api/apiService";
-import { TaskRequestDTO, TaskDTO } from "../../../../../../models/dtos/taskDTO";
-import { createTask } from "../../../../redux/actionCreators/tasks/createTask";
+import { useTypedDispatch, useTypedSelector } from "../../../../../redux/store";
+import { TaskRequestDTO } from "../../../../../../../models/dtos/taskDTO";
+import { createTask } from "../../../../../redux/actionCreators/tasks/createTask";
 
 const AddTasks: FC = () => {
     const [taskName, setTaskName] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
 
     const dispatch = useTypedDispatch();
-    const tasksState = useTypedSelector(state => state.tasks);
     const usersState = useTypedSelector(state => state.user);
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setTaskName(e.target.value);
-    };
 
     const addTask = async () => {
         if (!usersState.user?.userId) throw 401;
@@ -30,7 +23,13 @@ const AddTasks: FC = () => {
     return (
         <div className={"add-task__button"}>
             <p>Add new task</p>
-            <input type="text" value={taskName} onChange={e => handleChange(e)} placeholder="title" />
+            <input type="taskName" value={taskName} onChange={e => setTaskName(e.target.value)} placeholder="title" />
+            <input
+                type="taskDescription"
+                value={taskDescription}
+                onChange={e => setTaskDescription(e.target.value)}
+                placeholder="description"
+            />
             <button onClick={addTask}>Add task</button>
         </div>
     );

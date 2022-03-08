@@ -57,6 +57,7 @@ export const UserStore = createSlice({
         },
         // Logout
         [logout.fulfilled.type]: state => {
+            console.log(state);
             state.user = undefined;
         },
     },

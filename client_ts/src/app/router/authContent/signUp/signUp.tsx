@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import logo from "assets/logo.svg";
 import "./signUp.scss";
-import { Redirect, useHistory } from "react-router-dom";
-import { useTypedDispatch, useTypedSelector } from "../../../redux/store";
-import ModalMessage from "../../../elements/modalMessage/modalMessage";
-import AuthInput from "../authInput/authInput";
+import { Redirect } from "react-router-dom";
+import { useTypedDispatch, useTypedSelector } from "../../../../redux/store";
+import AuthInput from "../../../../elements/authInput/authInput";
+import { signUp } from "../../../../redux/actionCreators/auth/signUp";
+import { SignUpRequest } from "../../../../../../models/http/signUp";
 
-//TODO: классы и диспатчи ахуенные конечно, деструктуризация лютая нужна
 const SignUp: React.FC = () => {
-    const history = useHistory();
     const state = useTypedSelector(state => state.user);
     const dispatch = useTypedDispatch();
 
@@ -21,26 +20,12 @@ const SignUp: React.FC = () => {
     }
 
     const register = () => {
-        // axiosInstance
-        //     .post("/api/registration", {
-        //         name: name,
-        //         email: email,
-        //         password: password,
-        //     })
-        //     .then(r => {
-        //         if (r.data.Error) {
-        //             dispatch({ type: AuthActionTypes.setError, payload: r.data.Description });
-        //             setTimeout(() => {
-        //                 dispatch({ type: AuthActionTypes.setError, payload: null });
-        //             }, 5000);
-        //         } else {
-        //             localStorage.setItem("token", r.data.accessToken);
-        //             dispatch({ type: AuthActionTypes.SetUsername, payload: r.data.user.username });
-        //             dispatch({ type: AuthActionTypes.setEmail, payload: r.data.user.email });
-        //             dispatch({ type: AuthActionTypes.setUserID, payload: r.data.user.user_id });
-        //             dispatch({ type: AuthActionTypes.setLogged });
-        //             history.push("/profile");
-        //         }
+        const userData: SignUpRequest = {
+            name,
+            email,
+            password,
+        };
+        dispatch(signUp(userData));
     };
 
     // нейминги краш

@@ -1,6 +1,7 @@
 import { pool } from "../db";
 import { Request, Response } from "express";
 import { ErrorHandler } from "../models/common/error";
+import { Task, TaskDTO } from "../models/dtos/taskDTO";
 
 export class TasksController {
   async createTask(req: Request, res: Response) {
@@ -10,7 +11,10 @@ export class TasksController {
         `INSERT INTO tasks (message, description, completed, user_id) values ($1, $2, $3, $4) RETURNING *`,
         [message, description, false, userId]
       );
-      res.json(newTask);
+      if (!newTask.rows[0]) {
+        return res.status(403).json("Something went wrong");
+      }
+      res.json(new TaskDTO(newTask.rows[0]));
     } catch (e) {
       res.status(500);
     }
@@ -18,9 +22,9 @@ export class TasksController {
 
   async deleteTask(req: Request, res: Response) {
     try {
-      const { task_id } = req.body;
-      await pool.query(`DELETE FROM tasks WHERE task_id = $1`, [task_id]);
-      res.json(`${task_id} has been deleted`);
+      const { taskId } = req.body;
+      await pool.query(`DELETE FROM tasks WHERE task_id = $1`, [taskId]);
+      res.json(`${taskId} has been deleted`);
     } catch (e) {
       res.status(500);
     }
@@ -32,7 +36,7 @@ export class TasksController {
       const task = await pool.query(`SELECT * from tasks where user_id = $1`, [
         id,
       ]);
-      res.json(task.rows);
+      res.json(task.rows.map((task: Task) => new TaskDTO(task)));
     } catch (e) {
       res.status(500);
     }
@@ -45,7 +49,10 @@ export class TasksController {
       const task = await pool.query(`SELECT * FROM tasks where task_id = $1`, [
         id,
       ]);
-      res.json(task.rows[0]);
+      if (!task.rows[0]) {
+        return res.status(403).json("Task not found");
+      }
+      res.json(new TaskDTO(task.rows[0]));
     } catch (e) {
       res.status(200);
     }
