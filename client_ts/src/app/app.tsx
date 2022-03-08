@@ -19,6 +19,9 @@ const App: FC = () => {
         dispatch(getCurrent());
     }, []);
 
+    if (userState.fetching) {
+        return <div className="loading"> Loading... </div>;
+    }
     if (!userState.user) {
         return (
             <BrowserRouter>
