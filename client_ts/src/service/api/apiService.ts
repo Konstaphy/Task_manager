@@ -40,7 +40,7 @@ export class ApiService {
     // TASKS
     public static GetTasks = async (userId?: number): Promise<TaskDTO[]> => {
         if (!userId) return [];
-        const tasks = await axiosInstance.get(`${Endpoints.Task}/${userId}`);
+        const tasks = await axiosInstance.get(`${Endpoints.Tasks}/${userId}`);
         return tasks.data;
     };
     public static CreateTask = async (task: TaskRequestDTO): Promise<TaskDTO> => {

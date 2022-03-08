@@ -2,22 +2,20 @@ import React, { FC, useEffect } from "react";
 import Task from "app/content/tasks/task/task";
 import ActiveTask from "app/content/tasks/activeTask/activeTask";
 import "./tasks.scss";
-import { ApiService } from "../../../service/api/apiService";
-import { TasksStore } from "../../../redux/reducers/tasks/tasksSlice";
 import { useTypedDispatch, useTypedSelector } from "../../../redux/store";
+import { getTasks } from "../../../redux/actionCreators/tasks/getAllTasks";
 
 const Tasks: FC = (): JSX.Element => {
     const userState = useTypedSelector(state => state.user);
     const { tasks } = useTypedSelector(state => state.tasks);
     const dispatch = useTypedDispatch();
 
-    const { setTasks } = TasksStore.actions;
-
     useEffect(() => {
-        ApiService.GetTasks(userState.user?.userId).then(tasks => {
-            dispatch(setTasks(tasks));
-        });
-    }, [userState.user?.userId, dispatch]);
+        if (!userState.user?.userId) {
+            return;
+        }
+        dispatch(getTasks(userState.user?.userId));
+    }, []);
 
     return (
         <div className="tasks">
@@ -26,7 +24,7 @@ const Tasks: FC = (): JSX.Element => {
                 {tasks?.map(elem => {
                     return (
                         <div key={elem.taskId}>
-                            <Task text={elem.message} completed={elem.completed} />
+                            <Task text={elem.message} completed={elem.completed} key={elem.taskId} />
                         </div>
                     );
                 })}
