@@ -43,29 +43,30 @@ export class TokenService {
         `SELECT * FROM tokens WHERE refresh_token = $1`,
         [refreshToken]
       );
+      if (!tokenDB.rows) return { message: "Token expired" };
       return tokenDB.rows[0].refresh_token;
     } catch (e) {
       throw new Error();
     }
   }
 
-  async saveToken(user_id: number, refreshToken: string) {
+  async saveToken(userId: number, refreshToken: string) {
     try {
       const tokenData = await pool.query(
         `select user_id from Tokens where user_id = $1`,
-        [user_id]
+        [userId]
       );
 
       if (tokenData.rows.length !== 0) {
         return await pool.query(
-          `update Tokens set refresh_token = $1 where user_id = $2`,
-          [refreshToken, user_id]
+          `update Tokens set refresh_token = $1 where user_id = $2 returning *`,
+          [refreshToken, userId]
         );
       }
 
       return await pool.query(
         `insert into tokens (user_id, refresh_token) values ($1, $2) returning *`,
-        [user_id, refreshToken]
+        [userId, refreshToken]
       );
     } catch (e) {
       throw new Error();

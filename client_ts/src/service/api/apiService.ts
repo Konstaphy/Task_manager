@@ -5,6 +5,7 @@ import { TaskRequestDTO, TaskDTO } from "../../../../models/dtos/taskDTO";
 import { RefreshApiResponse } from "../../../../models/http/refresh";
 import { LoginRequest } from "../../../../models/http/login";
 import { SignUpRequest } from "../../../../models/http/signUp";
+import { log } from "util";
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:5000/api/",
@@ -18,9 +19,13 @@ axiosInstance.interceptors.request.use(config => {
 
 export class ApiService {
     // AUTH
-    public static GetCurrent = async (): Promise<RefreshApiResponse> => {
-        const user = await axiosInstance.get(Endpoints.Refresh);
-        return user.data;
+    public static GetCurrent = async (): Promise<RefreshApiResponse | undefined> => {
+        try {
+            const user = await axiosInstance.get(Endpoints.Refresh).catch(e => console.log(e));
+            return user?.data;
+        } catch (e) {
+            console.log(e);
+        }
     };
     public static Login = async (userData: LoginRequest): Promise<RefreshApiResponse> => {
         const user = await axiosInstance.post(Endpoints.Login, userData);

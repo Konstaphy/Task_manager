@@ -69,26 +69,28 @@ export class AuthService {
   }
 
   async refresh(refreshToken: string) {
-    if (!refreshToken) {
-      return new ErrorHandler(403, "User unauthenticated");
+    try {
+      if (!refreshToken) {
+        return new ErrorHandler(403, "User unauthenticated");
+      }
+
+      const userData: any = await tokenService.validateRefToken(refreshToken);
+
+      const token: string = await tokenService.findToken(refreshToken);
+
+      if (!userData || !token) {
+        return new ErrorHandler(403, "User unauthenticated");
+      }
+      const user = await pool.query(`SELECT * FROM Users where user_id = $1`, [
+        userData.userId,
+      ]);
+      const userIns = new userDTO(user.rows[0]);
+      const tokens = tokenService.getToken({ ...userIns });
+
+      await tokenService.saveToken(userIns.userId, tokens.refreshToken);
+      return { ...tokens, user: userIns };
+    } catch (e) {
+      return new Error();
     }
-
-    const userData: any = await tokenService.validateRefToken(refreshToken);
-
-    const token: string = await tokenService.findToken(refreshToken);
-
-    if (!userData || !token) {
-      return new ErrorHandler(403, "User unauthenticated");
-    }
-
-    const user = await pool.query(`SELECT * FROM Users where user_id = $1`, [
-      userData.userId,
-    ]);
-
-    const userIns = new userDTO(user.rows[0]);
-    const tokens = tokenService.getToken({ ...userIns });
-
-    await tokenService.saveToken(userIns.userId, tokens.refreshToken);
-    return { ...tokens, user: userIns };
   }
 }

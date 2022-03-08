@@ -17,7 +17,7 @@ const Login: React.FC = () => {
             name,
             password,
         };
-        dispatch(login(request));
+        await dispatch(login(request));
     };
 
     //TODO: деструктуризовать

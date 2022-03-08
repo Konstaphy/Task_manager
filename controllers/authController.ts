@@ -1,19 +1,16 @@
 import { AuthService } from "../services/authService";
 import { pool } from "../db";
-
 import validator from "validator";
 import { TokenService } from "../services/tokenService";
-
-const tokenService = new TokenService();
-
 import "dotenv/config";
 import { NextFunction, Request, Response } from "express";
 import { RefreshApiResponse } from "../models/http/refresh";
-import { ErrorHandler } from "../models/common/error";
 import { sendError } from "../utils/sendError";
 import { Constants } from "../static/constants";
+import { ErrorHandler } from "../models/common/error";
 
 const authService = new AuthService();
+const tokenService = new TokenService();
 
 export class AuthController {
   async signUp(req: Request, res: Response, next: NextFunction) {
@@ -30,13 +27,10 @@ export class AuthController {
         return res.json({ Error: 400, Description: "Invalid password" });
       }
 
-      const userData:
-        | RefreshApiResponse
-        | ErrorHandler = await authService.registration(name, email, password);
+      const userData = await authService.registration(name, email, password);
 
       if (userData instanceof ErrorHandler) {
-        sendError(userData);
-        return;
+        return res.status(500).json(userData.description);
       }
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -56,8 +50,7 @@ export class AuthController {
       const userData = await authService.loginWithUsername(name, password);
 
       if (userData instanceof ErrorHandler) {
-        sendError(userData);
-        return;
+        return res.status(505).json(userData.description);
       }
 
       res.cookie(Constants.CookieToken, userData.refreshToken, {
@@ -92,17 +85,17 @@ export class AuthController {
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const authHeader = req.headers.authorization;
-      if (!authHeader) {
-        sendError(new ErrorHandler(401, "User unauthenticated"));
-        return;
+
+      const accessToken = authHeader?.split(" ")[1];
+
+      if (!accessToken || accessToken === "undefined") {
+        return res.status(401).json("User unauthenticated");
       }
-      const accessToken = authHeader.split(" ")[1];
 
       const userIsValid = tokenService.validateAccToken(accessToken);
 
       if (!userIsValid) {
-        sendError(new ErrorHandler(401, "User unauthenticated"));
-        return;
+        return res.status(401).json("User unauthenticated");
       }
 
       const { refreshToken } = req.cookies;
@@ -120,7 +113,7 @@ export class AuthController {
 
       return res.json(userData);
     } catch (e) {
-      res.status(500);
+      res.status(500).json("huy");
     }
   }
 }

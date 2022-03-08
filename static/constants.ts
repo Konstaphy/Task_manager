@@ -1,3 +1,3 @@
 export enum Constants {
-  CookieToken = "refresh_token",
+  CookieToken = "refreshToken",
 }

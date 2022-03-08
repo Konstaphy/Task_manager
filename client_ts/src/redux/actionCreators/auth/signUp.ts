@@ -6,7 +6,7 @@ import UserDTO from "../../../../../models/dtos/userDTO";
 export const signUp = createAsyncThunk(
     "user/signUp",
     async (userData: SignUpRequest): Promise<UserDTO> => {
-        const user = await ApiService.Login(userData);
+        const user = await ApiService.SignUp(userData);
         localStorage.setItem("token", user.accessToken);
         return user.user;
     }
