@@ -1,8 +1,7 @@
 import express from "express";
-import "dotenv/config";
 import cors from "cors";
 import cp from "cookie-parser";
-
+import "dotenv/config";
 import authRouter from "./routes/authRoutes";
 import userRouter from "./routes/userRoutes";
 import taskRouter from "./routes/taskRoutes";
@@ -18,6 +17,15 @@ app.use("/api", authRouter);
 app.use("/api", userRouter);
 app.use("/api", taskRouter);
 
-app.listen(PORT, () => {
+const start = async () => {
+  if (!process.env.DATABASE_USER) {
+    console.error(
+      "No .env file or database credentials are not included in it"
+    );
+  }
+  app.listen(PORT);
+};
+
+start().then(() => {
   console.log("Server started on port", PORT);
 });
