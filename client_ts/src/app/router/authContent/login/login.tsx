@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import logo from "assets/logo.svg";
 import { useDispatch } from "react-redux";
 import "./login.scss";
-import AuthInput from "../authInput/authInput";
-import { LoginRequest } from "../../../../../models/http/login";
-import { login } from "../../../redux/actionCreators/auth/login";
+import AuthInput from "../../../../elements/authInput/authInput";
+import { LoginRequest } from "../../../../../../models/http/login";
+import { login } from "../../../../redux/actionCreators/auth/login";
 
 const Login: React.FC = () => {
     const dispatch = useDispatch();

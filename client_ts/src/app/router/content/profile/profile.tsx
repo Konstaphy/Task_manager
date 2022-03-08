@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { useDispatch } from "react-redux";
 import "./profile.scss";
-import { useTypedSelector } from "../../../redux/store";
-import { logout } from "../../../redux/actionCreators/auth/logout";
+import { useTypedSelector } from "../../../../redux/store";
+import { logout } from "../../../../redux/actionCreators/auth/logout";
 
 const Profile: FC = () => {
     const state = useTypedSelector(state => state.user);

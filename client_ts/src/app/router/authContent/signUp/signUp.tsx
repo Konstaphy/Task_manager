@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import logo from "assets/logo.svg";
 import "./signUp.scss";
 import { Redirect } from "react-router-dom";
-import { useTypedDispatch, useTypedSelector } from "../../../redux/store";
-import AuthInput from "../authInput/authInput";
-import { signUp } from "../../../redux/actionCreators/auth/signUp";
-import { SignUpRequest } from "../../../../../models/http/signUp";
+import { useTypedDispatch, useTypedSelector } from "../../../../redux/store";
+import AuthInput from "../../../../elements/authInput/authInput";
+import { signUp } from "../../../../redux/actionCreators/auth/signUp";
+import { SignUpRequest } from "../../../../../../models/http/signUp";
 
 const SignUp: React.FC = () => {
     const state = useTypedSelector(state => state.user);

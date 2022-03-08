@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
 import "./addTasks.scss";
-import { useTypedDispatch, useTypedSelector } from "../../../../redux/store";
-import { TaskRequestDTO } from "../../../../../../models/dtos/taskDTO";
-import { createTask } from "../../../../redux/actionCreators/tasks/createTask";
+import { useTypedDispatch, useTypedSelector } from "../../../../../redux/store";
+import { TaskRequestDTO } from "../../../../../../../models/dtos/taskDTO";
+import { createTask } from "../../../../../redux/actionCreators/tasks/createTask";
 
 const AddTasks: FC = () => {
     const [taskName, setTaskName] = useState("");

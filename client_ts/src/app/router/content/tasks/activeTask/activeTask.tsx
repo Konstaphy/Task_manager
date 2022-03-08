@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import "./activeTask.scss";
-import { useTypedSelector } from "../../../../redux/store";
+import { useTypedSelector } from "../../../../../redux/store";
 
 const ActiveTask: FC = () => {
     const { tasks } = useTypedSelector(state => state.tasks);

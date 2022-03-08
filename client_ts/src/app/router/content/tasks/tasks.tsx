@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from "react";
-import Task from "app/content/tasks/task/task";
-import ActiveTask from "app/content/tasks/activeTask/activeTask";
+import Task from "app/router/content/tasks/task/task";
+import ActiveTask from "app/router/content/tasks/activeTask/activeTask";
 import "./tasks.scss";
-import { useTypedDispatch, useTypedSelector } from "../../../redux/store";
-import { getTasks } from "../../../redux/actionCreators/tasks/getAllTasks";
+import { useTypedDispatch, useTypedSelector } from "../../../../redux/store";
+import { getTasks } from "../../../../redux/actionCreators/tasks/getAllTasks";
 
 const Tasks: FC = (): JSX.Element => {
     const userState = useTypedSelector(state => state.user);

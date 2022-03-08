@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import logo from "assets/logo.svg";
 import "./header.scss";
-import LoggedInHeaderLinks from "./linkTypes/loggedInHeaderLinks/loggedInHeaderLinks";
-import LoggedOutHeaderLinks from "./linkTypes/loggedOutHeaderLinks/loggedOutHeaderLinks";
-import { useTypedSelector } from "../../../redux/store";
+import LoggedInHeaderLinks from "./loggedInHeaderLinks/loggedInHeaderLinks";
+import LoggedOutHeaderLinks from "./loggedOutHeaderLinks/loggedOutHeaderLinks";
+import { useTypedSelector } from "../../redux/store";
 
 const Header: FC = () => {
     const state = useTypedSelector(state => state.user);
