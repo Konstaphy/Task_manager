@@ -1,12 +1,9 @@
 import React, { FC, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import Task from "app/content/tasks/task/task";
-import AddTasks from "app/content/tasks/addTasks/addTasks";
 import ActiveTask from "app/content/tasks/activeTask/activeTask";
 import "./tasks.scss";
 import { ApiService } from "../../../service/api/apiService";
 import { TasksStore } from "../../../redux/reducers/tasks/tasksSlice";
-import { TaskDTO } from "../../../../../models/dtos/taskDTO";
 import { useTypedDispatch, useTypedSelector } from "../../../redux/store";
 
 const Tasks: FC = (): JSX.Element => {

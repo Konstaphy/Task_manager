@@ -1,5 +1,4 @@
 import React, { FC, useEffect } from "react";
-import "../font.css";
 import { BrowserRouter } from "react-router-dom";
 import Header from "app/content/header/header";
 import "./app.css";

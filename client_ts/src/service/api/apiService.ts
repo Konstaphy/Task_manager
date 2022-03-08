@@ -1,11 +1,9 @@
 import axios from "axios";
 import { Endpoints } from "./endpoints";
-import UserDTO, { UserFromDB } from "../../../../models/dtos/userDTO";
 import { TaskRequestDTO, TaskDTO } from "../../../../models/dtos/taskDTO";
 import { RefreshApiResponse } from "../../../../models/http/refresh";
 import { LoginRequest } from "../../../../models/http/login";
 import { SignUpRequest } from "../../../../models/http/signUp";
-import { log } from "util";
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:5000/api/",
