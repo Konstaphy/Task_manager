@@ -22,9 +22,9 @@ export class TasksController {
 
   async deleteTask(req: Request, res: Response) {
     try {
-      const { task_id } = req.body;
-      await pool.query(`DELETE FROM tasks WHERE task_id = $1`, [task_id]);
-      res.json(`${task_id} has been deleted`);
+      const { taskId } = req.body;
+      await pool.query(`DELETE FROM tasks WHERE task_id = $1`, [taskId]);
+      res.json(`${taskId} has been deleted`);
     } catch (e) {
       res.status(500);
     }

@@ -47,4 +47,7 @@ export class ApiService {
         const putTask = await axiosInstance.post(Endpoints.CreateTask, task);
         return putTask.data;
     };
+    public static DeleteTask = async (taskId: number): Promise<void> => {
+        await axiosInstance.post(Endpoints.DeleteTask, { taskId });
+    };
 }

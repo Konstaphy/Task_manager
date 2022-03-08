@@ -2,6 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TaskDTO } from "../../../../../models/dtos/taskDTO";
 import { createTask } from "../../actionCreators/tasks/createTask";
 import { getTasks } from "../../actionCreators/tasks/getAllTasks";
+import { deleteTask } from "../../actionCreators/tasks/deleteTask";
+import tasks from "../../../app/router/content/tasks/tasks";
+import { stat } from "fs";
 
 export enum TasksPages {
     active = "Active task",
@@ -39,6 +42,11 @@ export const TasksStore = createSlice({
         },
         [getTasks.fulfilled.type]: (state, action: PayloadAction<TaskDTO[] | undefined>) => {
             if (action.payload) state.tasks = action.payload;
+        },
+        [deleteTask.fulfilled.type]: (state, action: PayloadAction<number>) => {
+            if (action.payload) state.tasks = state.tasks?.filter(task => task.taskId !== action.payload);
+            if (state.tasks?.[0]) state.activeTaskId = state.tasks[0].taskId;
+            else state.currentPage = TasksPages.new;
         },
     },
 });
