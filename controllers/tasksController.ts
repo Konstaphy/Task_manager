@@ -11,7 +11,10 @@ export class TasksController {
         `INSERT INTO tasks (message, description, completed, user_id) values ($1, $2, $3, $4) RETURNING *`,
         [message, description, false, userId]
       );
-      res.json(newTask);
+      if (!newTask.rows[0]) {
+        return res.status(403).json("Something went wrong");
+      }
+      res.json(new TaskDTO(newTask.rows[0]));
     } catch (e) {
       res.status(500);
     }
@@ -47,7 +50,7 @@ export class TasksController {
         id,
       ]);
       if (!task.rows[0]) {
-        res.status(403).json("Task not found");
+        return res.status(403).json("Task not found");
       }
       res.json(new TaskDTO(task.rows[0]));
     } catch (e) {

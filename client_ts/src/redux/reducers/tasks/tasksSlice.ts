@@ -34,6 +34,7 @@ export const TasksStore = createSlice({
     extraReducers: {
         [createTask.fulfilled.type]: (state, action: PayloadAction<TaskDTO | undefined>) => {
             if (!state.tasks) state.tasks = [];
+            console.log(action.payload);
             if (action.payload) state.tasks.push(action.payload);
         },
         [getTasks.fulfilled.type]: (state, action: PayloadAction<TaskDTO[] | undefined>) => {
