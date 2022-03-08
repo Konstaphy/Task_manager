@@ -1,6 +1,7 @@
 import { pool } from "../db";
 import { Request, Response } from "express";
 import { ErrorHandler } from "../models/common/error";
+import { Task, TaskDTO } from "../models/dtos/taskDTO";
 
 export class TasksController {
   async createTask(req: Request, res: Response) {
@@ -32,7 +33,7 @@ export class TasksController {
       const task = await pool.query(`SELECT * from tasks where user_id = $1`, [
         id,
       ]);
-      res.json(task.rows);
+      res.json(task.rows.map((task: Task) => new TaskDTO(task)));
     } catch (e) {
       res.status(500);
     }
@@ -45,7 +46,10 @@ export class TasksController {
       const task = await pool.query(`SELECT * FROM tasks where task_id = $1`, [
         id,
       ]);
-      res.json(task.rows[0]);
+      if (!task.rows[0]) {
+        res.status(403).json("Task not found");
+      }
+      res.json(new TaskDTO(task.rows[0]));
     } catch (e) {
       res.status(200);
     }

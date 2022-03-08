@@ -11,7 +11,7 @@ export enum TasksPages {
 interface TasksState {
     tasks?: TaskDTO[];
     currentPage: TasksPages;
-    activeTaskIndex?: number;
+    activeTaskId?: number;
 }
 
 const initialState: TasksState = {
@@ -19,14 +19,16 @@ const initialState: TasksState = {
 };
 
 export const TasksStore = createSlice({
-    name: "user",
+    name: "tasks",
     initialState,
     reducers: {
-        addTask(state, action: PayloadAction<TaskDTO>) {
-            state.tasks?.push(action.payload);
-        },
-        setTasks(state, action: PayloadAction<TaskDTO[]>) {
-            state.tasks = [...action.payload];
+        setCurrent(state, action: PayloadAction<number | undefined>) {
+            state.activeTaskId = action.payload;
+            if (action.payload) {
+                state.currentPage = TasksPages.active;
+            } else {
+                state.currentPage = TasksPages.new;
+            }
         },
     },
     extraReducers: {

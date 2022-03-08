@@ -28,7 +28,7 @@ const AddTasks: FC = () => {
                 type="taskDescription"
                 value={taskDescription}
                 onChange={e => setTaskDescription(e.target.value)}
-                placeholder="title"
+                placeholder="description"
             />
             <button onClick={addTask}>Add task</button>
         </div>

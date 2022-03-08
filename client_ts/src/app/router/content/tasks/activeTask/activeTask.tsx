@@ -1,9 +1,13 @@
 import React, { FC } from "react";
 import "./activeTask.scss";
 import { useTypedSelector } from "../../../../../redux/store";
+import { TasksPages } from "../../../../../redux/reducers/tasks/tasksSlice";
+import AddTasks from "../addTasks/addTasks";
 
 const ActiveTask: FC = () => {
-    const { tasks } = useTypedSelector(state => state.tasks);
+    const tasksState = useTypedSelector(state => state.tasks);
+
+    const currentTask = tasksState.tasks?.find(task => task.taskId === tasksState.activeTaskId);
     // TODO: все запросы в апи сервис
     // const DeleteTask = () => {
     //     axiosInstance.post("/api/deleteTask", { task_id: state.tasks.active_task?.task_id }).then(() => {
@@ -13,13 +17,14 @@ const ActiveTask: FC = () => {
     //         });
     //     });
     // };
-    // if (!state.tasks.active_task) {
-    //     return <></>;
-    // }
+    if (tasksState.currentPage === TasksPages.new) {
+        return <AddTasks />;
+    }
     return (
         <div className="active-task">
             <div className="active-task__instance">
-                <p className="active-task__title">{tasks ? tasks[0]?.message : ""}</p>
+                <p className="active-task__title">{currentTask?.message}</p>
+                <p className="active-task__title">{currentTask?.description}</p>
                 <div className="active-task__delete-button">
                     <p>&#10006;</p>
                 </div>

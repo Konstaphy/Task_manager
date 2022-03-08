@@ -1,16 +1,22 @@
 import React from "react";
 import "./task.scss";
+import { TaskDTO } from "../../../../../../../models/dtos/taskDTO";
+import { useTypedDispatch } from "../../../../../redux/store";
+import { TasksStore } from "../../../../../redux/reducers/tasks/tasksSlice";
 
-interface taskType {
-    text: string;
-    completed: boolean;
+interface TaskProps {
+    task: TaskDTO;
 }
 
-const Task = ({ text }: taskType): JSX.Element => {
+const Task: React.FC<TaskProps> = (props): JSX.Element => {
+    const dispatch = useTypedDispatch();
+    const setCurrent = () => {
+        dispatch(TasksStore.actions.setCurrent(props.task.taskId));
+    };
     return (
-        <div className={"task"}>
-            <div className={"task__title"}>
-                <p>{text}</p>
+        <div className="task" onClick={setCurrent}>
+            <div className="task__title">
+                <p>{props.task.message}</p>
             </div>
         </div>
     );
