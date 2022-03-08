@@ -21,7 +21,7 @@ const App: FC = () => {
     if (userState.fetching) {
         return <div className="loading"> Loading... </div>;
     }
-    if (!userState.user) {
+    if (userState.user === undefined) {
         return (
             <BrowserRouter>
                 <Auth />

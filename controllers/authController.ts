@@ -76,7 +76,7 @@ export class AuthController {
 
       res.clearCookie(Constants.CookieToken);
 
-      return res.status(200);
+      return res.status(200).json("Success");
     } catch (e) {
       res.status(500);
     }
