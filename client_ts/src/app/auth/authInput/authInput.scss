@@ -1,0 +1,25 @@
+.auth-input {
+  margin: auto;
+  width: 100%;
+  max-width: 620px;
+  height: auto;
+  display: grid;
+
+  .auth-input__title {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 15px 0 5px 30px;
+    margin: 0;
+  }
+
+  .auth-input__input {
+    font-size: 18px;
+    padding: 7px 20px;
+    border: #656565 2px solid;
+    width: calc(100% - 44px);
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

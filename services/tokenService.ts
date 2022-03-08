@@ -2,27 +2,30 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { pool } from "../db";
 
-//TODO: types
 export class TokenService {
   getToken(payload: any) {
-    const accessToken = jwt.sign(payload, process.env.SECRET_KEY ?? "", {
-      expiresIn: "24h",
-    });
-    const refreshToken = jwt.sign(
-      payload,
-      process.env.SECRET_KEY_REFRESH ?? "",
-      {
-        expiresIn: "31d",
-      }
-    );
-    return { accessToken, refreshToken };
+    try {
+      const accessToken = jwt.sign(payload, process.env.SECRET_KEY ?? "", {
+        expiresIn: "24h",
+      });
+      const refreshToken = jwt.sign(
+        payload,
+        process.env.SECRET_KEY_REFRESH ?? "",
+        {
+          expiresIn: "31d",
+        }
+      );
+      return { accessToken, refreshToken };
+    } catch (e) {
+      throw new Error();
+    }
   }
 
   validateAccToken(token: string) {
     try {
       return jwt.verify(token, process.env.SECRET_KEY ?? "");
     } catch (e) {
-      return null;
+      throw new Error();
     }
   }
 
@@ -30,38 +33,43 @@ export class TokenService {
     try {
       return jwt.verify(token, process.env.SECRET_KEY_REFRESH ?? "");
     } catch (e) {
-      return null;
+      throw new Error();
     }
   }
 
   async findToken(refreshToken: string) {
     try {
       const tokenDB = await pool.query(
-        `SELECT * FROM tokens WHERE token = $1`,
+        `SELECT * FROM tokens WHERE refresh_token = $1`,
         [refreshToken]
       );
-      return tokenDB.rows[0].token;
+      if (!tokenDB.rows) return { message: "Token expired" };
+      return tokenDB.rows[0].refresh_token;
     } catch (e) {
       throw new Error();
     }
   }
 
-  async saveToken(user_id: number, refreshToken: string) {
-    const tokenData = await pool.query(
-      `select user_id from tokens where user_id = $1`,
-      [user_id]
-    );
-
-    if (tokenData.rows.length !== 0) {
-      return await pool.query(
-        `update tokens set token = $1 where user_id = $2`,
-        [refreshToken, user_id]
+  async saveToken(userId: number, refreshToken: string) {
+    try {
+      const tokenData = await pool.query(
+        `select user_id from Tokens where user_id = $1`,
+        [userId]
       );
-    }
 
-    return await pool.query(
-      `insert into tokens (user_id, token) values ($1, $2) returning *`,
-      [user_id, refreshToken]
-    );
+      if (tokenData.rows.length !== 0) {
+        return await pool.query(
+          `update Tokens set refresh_token = $1 where user_id = $2 returning *`,
+          [refreshToken, userId]
+        );
+      }
+
+      return await pool.query(
+        `insert into tokens (user_id, refresh_token) values ($1, $2) returning *`,
+        [userId, refreshToken]
+      );
+    } catch (e) {
+      throw new Error();
+    }
   }
 }
